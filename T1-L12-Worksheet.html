@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L12 Worksheet — Net Construction and Architectural Symbols</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Symbol cards */
+.symbol-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+.symbol-card{background:var(--bg);border-radius:10px;padding:14px;text-align:center;border-top:4px solid var(--blue)}
+.symbol-card .sc-name{font-family:var(--font-heading);font-size:.95rem;color:var(--blue);margin-bottom:6px}
+.symbol-card .sc-desc{font-size:.8rem;color:var(--charcoal);margin-bottom:8px}
+.symbol-card .sc-draw{border:1.5px dashed var(--light-grey);border-radius:6px;height:80px;display:flex;align-items:center;justify-content:center;font-size:.78rem;color:var(--grey);background:var(--white)}
+
+/* Dimension cards */
+.dim-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.dim-card{background:var(--bg);border-radius:10px;padding:14px;border-left:4px solid var(--orange)}
+.dim-card .dc-face{font-family:var(--font-heading);font-size:.95rem;color:var(--orange);margin-bottom:4px}
+.dim-card .dc-size{font-size:.9rem;font-weight:600}
+
+/* Line types */
+.line-types{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+.line-type{background:var(--bg);border-radius:10px;padding:14px;text-align:center}
+.line-type .lt-name{font-family:var(--font-heading);font-size:.95rem;color:var(--charcoal);margin-bottom:4px}
+.line-type .lt-style{height:4px;margin:8px auto;width:80%;border-radius:2px}
+.lt-solid .lt-style{background:var(--charcoal)}
+.lt-dashed .lt-style{background:repeating-linear-gradient(90deg,var(--charcoal) 0,var(--charcoal) 10px,transparent 10px,transparent 16px)}
+.lt-score .lt-style{background:repeating-linear-gradient(90deg,var(--grey) 0,var(--grey) 4px,transparent 4px,transparent 8px)}
+.line-type .lt-desc{font-size:.82rem;color:var(--grey);margin-top:4px}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.symbol-cards{grid-template-columns:1fr 1fr}.dim-cards{grid-template-columns:1fr}.line-types{grid-template-columns:1fr}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.symbol-card,.dim-card,.line-type{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L12</span>
+      <span class="ws-unit">Week 6 &bull; Section 3</span>
+    </div>
+    <h1 class="ws-title">Net Construction and Architectural Symbols</h1>
+    <p class="ws-subtitle">Drawing a template net for our 1:20 scale model and learning floor plan symbols</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to draw a template net for our 1:20 scale model and recognise architectural floor plan symbols.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Unfold a Cereal Box</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Imagine a cereal box pulled apart and laid completely flat. Sketch the unfolded shape below.</p>
+    <div class="question">
+      <p>Draw the unfolded cereal box shape (the net):</p>
+      <textarea class="tall" data-save="doNow1" placeholder="Describe or sketch the shape here. How many faces does it have? Label them: top, bottom, front, back, left side, right side."></textarea>
+    </div>
+    <div class="question">
+      <p>How many faces does a rectangular box have? Name them all.</p>
+      <textarea data-save="doNow2" placeholder="A rectangular box has ___ faces: ..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PART 1: NETS ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4DD;</span> PART 1 &mdash; What is a Net?</div>
+
+    <div class="info-box">
+      A <strong>net</strong> is a 2D (flat) shape that folds up into a 3D object. All faces are <strong>connected</strong> along fold lines. Small flaps called <strong>tabs</strong> are added for gluing faces together.
+    </div>
+
+    <h3 style="font-family:var(--font-heading);color:var(--blue);margin:18px 0 12px;">Container Net Dimensions (1:20 Scale)</h3>
+    <div class="dim-cards">
+      <div class="dim-card"><div class="dc-face">Bottom (floor)</div><div class="dc-size">30.5 cm &times; 12.2 cm</div></div>
+      <div class="dim-card"><div class="dc-face">Front face</div><div class="dc-size">30.5 cm &times; 13 cm</div></div>
+      <div class="dim-card"><div class="dc-face">Back face</div><div class="dc-size">30.5 cm &times; 13 cm</div></div>
+      <div class="dim-card"><div class="dc-face">Left end</div><div class="dc-size">12.2 cm &times; 13 cm</div></div>
+      <div class="dim-card"><div class="dc-face">Right end</div><div class="dc-size">12.2 cm &times; 13 cm</div></div>
+      <div class="dim-card"><div class="dc-face">Tabs</div><div class="dc-size">1.5 cm wide on gluing edges</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== LINE TYPES ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4CF;</span> LINE TYPES ON YOUR NET</div>
+    <div class="line-types">
+      <div class="line-type lt-solid"><div class="lt-name">CUT LINE</div><div class="lt-style"></div><div class="lt-desc">Thick solid line &mdash; cut here</div></div>
+      <div class="line-type lt-dashed"><div class="lt-name">FOLD LINE</div><div class="lt-style"></div><div class="lt-desc">Dashed line &mdash; fold here, do NOT cut</div></div>
+      <div class="line-type lt-score"><div class="lt-name">SCORE LINE</div><div class="lt-style"></div><div class="lt-desc">Press firmly to crease &mdash; makes clean folds</div></div>
+    </div>
+    <div class="question">
+      <p>Why is it important to know the difference between a cut line and a fold line?</p>
+      <textarea data-save="lineTypes1" placeholder="If I cut along a fold line..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== NET DRAWING ACTIVITY ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270D;</span> ACTIVITY &mdash; Draw Your Net (WB p. 31)</div>
+    <div class="info-box">
+      Draw your net on the A2 cardboard sheet. Start with the <strong>bottom face</strong> in the centre and add other faces outward. Mark fold lines as DASHED and cut lines as SOLID. Add 1.5 cm tabs on gluing edges.
+    </div>
+    <div class="question">
+      <p>Net Drawing Checklist &mdash; tick each item as you complete it:</p>
+    </div>
+    <div class="self-assess">
+      <h3>Net Drawing Checklist</h3>
+      <div class="sc-check"><input type="checkbox" id="net1" data-save="net1"><label for="net1">Bottom face drawn: 30.5 cm &times; 12.2 cm (centre of cardboard)</label></div>
+      <div class="sc-check"><input type="checkbox" id="net2" data-save="net2"><label for="net2">Front face drawn: 30.5 cm &times; 13 cm (extends UP from bottom)</label></div>
+      <div class="sc-check"><input type="checkbox" id="net3" data-save="net3"><label for="net3">Back face drawn: 30.5 cm &times; 13 cm (extends DOWN from bottom)</label></div>
+      <div class="sc-check"><input type="checkbox" id="net4" data-save="net4"><label for="net4">Left end drawn: 12.2 cm &times; 13 cm</label></div>
+      <div class="sc-check"><input type="checkbox" id="net5" data-save="net5"><label for="net5">Right end drawn: 12.2 cm &times; 13 cm</label></div>
+      <div class="sc-check"><input type="checkbox" id="net6" data-save="net6"><label for="net6">Tabs added (1.5 cm wide) on at least 4 edges</label></div>
+      <div class="sc-check"><input type="checkbox" id="net7" data-save="net7"><label for="net7">Fold lines marked as DASHED</label></div>
+      <div class="sc-check"><input type="checkbox" id="net8" data-save="net8"><label for="net8">Cut lines marked as SOLID</label></div>
+      <div class="sc-check"><input type="checkbox" id="net9" data-save="net9"><label for="net9">Serving window position marked on the FRONT face</label></div>
+      <div class="sc-check"><input type="checkbox" id="net10" data-save="net10"><label for="net10">Each face labelled in pencil</label></div>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#x1F7E2; Support</div>
+      <ul>
+        <li>Use the pre-measured template to trace onto cardboard</li>
+        <li>Focus on the 6 faces only &mdash; teacher will help with tabs</li>
+        <li>Work with a peer buddy for measuring support</li>
+      </ul>
+    </div>
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#x1F7E3; Extension</div>
+      <ul>
+        <li>Calculate the total surface area of the net including all tabs</li>
+        <li>Design a net that includes a fold-out awning structure</li>
+        <li>Add colour coding to your net to show different materials</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== PART 2: ARCHITECTURAL SYMBOLS ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F3D7;</span> PART 2 &mdash; Architectural Symbols</div>
+
+    <div class="info-box">
+      <strong>Architectural symbols</strong> are standardised drawings used in floor plans worldwide. Everyone uses the same symbols so anyone reading the plan understands it immediately. Based on <strong>Australian Standard AS 1100</strong>.
+    </div>
+
+    <h3 style="font-family:var(--font-heading);color:var(--blue);margin:18px 0 12px;">Essential Floor Plan Symbols &mdash; Draw Each One</h3>
+    <div class="symbol-cards">
+      <div class="symbol-card">
+        <div class="sc-name">Wall</div>
+        <div class="sc-desc">Two thick parallel lines, filled or hatched</div>
+        <div class="sc-draw">Draw the symbol here</div>
+      </div>
+      <div class="symbol-card">
+        <div class="sc-name">Door</div>
+        <div class="sc-desc">A line with a quarter-circle showing swing direction</div>
+        <div class="sc-draw">Draw the symbol here</div>
+      </div>
+      <div class="symbol-card">
+        <div class="sc-name">Window</div>
+        <div class="sc-desc">Thin parallel lines with a gap between wall lines</div>
+        <div class="sc-draw">Draw the symbol here</div>
+      </div>
+      <div class="symbol-card">
+        <div class="sc-name">Sink</div>
+        <div class="sc-desc">Oval or rectangle with a small circle for drain</div>
+        <div class="sc-draw">Draw the symbol here</div>
+      </div>
+      <div class="symbol-card">
+        <div class="sc-name">Bench / Counter</div>
+        <div class="sc-desc">Rectangle with a thicker outline</div>
+        <div class="sc-draw">Draw the symbol here</div>
+      </div>
+      <div class="symbol-card">
+        <div class="sc-name">Stove / Cooktop</div>
+        <div class="sc-desc">Rectangle with 4 circles for burners</div>
+        <div class="sc-draw">Draw the symbol here</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-heading);color:var(--blue);margin:18px 0 12px;">More Symbols to Know</h3>
+    <div class="symbol-cards">
+      <div class="symbol-card">
+        <div class="sc-name">Refrigerator</div>
+        <div class="sc-desc">Rectangle with diagonal line, labelled &lsquo;REF&rsquo;</div>
+        <div class="sc-draw">Draw the symbol here</div>
+      </div>
+      <div class="symbol-card">
+        <div class="sc-name">Hand Wash Basin</div>
+        <div class="sc-desc">Small oval or semicircle, labelled &lsquo;HWB&rsquo;</div>
+        <div class="sc-draw">Draw the symbol here</div>
+      </div>
+      <div class="symbol-card">
+        <div class="sc-name">Exhaust Fan</div>
+        <div class="sc-desc">Circle with blades or labelled &lsquo;EF&rsquo;</div>
+        <div class="sc-draw">Draw the symbol here</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SYMBOL ACTIVITY ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270D;</span> ACTIVITY &mdash; Symbol Identification (WB pp. 32&ndash;33)</div>
+    <div class="question">
+      <p>Complete the symbol matching and drawing exercises in your workbook pages 32&ndash;33. Then answer:</p>
+    </div>
+    <div class="question">
+      <p>Which symbols will you use in YOUR container restaurant floor plan? List at least 6.</p>
+      <textarea class="tall" data-save="symbols1" placeholder="1. &#10;2. &#10;3. &#10;4. &#10;5. &#10;6. "></textarea>
+    </div>
+    <div class="question">
+      <p>Why is it important that architectural symbols are <em>standardised</em> (everyone uses the same ones)?</p>
+      <textarea data-save="symbols2" placeholder="Standardised symbols are important because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">&#x1F4D6;</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th>Term</th><th>Definition</th><th>My Example / Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Net / Template</td><td>A flat pattern that folds into a 3D shape</td><td><textarea data-save="vocab1" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Tab</td><td>Small flap for gluing when assembling a net</td><td><textarea data-save="vocab2" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Cut line</td><td>Solid line showing where to cut material</td><td><textarea data-save="vocab3" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Fold line</td><td>Dashed line showing where to fold</td><td><textarea data-save="vocab4" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Architectural symbol</td><td>Standard drawing representing a real feature in a floor plan</td><td><textarea data-save="vocab5" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Floor plan</td><td>Scaled drawing showing layout from above</td><td><textarea data-save="vocab6" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Standardised</td><td>Using agreed rules everyone follows</td><td><textarea data-save="vocab7" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Scale 1:20</td><td>1 cm on drawing equals 20 cm in real life</td><td><textarea data-save="vocab8" placeholder="My note..."></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F3AB;</span> EXIT TICKET</div>
+    <div class="question">
+      <p>1. How many faces does a rectangular box net have? Name them all.</p>
+      <textarea data-save="exit1" placeholder="A rectangular box has..."></textarea>
+    </div>
+    <div class="question">
+      <p>2. What is the difference between a cut line and a fold line?</p>
+      <textarea data-save="exit2" placeholder="A cut line is... A fold line is..."></textarea>
+    </div>
+    <div class="question">
+      <p>3. Draw the architectural symbol for a door (describe it if you cannot draw here).</p>
+      <textarea data-save="exit3" placeholder="The door symbol looks like..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SELF-ASSESSMENT ===================== -->
+  <section class="reflection">
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; How Did I Go?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can draw a net with correct dimensions for a rectangular container model</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can include fold lines, cut lines and glue tabs on my net</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can identify and draw common architectural symbols for floor plans</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can match floor plan symbols to their real-world features</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <span><strong>From Container to Countertop</strong> &mdash; Year 8 Technology (Mandatory)</span>
+    <span>TE4-PPM-01 &bull; TE4-MSC-01 &bull; TE4-DES-01</span>
+  </footer>
+
+</div>
+
+<script>
+;(function(){
+  var STORAGE_KEY='CTC-T1-L12';
+  var indicator=document.getElementById('saveIndicator');
+  var timer=null;
+  function save(){var data={};document.querySelectorAll('[data-save]').forEach(function(el){data[el.getAttribute('data-save')]=el.type==='checkbox'?el.checked:el.value});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Save failed'}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(timer);timer=setTimeout(save,400)}
+  function restoreAll(){try{var raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;var data=JSON.parse(raw);Object.keys(data).forEach(function(k){var el=document.querySelector('[data-save="'+k+'"]');if(!el)return;if(el.type==='checkbox'){el.checked=data[k]}else{el.value=data[k]}})}catch(e){}}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

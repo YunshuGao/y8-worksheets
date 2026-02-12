@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L15 Worksheet — Model Construction: Cutting and Assembly</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--red:#D94040;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.warning-box{background:#FFF3F3;border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--red)}.warning-box strong{color:var(--red)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Construction steps */
+.build-steps{counter-reset:buildstep;margin:14px 0}
+.build-step{display:flex;align-items:flex-start;gap:14px;padding:14px;margin-bottom:8px;background:var(--bg);border-radius:10px;counter-increment:buildstep}
+.build-step::before{content:counter(buildstep);display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--orange);color:var(--white);font-family:var(--font-heading);font-size:1rem;font-weight:700;flex-shrink:0}
+.build-step .bs-text{font-size:.92rem}
+.build-step .bs-text strong{color:var(--orange)}
+
+/* Safety rules */
+.safety-rules{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.safety-rule{background:#FFF3F3;border-radius:10px;padding:14px;border-left:4px solid var(--red);font-size:.88rem}
+.safety-rule strong{color:var(--red)}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.safety-rules{grid-template-columns:1fr}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.build-step{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.build-step::before{-webkit-print-color-adjust:exact;print-color-adjust:exact}.safety-rule{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.warning-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L15</span>
+      <span class="ws-unit">Week 8 &bull; Section 3</span>
+    </div>
+    <h1 class="ws-title">Model Construction &mdash; Cutting and Assembly</h1>
+    <p class="ws-subtitle">Safely cutting, scoring, folding and assembling the basic container box model</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to safely cut, score, fold, and assemble a 1:20 scale model of our container restaurant.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Safety First</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Write 4 safety rules for using cutting tools in the workshop.</p>
+    <div class="question">
+      <textarea class="tall" data-save="doNow1" placeholder="1. When using cutting tools, always...&#10;2. Never...&#10;3. If someone gets hurt...&#10;4. When carrying scissors..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SAFETY RULES ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x26A0;</span> SAFETY RULES &mdash; NON-NEGOTIABLE</div>
+    <div class="warning-box">
+      <strong>These rules are NON-NEGOTIABLE.</strong> Breaking any rule = immediate loss of tool privileges for the lesson.
+    </div>
+    <div class="safety-rules">
+      <div class="safety-rule"><strong>Safety mat:</strong> ALWAYS cut on a safety mat &mdash; never on the desk</div>
+      <div class="safety-rule"><strong>Cut away:</strong> Blade moves AWAY from your body</div>
+      <div class="safety-rule"><strong>Retract blades:</strong> Retract craft knife blade when NOT cutting</div>
+      <div class="safety-rule"><strong>Metal ruler:</strong> Use METAL ruler for knife cutting &mdash; never plastic</div>
+      <div class="safety-rule"><strong>Scissors:</strong> Carry point-DOWN, close when not in use</div>
+      <div class="safety-rule"><strong>Report injuries:</strong> Report ALL injuries immediately</div>
+    </div>
+    <div class="question">
+      <p>I have read and understand the safety rules:</p>
+      <div class="sc-check"><input type="checkbox" id="safetyAgree" data-save="safetyAgree"><label for="safetyAgree">I agree to follow ALL safety rules during this practical lesson</label></div>
+    </div>
+  </section>
+
+  <!-- ===================== CONSTRUCTION STEPS ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F6E0;</span> CONSTRUCTION STEPS &mdash; Follow This Order</div>
+    <div class="build-steps">
+      <div class="build-step"><div class="bs-text"><strong>Cut outer edges</strong> &mdash; Cut along all SOLID outer lines of the net</div></div>
+      <div class="build-step"><div class="bs-text"><strong>Cut serving window</strong> &mdash; Cut the window opening on the FRONT face</div></div>
+      <div class="build-step"><div class="bs-text"><strong>Score fold lines</strong> &mdash; Score ALL dashed lines &mdash; press firmly but do NOT cut through</div></div>
+      <div class="build-step"><div class="bs-text"><strong>Fold</strong> &mdash; Fold inward along scored lines &mdash; pencil marks go INSIDE</div></div>
+      <div class="build-step"><div class="bs-text"><strong>Dry fit</strong> &mdash; Hold the box together WITHOUT glue to check alignment</div></div>
+      <div class="build-step"><div class="bs-text"><strong>Glue tabs</strong> &mdash; One tab at a time, tape to hold while PVA dries</div></div>
+    </div>
+    <div class="info-box">
+      <strong>Key difference:</strong> SCORING creates a groove for folding (press firmly but do NOT cut through). CUTTING goes all the way through the cardboard. If you cut a fold line by accident, repair with masking tape on the inside.
+    </div>
+  </section>
+
+  <!-- ===================== CONSTRUCTION ACTIVITY ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270D;</span> ACTIVITY &mdash; Build Your Model (WB pp. 36&ndash;37)</div>
+
+    <div class="self-assess">
+      <h3>Construction Progress Checklist</h3>
+      <div class="sc-check"><input type="checkbox" id="b1" data-save="b1"><label for="b1">Step 1: All outer edges cut cleanly along solid lines</label></div>
+      <div class="sc-check"><input type="checkbox" id="b2" data-save="b2"><label for="b2">Step 2: Serving window opening cut out neatly</label></div>
+      <div class="sc-check"><input type="checkbox" id="b3" data-save="b3"><label for="b3">Step 3: All fold lines scored (grooved, not cut through)</label></div>
+      <div class="sc-check"><input type="checkbox" id="b4" data-save="b4"><label for="b4">Step 4: All faces folded inward, pencil marks inside</label></div>
+      <div class="sc-check"><input type="checkbox" id="b5" data-save="b5"><label for="b5">Step 5: Dry fit tested &mdash; edges align, box sits flat</label></div>
+      <div class="sc-check"><input type="checkbox" id="b6" data-save="b6"><label for="b6">Step 6: All tabs glued and secured (tape if needed)</label></div>
+      <div class="sc-check"><input type="checkbox" id="b7" data-save="b7"><label for="b7">Box holds its shape without support</label></div>
+      <div class="sc-check"><input type="checkbox" id="b8" data-save="b8"><label for="b8">Name written on the BOTTOM of the model</label></div>
+      <div class="sc-check"><input type="checkbox" id="b9" data-save="b9"><label for="b9">Photos taken from 2 angles (front + side)</label></div>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#x1F7E2; Support</div>
+      <ul>
+        <li>Use the pre-scored net if available</li>
+        <li>Follow the visual step-by-step card at your desk</li>
+        <li>Work with a buddy &mdash; one holds, the other glues</li>
+      </ul>
+    </div>
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#x1F7E3; Extension</div>
+      <ul>
+        <li>Add a fold-out awning or canopy structure</li>
+        <li>Create window frames from thin cardboard strips</li>
+        <li>Build a removable roof to showcase interior detail</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== TROUBLESHOOTING ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F527;</span> TROUBLESHOOTING</div>
+    <div class="question">
+      <p>Did you encounter any problems during construction? Describe the problem and how you fixed it.</p>
+      <textarea class="tall" data-save="trouble1" placeholder="The problem was... I fixed it by..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">&#x1F4D6;</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th>Term</th><th>Definition</th><th>My Example / Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Score</td><td>To press a groove along a line to make folding easier</td><td><textarea data-save="vocab1" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Dry fit</td><td>Testing assembly without glue to check alignment</td><td><textarea data-save="vocab2" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Tab</td><td>A flap of material used for gluing adjacent faces</td><td><textarea data-save="vocab3" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">PVA glue</td><td>Polyvinyl acetate &mdash; a strong, white, water-based adhesive</td><td><textarea data-save="vocab4" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Reinforce</td><td>To make stronger by adding extra material</td><td><textarea data-save="vocab5" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Assembly</td><td>The process of putting parts together</td><td><textarea data-save="vocab6" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Safety mat</td><td>A self-healing mat that protects the desk when cutting</td><td><textarea data-save="vocab7" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Retract</td><td>To pull the blade back into the handle when not in use</td><td><textarea data-save="vocab8" placeholder="My note..."></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F3AB;</span> EXIT TICKET</div>
+    <div class="question">
+      <p>1. What is the difference between SCORING and CUTTING?</p>
+      <textarea data-save="exit1" placeholder="Scoring means... Cutting means..."></textarea>
+    </div>
+    <div class="question">
+      <p>2. Why should you do a DRY FIT before gluing?</p>
+      <textarea data-save="exit2" placeholder="A dry fit is important because..."></textarea>
+    </div>
+    <div class="question">
+      <p>3. Name one safety rule you followed carefully today.</p>
+      <textarea data-save="exit3" placeholder="One safety rule I followed was..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SELF-ASSESSMENT ===================== -->
+  <section class="reflection">
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; How Did I Go?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can safely use cutting tools following all workshop safety rules</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can cut along solid cut lines accurately</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can score and fold along dashed fold lines to create clean edges</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can assemble the basic box structure using PVA glue and tabs</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <span><strong>From Container to Countertop</strong> &mdash; Year 8 Technology (Mandatory)</span>
+    <span>TE4-SAF-01 &bull; TE4-PPM-01 &bull; TE4-MSC-01</span>
+  </footer>
+
+</div>
+
+<script>
+;(function(){
+  var STORAGE_KEY='CTC-T1-L15';
+  var indicator=document.getElementById('saveIndicator');
+  var timer=null;
+  function save(){var data={};document.querySelectorAll('[data-save]').forEach(function(el){data[el.getAttribute('data-save')]=el.type==='checkbox'?el.checked:el.value});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Save failed'}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(timer);timer=setTimeout(save,400)}
+  function restoreAll(){try{var raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;var data=JSON.parse(raw);Object.keys(data).forEach(function(k){var el=document.querySelector('[data-save="'+k+'"]');if(!el)return;if(el.type==='checkbox'){el.checked=data[k]}else{el.value=data[k]}})}catch(e){}}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L06 Worksheet — Essential Spaces, Equipment and Design Brief</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Zone cards */
+.zone-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.zone-card{border-radius:10px;padding:14px;border-left:5px solid var(--orange);background:var(--bg)}
+.zone-card .zc-title{font-family:var(--font-heading);font-size:.95rem;color:var(--orange);margin-bottom:4px}
+.zone-card .zc-desc{font-size:.85rem;color:var(--charcoal);margin-bottom:8px}
+
+/* Features table */
+.features-table{width:100%;border-collapse:collapse;margin:14px 0}
+.features-table th{background:var(--orange);color:var(--white);font-family:var(--font-heading);font-size:.85rem;padding:10px 14px;text-align:left}
+.features-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top}
+.features-table td textarea{min-height:50px;font-size:.85rem;padding:6px 10px}
+
+/* Workflow arrow */
+.workflow-arrow{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0;flex-wrap:wrap}
+.workflow-step{background:var(--blue);color:var(--white);padding:10px 18px;border-radius:8px;font-family:var(--font-heading);font-size:.9rem;text-align:center}
+.workflow-arrow-icon{font-size:1.4rem;color:var(--orange)}
+
+/* Checklist */
+.checkpoint-list{list-style:none;margin:14px 0}
+.checkpoint-list li{padding:8px 14px;margin-bottom:6px;border-radius:8px;font-size:.9rem;display:flex;align-items:center;gap:10px}
+.checkpoint-list li.done{background:#E8F5E9;border-left:4px solid var(--green)}
+.checkpoint-list li.pending{background:#FFF8E1;border-left:4px solid #FFC107}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.zone-cards{grid-template-columns:1fr}.ws-meta input{width:150px}.workflow-arrow{flex-direction:column}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th,.features-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.zone-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.workflow-step{-webkit-print-color-adjust:exact;print-color-adjust:exact}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L06</span>
+      <span class="ws-unit">Week 3 &bull; Section 2 &amp; 3</span>
+    </div>
+    <h1 class="ws-title">Essential Spaces, Equipment and Design Brief</h1>
+    <p class="ws-subtitle">Mapping out kitchen zones, equipment, food safety requirements and reviewing the design brief</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning about the essential spaces, equipment and design requirements for a container burger restaurant.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Equipment Brainstorm</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">List every piece of equipment you would find in a burger restaurant kitchen.</p>
+    <span class="hint" style="display:block;margin-bottom:14px;">Think big AND small: appliances, utensils, safety equipment, storage</span>
+    <div class="question">
+      <textarea data-save="doNow1" class="tall" placeholder="1. Grill/hotplate&#10;2. Fryer&#10;3. Refrigerator&#10;4. Freezer&#10;5. Prep bench&#10;6. Cutting boards&#10;7. Sink&#10;8. &#10;9. &#10;10. &#10;11. &#10;12. &#10;13. &#10;14. &#10;15. "></textarea>
+    </div>
+    <div class="question">
+      <p>Class total equipment items:</p>
+      <input type="text" data-save="doNowTotal" placeholder="e.g. 24 items">
+    </div>
+  </section>
+
+  <!-- ===================== FOOD SAFETY ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F321;</span> FOOD SAFETY &mdash; NSW Food Authority Requirements</div>
+
+    <div style="background:#FFEBEE;border:2px solid #C62828;border-radius:10px;padding:16px 20px;margin:14px 0;text-align:center;">
+      <div style="font-family:var(--font-heading);color:#C62828;font-size:1.1rem;">TEMPERATURE DANGER ZONE</div>
+      <div style="font-size:2.2rem;font-family:var(--font-heading);color:#C62828;margin:8px 0;">5&deg;C &mdash; 60&deg;C</div>
+      <div style="font-size:.88rem;color:var(--charcoal);">Cold food &lt; 5&deg;C (fridge) &nbsp;|&nbsp; Hot food &gt; 60&deg;C (bain-marie/heat lamps)</div>
+    </div>
+
+    <div class="question">
+      <p>Why must the hand wash basin be SEPARATE from the food preparation sink?</p>
+      <textarea data-save="handWash" placeholder="The hand wash basin must be separate because..."></textarea>
+    </div>
+
+    <div class="question">
+      <p>What could happen if food stays in the danger zone (5&ndash;60&deg;C) for more than 4 hours?</p>
+      <textarea data-save="dangerZone" placeholder="If food stays in the danger zone..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== KITCHEN ZONES ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F3E0;</span> ZONES IN A COMMERCIAL KITCHEN</div>
+
+    <div class="zone-cards">
+      <div class="zone-card">
+        <div class="zc-title">Cooking Zone</div>
+        <div class="zc-desc">Grill, fryer, hotplate, oven</div>
+        <textarea data-save="zone1" placeholder="Equipment I would include:" style="min-height:50px;"></textarea>
+      </div>
+      <div class="zone-card">
+        <div class="zc-title">Preparation Zone</div>
+        <div class="zc-desc">Benches, cutting boards, assembly area</div>
+        <textarea data-save="zone2" placeholder="Equipment I would include:" style="min-height:50px;"></textarea>
+      </div>
+      <div class="zone-card">
+        <div class="zc-title">Storage Zone</div>
+        <div class="zc-desc">Fridge (&lt;5&deg;C), freezer, dry goods shelves</div>
+        <textarea data-save="zone3" placeholder="Equipment I would include:" style="min-height:50px;"></textarea>
+      </div>
+      <div class="zone-card">
+        <div class="zc-title">Wash-up Zone</div>
+        <div class="zc-desc">Dish sinks + SEPARATE hand wash basin</div>
+        <textarea data-save="zone4" placeholder="Equipment I would include:" style="min-height:50px;"></textarea>
+      </div>
+      <div class="zone-card">
+        <div class="zc-title">Service Zone</div>
+        <div class="zc-desc">Counter, POS/register, menu display</div>
+        <textarea data-save="zone5" placeholder="Equipment I would include:" style="min-height:50px;"></textarea>
+      </div>
+      <div class="zone-card">
+        <div class="zc-title">Utilities</div>
+        <div class="zc-desc">Power, water in/out, waste, ventilation</div>
+        <textarea data-save="zone6" placeholder="Equipment I would include:" style="min-height:50px;"></textarea>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>Key constraint:</strong> Your container is only <strong>2.44 m wide</strong>. These zones must be arranged in a <strong>linear</strong> sequence along the length!
+    </div>
+  </section>
+
+  <!-- ===================== WORKFLOW ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x27A1;</span> WORKFLOW &mdash; The Path of Food</div>
+
+    <div class="workflow-arrow">
+      <div class="workflow-step">STORAGE</div>
+      <div class="workflow-arrow-icon">&rarr;</div>
+      <div class="workflow-step">PREPARATION</div>
+      <div class="workflow-arrow-icon">&rarr;</div>
+      <div class="workflow-step">COOKING</div>
+      <div class="workflow-arrow-icon">&rarr;</div>
+      <div class="workflow-step">SERVING</div>
+    </div>
+
+    <div class="question">
+      <p>Why is linear workflow important in a narrow container?</p>
+      <textarea data-save="workflow" placeholder="Linear workflow is important because..."></textarea>
+    </div>
+
+    <div class="question">
+      <p>What goes wrong if a cook has to walk past raw food to reach the grill?</p>
+      <textarea data-save="workflowProblem" placeholder="This would be a problem because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== MIND MAP ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F9E0;</span> MIND MAP &mdash; Workbook Page 17</div>
+
+    <div class="info-box"><strong>Workbook page 17:</strong> Complete the mind map of essential spaces and equipment. Aim for at least <strong>4 items per branch</strong> = 20+ total items.</div>
+
+    <div class="question">
+      <p>Record your mind map items here as a backup (organised by zone):</p>
+      <textarea data-save="mindmap" style="min-height:160px;" placeholder="COOKING: grill, fryer, hotplate, exhaust fan above&#10;&#10;PREPARATION: prep bench, cutting boards, thermometer, tongs&#10;&#10;STORAGE: fridge (below 5°C), freezer, dry goods shelf, cleaning supplies&#10;&#10;SERVICE: counter, POS/register, menu display, packaging&#10;&#10;UTILITIES: power board, water inlet, waste pipe, ventilation duct, fire extinguisher"></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <p>Start with the 5 category headings already written. Then add items you remember from the class brainstorm and teacher model. Aim for at least 3 items per category.</p>
+    </div>
+  </section>
+
+  <!-- ===================== ADDITIONAL FEATURES TABLE ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F4CB;</span> ADDITIONAL FEATURES TABLE &mdash; Workbook Page 18</div>
+
+    <div class="info-box"><strong>Workbook page 18:</strong> For each feature, explain its <strong>function</strong> (what it does) and <strong>importance</strong> (why it matters).</div>
+
+    <table class="features-table">
+      <thead><tr><th style="width:22%">Feature</th><th style="width:39%">Function</th><th style="width:39%">Importance</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Exhaust fan</strong></td><td><textarea data-save="feat1func" placeholder="Removes hot air, smoke, steam, grease and odours"></textarea></td><td><textarea data-save="feat1imp" placeholder="Heat control, air quality, fire safety"></textarea></td></tr>
+        <tr><td><strong>Fire extinguisher</strong></td><td><textarea data-save="feat2func" placeholder=""></textarea></td><td><textarea data-save="feat2imp" placeholder=""></textarea></td></tr>
+        <tr><td><strong>Hand wash station</strong></td><td><textarea data-save="feat3func" placeholder=""></textarea></td><td><textarea data-save="feat3imp" placeholder=""></textarea></td></tr>
+        <tr><td><strong>Grease trap</strong></td><td><textarea data-save="feat4func" placeholder=""></textarea></td><td><textarea data-save="feat4imp" placeholder=""></textarea></td></tr>
+        <tr><td><strong>Non-slip flooring</strong></td><td><textarea data-save="feat5func" placeholder=""></textarea></td><td><textarea data-save="feat5imp" placeholder=""></textarea></td></tr>
+        <tr><td><strong>Water tank</strong></td><td><textarea data-save="feat6func" placeholder=""></textarea></td><td><textarea data-save="feat6imp" placeholder=""></textarea></td></tr>
+        <tr><td><strong>Power generator</strong></td><td><textarea data-save="feat7func" placeholder=""></textarea></td><td><textarea data-save="feat7imp" placeholder=""></textarea></td></tr>
+        <tr><td><strong>Waste bins</strong></td><td><textarea data-save="feat8func" placeholder=""></textarea></td><td><textarea data-save="feat8imp" placeholder=""></textarea></td></tr>
+      </tbody>
+    </table>
+
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#9650; Extension</div>
+      <p>Research the <strong>electrical requirements</strong> for a commercial kitchen. How many amps would your container restaurant need? What safety switches are required?</p>
+      <textarea data-save="featExt" class="tall" placeholder="A commercial kitchen requires..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== CHECKPOINT 1 ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x2705;</span> CHECKPOINT 1 &mdash; Self-Check</div>
+
+    <p style="font-weight:600;margin-bottom:14px;">Check your workbook progress. Tick each item that is COMPLETE:</p>
+
+    <ul class="checkpoint-list">
+      <li class="done"><input type="checkbox" data-save="ck1" style="width:20px;height:20px;accent-color:var(--green);"> Video comprehension and fill-in-the-blanks (pp. 4&ndash;5)</li>
+      <li class="done"><input type="checkbox" data-save="ck2" style="width:20px;height:20px;accent-color:var(--green);"> Isometric drawing of a container (p. 6)</li>
+      <li class="done"><input type="checkbox" data-save="ck3" style="width:20px;height:20px;accent-color:var(--green);"> Key terms: standardised, modular, intermodal (p. 7)</li>
+      <li class="done"><input type="checkbox" data-save="ck4" style="width:20px;height:20px;accent-color:var(--green);"> Strength test results and reflection (pp. 8&ndash;9)</li>
+      <li class="done"><input type="checkbox" data-save="ck5" style="width:20px;height:20px;accent-color:var(--green);"> Crossword challenge (pp. 11&ndash;12)</li>
+      <li class="done"><input type="checkbox" data-save="ck6" style="width:20px;height:20px;accent-color:var(--green);"> Modern uses video comprehension (p. 13)</li>
+      <li class="pending"><input type="checkbox" data-save="ck7" style="width:20px;height:20px;accent-color:var(--green);"> Research collage of 12+ images (p. 15)</li>
+      <li class="pending"><input type="checkbox" data-save="ck8" style="width:20px;height:20px;accent-color:var(--green);"> PMI tables and research paragraph (pp. 15&ndash;16)</li>
+    </ul>
+
+    <div class="question">
+      <p>Which items do you still need to complete? Make a plan:</p>
+      <textarea data-save="checkPlan" placeholder="I still need to finish:&#10;1. &#10;2. &#10;My plan to complete them: "></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== DESIGN BRIEF REVIEW ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4D0;</span> REVIEW &mdash; Your Design Brief</div>
+
+    <div class="info-box">
+      <strong>Design Brief:</strong> You are designing a <strong>portable shipping container burger restaurant</strong> that operates at festivals or community events. Your model will be <strong>1:20 scale: 30 cm &times; 12 cm &times; 12 cm</strong>.
+    </div>
+
+    <p style="font-weight:600;margin-bottom:12px;">Your design MUST meet these criteria:</p>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:8px;margin:14px 0;">
+      <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:10px 16px;border-radius:8px;border-left:4px solid var(--blue);">
+        <span style="font-family:var(--font-heading);color:var(--blue);font-size:1rem;min-width:24px;">1.</span>
+        <span>Be <strong>portable</strong> and functional</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:10px 16px;border-radius:8px;border-left:4px solid var(--blue);">
+        <span style="font-family:var(--font-heading);color:var(--blue);font-size:1rem;min-width:24px;">2.</span>
+        <span>Include food <strong>preparation AND service</strong> areas</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:10px 16px;border-radius:8px;border-left:4px solid var(--blue);">
+        <span style="font-family:var(--font-heading);color:var(--blue);font-size:1rem;min-width:24px;">3.</span>
+        <span>Consider <strong>food safety</strong> and hygiene</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:10px 16px;border-radius:8px;border-left:4px solid var(--blue);">
+        <span style="font-family:var(--font-heading);color:var(--blue);font-size:1rem;min-width:24px;">4.</span>
+        <span>Use <strong>sustainable</strong> materials and systems</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:10px 16px;border-radius:8px;border-left:4px solid var(--blue);">
+        <span style="font-family:var(--font-heading);color:var(--blue);font-size:1rem;min-width:24px;">5.</span>
+        <span>Include basic <strong>engineered systems</strong> (power, water, ventilation, workflow)</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>Which criterion do you think will be the most challenging for your design? Why?</p>
+      <textarea data-save="briefChallenge" placeholder="I think the most challenging criterion will be... because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SUSTAINABLE FEATURES ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x267B;</span> SUSTAINABLE DESIGN FEATURES</div>
+
+    <div class="question">
+      <p>Which sustainable features will YOU include in your restaurant design?</p>
+      <span class="hint">Choose from: solar panels, LED lighting, rainwater collection, low-flow taps, composting, recycling stations, biodegradable packaging, recycled timber, bamboo counters, natural ventilation</span>
+      <textarea data-save="sustainable" class="tall" placeholder="I plan to include these sustainable features:&#10;1. &#10;2. &#10;3. &#10;&#10;I chose these because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">Aa</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th style="width:28%">Term</th><th style="width:72%">Definition</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Workflow</td><td><textarea data-save="v1" placeholder="Logical sequence of tasks from start to finish"></textarea></td></tr>
+        <tr><td class="term">Food safety</td><td><textarea data-save="v2" placeholder="Practices preventing foodborne illness"></textarea></td></tr>
+        <tr><td class="term">Ventilation</td><td><textarea data-save="v3" placeholder="Air circulation system"></textarea></td></tr>
+        <tr><td class="term">Exhaust fan</td><td><textarea data-save="v4" placeholder="Extracts cooking fumes, grease and heat"></textarea></td></tr>
+        <tr><td class="term">Grease trap</td><td><textarea data-save="v5" placeholder="Captures grease before it enters the drain"></textarea></td></tr>
+        <tr><td class="term">Potable water</td><td><textarea data-save="v6" placeholder="Water safe for drinking and food preparation"></textarea></td></tr>
+        <tr><td class="term">Temperature danger zone</td><td><textarea data-save="v7" placeholder="5–60°C — bacteria multiply rapidly"></textarea></td></tr>
+        <tr><td class="term">Hand wash station</td><td><textarea data-save="v8" placeholder="Dedicated basin for hand washing"></textarea></td></tr>
+        <tr><td class="term">Service zone</td><td><textarea data-save="v9" placeholder="Customer-facing area for ordering and collection"></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x2714;</span> EXIT TICKET &mdash; Reflection</div>
+
+    <div class="question">
+      <p>Q1: Name 3 things that MUST be in your container restaurant for food safety.</p>
+      <textarea data-save="exit1" placeholder="1. &#10;2. &#10;3. "></textarea>
+    </div>
+
+    <div class="question">
+      <p>Q2: Draw the workflow path by filling in the blanks:</p>
+      <div class="workflow-arrow" style="margin:8px 0 14px;">
+        <input type="text" data-save="wf1" placeholder="______" style="width:120px;text-align:center;">
+        <span class="workflow-arrow-icon">&rarr;</span>
+        <input type="text" data-save="wf2" placeholder="______" style="width:120px;text-align:center;">
+        <span class="workflow-arrow-icon">&rarr;</span>
+        <input type="text" data-save="wf3" placeholder="______" style="width:120px;text-align:center;">
+        <span class="workflow-arrow-icon">&rarr;</span>
+        <input type="text" data-save="wf4" placeholder="______" style="width:120px;text-align:center;">
+      </div>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <ul>
+        <li>Food safety features include: hand wash basin, exhaust fan, refrigerator, separate zones, non-slip floor, fire extinguisher</li>
+        <li>Workflow order: Storage &rarr; Preparation &rarr; Cooking &rarr; Serving</li>
+      </ul>
+    </div>
+
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#9650; Extension</div>
+      <p>Design a <strong>waste management system</strong> for a festival container restaurant. How would you handle food waste, recyclables, general waste, and cooking oil disposal?</p>
+      <textarea data-save="exitExt" class="tall" placeholder="My waste management plan:&#10;Food waste: &#10;Recyclables: &#10;General waste: &#10;Cooking oil: "></textarea>
+    </div>
+
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; Did I Achieve the Success Criteria?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can create a detailed mind map of essential spaces and equipment</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can complete the additional features table with functions and importance</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can explain at least 3 food safety requirements</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can review the design brief and identify all success criteria</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <div><strong>Outcomes:</strong> TE4-PDP-01 &bull; TE4-PPM-01 &bull; TE4-MSC-01</div>
+    <div><strong>Workbook:</strong> Section 2 &amp; 3, pp. 17&ndash;19</div>
+    <div>Keep this worksheet in your design folio</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const STORAGE_KEY='CTC-T1-L06';const indicator=document.getElementById('saveIndicator');let saveTimeout;
+  function saveAll(){const data={};document.querySelectorAll('[data-save]').forEach(function(el){const key=el.getAttribute('data-save');if(el.type==='checkbox'){data[key]=el.checked}else{data[key]=el.value}});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Could not save (storage full)'}}
+  function restoreAll(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;const data=JSON.parse(raw);document.querySelectorAll('[data-save]').forEach(function(el){const key=el.getAttribute('data-save');if(key in data){if(el.type==='checkbox'){el.checked=data[key]}else{el.value=data[key]}}})}catch(e){}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(saveTimeout);saveTimeout=setTimeout(saveAll,400)}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

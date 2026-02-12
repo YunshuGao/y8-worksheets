@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L20 Worksheet — Presentations and Celebration</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Feedback cards */
+.feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.feedback-card{border-radius:10px;padding:14px}
+.fb-positive{background:#F0F7ED;border:2px solid var(--green)}
+.fb-suggest{background:#FFF8E6;border:2px solid var(--yellow)}
+.feedback-card h4{font-family:var(--font-heading);font-size:.9rem;margin-bottom:8px}
+.fb-positive h4{color:var(--green)}
+.fb-suggest h4{color:#B8860B}
+
+/* Celebration box */
+.congrats-box{background:linear-gradient(135deg,var(--yellow) 0%,var(--orange) 100%);border-radius:12px;padding:28px 32px;margin:14px 0;text-align:center;color:var(--white)}.congrats-box h2{font-family:var(--font-heading);font-size:1.6rem;margin-bottom:10px;letter-spacing:1px}.congrats-box p{font-size:1rem;line-height:1.6;max-width:600px;margin:0 auto}
+
+/* Skills grid */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+.skill-card{background:var(--bg);border-radius:10px;padding:14px;display:flex;align-items:flex-start;gap:10px}
+.skill-card input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0}
+.skill-card label{font-size:.9rem;cursor:pointer;font-weight:600;color:var(--charcoal)}
+
+/* Careers grid */
+.career-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+.career-card{background:var(--bg);border-radius:10px;padding:12px;text-align:center;font-size:.88rem}
+.career-card strong{color:var(--blue);display:block;margin-bottom:4px;font-family:var(--font-heading)}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.feedback-grid{grid-template-columns:1fr}.skills-grid{grid-template-columns:1fr 1fr}.career-cards{grid-template-columns:1fr 1fr}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.feedback-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.skill-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.career-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.congrats-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L20</span>
+      <span class="ws-unit">Week 10 &bull; THE FINAL LESSON</span>
+    </div>
+    <h1 class="ws-title">Presentations and Celebration</h1>
+    <p class="ws-subtitle">Presenting your container restaurant design and reflecting on the complete 10-week design journey</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to present our design work confidently and reflect on the complete design process.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Final Preparation</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Review your presentation notes from last lesson. Practise saying your opening sentence quietly to yourself or to a partner.</p>
+    <div class="question">
+      <p>Write your opening sentence below. This is the first thing you will say when you stand up to present.</p>
+      <p class="hint">e.g. &ldquo;Good morning everyone. My container restaurant is called Flame Box, and it is a gourmet burger bar designed for music festivals.&rdquo;</p>
+      <textarea data-save="doNowOpener" placeholder="My opening sentence is..."></textarea>
+    </div>
+    <div class="question">
+      <p>How are you feeling about presenting? What can you do to feel more confident?</p>
+      <textarea data-save="doNowFeel" placeholder="I am feeling... To feel more confident I can..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PRESENTATION NOTES ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F399;</span> MY PRESENTATION NOTES</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">Use these structured notes as a guide during your presentation. You do not need to read them word for word &mdash; use them as prompts.</p>
+
+    <div class="question">
+      <p>Restaurant name and concept:</p>
+      <textarea data-save="presName" placeholder="My restaurant is called... It is a... that specialises in..."></textarea>
+    </div>
+    <div class="question">
+      <p>Key feature 1:</p>
+      <p class="hint">Describe one important design feature and explain why you included it.</p>
+      <textarea data-save="presFeature1" placeholder="One key feature is... I included this because..."></textarea>
+    </div>
+    <div class="question">
+      <p>Key feature 2:</p>
+      <p class="hint">Describe a second design feature &mdash; consider sustainability, safety, or customer experience.</p>
+      <textarea data-save="presFeature2" placeholder="Another feature is... This is important because..."></textarea>
+    </div>
+    <div class="question">
+      <p>Workflow description:</p>
+      <p class="hint">How does food move through your restaurant from delivery to the customer?</p>
+      <textarea data-save="presWorkflow" placeholder="Food enters through... It is stored in... prepared at... cooked on... and served through the..."></textarea>
+    </div>
+    <div class="question">
+      <p>One challenge and how you solved it:</p>
+      <textarea data-save="presChallenge" placeholder="One challenge I faced was... I solved it by..."></textarea>
+    </div>
+    <div class="question">
+      <p>One thing you learned:</p>
+      <textarea data-save="presLearned" placeholder="The most important thing I learned during this project was..."></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#x1F7E2; Support</div>
+      <ul>
+        <li>You can read directly from your notes &mdash; that is perfectly fine</li>
+        <li>Focus on 3 key points: restaurant name, one feature, one thing you learned</li>
+        <li>Hold up your model and point to the features as you speak</li>
+      </ul>
+    </div>
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#x1F7E3; Extension</div>
+      <ul>
+        <li>Present without reading directly from notes &mdash; use them as prompts only</li>
+        <li>Explain how your design considers sustainability, food safety, and customer experience</li>
+        <li>Make eye contact with the audience and speak clearly at a steady pace</li>
+        <li>Invite one question from the audience at the end of your presentation</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== AUDIENCE FEEDBACK ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F91D;</span> AUDIENCE FEEDBACK &mdash; Peer Presentations</div>
+    <p style="font-size:.9rem;margin-bottom:6px;">As you listen to each presenter, write <strong>Two Stars</strong> (things they did well) and <strong>One Wish</strong> (a suggestion for improvement).</p>
+    <p class="hint" style="margin-bottom:14px;">Be a respectful audience member. Listen carefully, make eye contact with the presenter, and give thoughtful feedback.</p>
+
+    <!-- Presenter 1 -->
+    <div class="feedback-grid">
+      <div class="feedback-card fb-positive">
+        <h4>Presenter 1 &mdash; Two Stars</h4>
+        <span class="sub-label">Presenter name:</span>
+        <input type="text" data-save="af1name" placeholder="Name" style="margin-bottom:8px">
+        <textarea data-save="af1stars" placeholder="Star 1: &#10;Star 2: "></textarea>
+      </div>
+      <div class="feedback-card fb-suggest">
+        <h4>Presenter 1 &mdash; One Wish</h4>
+        <textarea data-save="af1wish" placeholder="I wish they would..." style="margin-top:34px"></textarea>
+      </div>
+    </div>
+
+    <!-- Presenter 2 -->
+    <div class="feedback-grid">
+      <div class="feedback-card fb-positive">
+        <h4>Presenter 2 &mdash; Two Stars</h4>
+        <span class="sub-label">Presenter name:</span>
+        <input type="text" data-save="af2name" placeholder="Name" style="margin-bottom:8px">
+        <textarea data-save="af2stars" placeholder="Star 1: &#10;Star 2: "></textarea>
+      </div>
+      <div class="feedback-card fb-suggest">
+        <h4>Presenter 2 &mdash; One Wish</h4>
+        <textarea data-save="af2wish" placeholder="I wish they would..." style="margin-top:34px"></textarea>
+      </div>
+    </div>
+
+    <!-- Presenter 3 -->
+    <div class="feedback-grid">
+      <div class="feedback-card fb-positive">
+        <h4>Presenter 3 &mdash; Two Stars</h4>
+        <span class="sub-label">Presenter name:</span>
+        <input type="text" data-save="af3name" placeholder="Name" style="margin-bottom:8px">
+        <textarea data-save="af3stars" placeholder="Star 1: &#10;Star 2: "></textarea>
+      </div>
+      <div class="feedback-card fb-suggest">
+        <h4>Presenter 3 &mdash; One Wish</h4>
+        <textarea data-save="af3wish" placeholder="I wish they would..." style="margin-top:34px"></textarea>
+      </div>
+    </div>
+
+    <!-- Presenter 4 -->
+    <div class="feedback-grid">
+      <div class="feedback-card fb-positive">
+        <h4>Presenter 4 &mdash; Two Stars</h4>
+        <span class="sub-label">Presenter name:</span>
+        <input type="text" data-save="af4name" placeholder="Name" style="margin-bottom:8px">
+        <textarea data-save="af4stars" placeholder="Star 1: &#10;Star 2: "></textarea>
+      </div>
+      <div class="feedback-card fb-suggest">
+        <h4>Presenter 4 &mdash; One Wish</h4>
+        <textarea data-save="af4wish" placeholder="I wish they would..." style="margin-top:34px"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DESIGN PROCESS REFLECTION ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F4AD;</span> DESIGN PROCESS REFLECTION (WB p. 40)</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">Think about the entire 10-week design journey &mdash; from learning about shipping containers to building and presenting your model.</p>
+
+    <div class="question">
+      <p>What was the most enjoyable part of this project?</p>
+      <textarea data-save="refEnjoy" placeholder="The most enjoyable part was... because..."></textarea>
+    </div>
+    <div class="question">
+      <p>What was the most challenging part of this project?</p>
+      <textarea data-save="refChallenge" placeholder="The most challenging part was... because..."></textarea>
+    </div>
+    <div class="question">
+      <p>Name one skill you developed or improved during this unit.</p>
+      <textarea data-save="refSkill" placeholder="One skill I developed was... I improved this by..."></textarea>
+    </div>
+    <div class="question">
+      <p>If you could do this project again, what would you change or do differently?</p>
+      <textarea data-save="refChange" placeholder="If I could do this again, I would..."></textarea>
+    </div>
+    <div class="question">
+      <p>What advice would you give to next year&rsquo;s Year 8 class about this project?</p>
+      <textarea data-save="refAdvice" placeholder="My advice to next year's students would be..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SKILLS DEVELOPED ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F4AA;</span> SKILLS DEVELOPED</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">Tick all the skills you developed or practised during this 10-week unit.</p>
+
+    <div class="skills-grid">
+      <div class="skill-card"><input type="checkbox" id="sk1" data-save="sk1"><label for="sk1">Design thinking</label></div>
+      <div class="skill-card"><input type="checkbox" id="sk2" data-save="sk2"><label for="sk2">Technical drawing</label></div>
+      <div class="skill-card"><input type="checkbox" id="sk3" data-save="sk3"><label for="sk3">Construction</label></div>
+      <div class="skill-card"><input type="checkbox" id="sk4" data-save="sk4"><label for="sk4">Research</label></div>
+      <div class="skill-card"><input type="checkbox" id="sk5" data-save="sk5"><label for="sk5">Evaluation</label></div>
+      <div class="skill-card"><input type="checkbox" id="sk6" data-save="sk6"><label for="sk6">Collaboration</label></div>
+    </div>
+
+    <div class="question">
+      <p>Which skill are you most proud of developing? Explain why.</p>
+      <textarea class="tall" data-save="skProud" placeholder="The skill I am most proud of is... because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== CAREERS CONNECTION ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F3ED;</span> CAREERS CONNECTION</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">The skills you used in this project are the same skills used in real-world careers. Consider the following career pathways:</p>
+
+    <div class="career-cards">
+      <div class="career-card"><strong>Architect</strong>Designs buildings and structures</div>
+      <div class="career-card"><strong>Industrial Designer</strong>Designs products for manufacturing</div>
+      <div class="career-card"><strong>Interior Designer</strong>Plans interior spaces and layouts</div>
+      <div class="career-card"><strong>Civil Engineer</strong>Plans and builds infrastructure</div>
+      <div class="career-card"><strong>Graphic Designer</strong>Creates visual communication and branding</div>
+      <div class="career-card"><strong>Urban Planner</strong>Plans how communities and spaces are used</div>
+    </div>
+
+    <div class="question">
+      <p>Which career interests you the most and why?</p>
+      <p class="hint">Think about which parts of this project you enjoyed and how they connect to these career pathways.</p>
+      <textarea class="tall" data-save="careerInterest" placeholder="The career that interests me most is... because during this project I enjoyed..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">&#x1F4D6;</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th>Term</th><th>Definition</th><th>My Example / Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Design brief</td><td>A document outlining the requirements, constraints and goals of a design project</td><td><textarea data-save="vocab1" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Prototype / Model</td><td>A scaled or simplified version of a design used for testing and evaluation</td><td><textarea data-save="vocab2" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Evaluate</td><td>To assess how well a design meets its criteria and identify areas for improvement</td><td><textarea data-save="vocab3" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Sustainability</td><td>Designing in ways that meet current needs without harming the environment or future generations</td><td><textarea data-save="vocab4" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Scale 1:20</td><td>A ratio where 1 cm on the model represents 20 cm in real life</td><td><textarea data-save="vocab5" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Portfolio</td><td>A collection of design work that documents the entire design process from research to evaluation</td><td><textarea data-save="vocab6" placeholder="My note..."></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F3AB;</span> EXIT TICKET &mdash; Final Reflection</div>
+    <div class="question">
+      <p>1. What are the four stages of the design process you followed in this unit?</p>
+      <textarea data-save="exit1" placeholder="1. &#10;2. &#10;3. &#10;4. "></textarea>
+    </div>
+    <div class="question">
+      <p>2. Name one way your container restaurant design considers sustainability.</p>
+      <textarea data-save="exit2" placeholder="My design considers sustainability by..."></textarea>
+    </div>
+    <div class="question">
+      <p>3. What is one skill from this project that you could use in another subject or in everyday life?</p>
+      <textarea data-save="exit3" placeholder="One transferable skill is... I could use it in..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SELF-ASSESSMENT ===================== -->
+  <section class="reflection">
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; How Did I Go?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can present my design work to an audience, explaining my decisions and process</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can give constructive feedback on other students&rsquo; presentations and designs</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can reflect on the complete design process and identify what I learned</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can identify transferable skills developed during this project and connect them to real-world careers</label></div>
+    </div>
+  </section>
+
+  <!-- ===================== CONGRATULATIONS ===================== -->
+  <section style="padding:28px 36px;border-top:1px solid var(--light-grey)">
+    <div class="congrats-box">
+      <h2>Congratulations!</h2>
+      <p>You have completed the <strong>From Container to Countertop</strong> unit. Over the past 10 weeks you have researched, designed, built and presented a portable shipping container restaurant. You have developed skills in design thinking, technical drawing, model construction, research, evaluation and presentation. These are skills you will carry with you into future projects and beyond school. Well done!</p>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <span><strong>From Container to Countertop</strong> &mdash; Year 8 Technology (Mandatory)</span>
+    <span>TE4-DES-01 &bull; TE4-PDP-01 &bull; TE4-SDP-01</span>
+  </footer>
+
+</div>
+
+<script>
+;(function(){
+  var STORAGE_KEY='CTC-T1-L20';
+  var indicator=document.getElementById('saveIndicator');
+  var timer=null;
+  function save(){var data={};document.querySelectorAll('[data-save]').forEach(function(el){data[el.getAttribute('data-save')]=el.type==='checkbox'?el.checked:el.value});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Save failed'}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(timer);timer=setTimeout(save,400)}
+  function restoreAll(){try{var raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;var data=JSON.parse(raw);Object.keys(data).forEach(function(k){var el=document.querySelector('[data-save="'+k+'"]');if(!el)return;if(el.type==='checkbox'){el.checked=data[k]}else{el.value=data[k]}})}catch(e){}}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

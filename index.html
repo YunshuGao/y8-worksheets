@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year 8 Technology — Container to Countertop Worksheets</title>
+<style>
+  :root {
+    --blue: #1B4965;
+    --orange: #E07A3A;
+    --charcoal: #2D3142;
+    --light-grey: #F5F0EB;
+    --green: #7FB069;
+    --white: #FFFFFF;
+    --purple: #8E5DB2;
+    --grey: #5C6B73;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    background: var(--light-grey);
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 20px;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--blue) 0%, #234E6F 100%);
+    color: var(--white);
+    padding: 28px 32px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: "";
+    position: absolute; top: 0; right: 0; bottom: 0; width: 220px;
+    background: repeating-linear-gradient(
+      90deg, transparent, transparent 18px,
+      rgba(255,255,255,.04) 18px, rgba(255,255,255,.04) 20px
+    );
+  }
+  .header h1 { font-size: 24px; margin-bottom: 4px; position: relative; z-index: 1; }
+  .header p { font-size: 14px; opacity: 0.9; position: relative; z-index: 1; }
+  .phase {
+    margin-bottom: 20px;
+  }
+  .phase-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--blue);
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  a.card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--white);
+    padding: 14px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--charcoal);
+    border-left: 5px solid var(--blue);
+    transition: transform 0.15s, box-shadow 0.2s;
+  }
+  a.card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  }
+  .card .num {
+    background: var(--blue);
+    color: var(--white);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .card .title { font-size: 14px; font-weight: 600; }
+  .card .subtitle { font-size: 12px; color: #888; }
+
+  /* Section colours */
+  .section-identify a.card { border-left-color: var(--orange); }
+  .section-identify .num { background: var(--orange); }
+  .section-identify .phase-title { color: var(--orange); }
+
+  .section-research a.card { border-left-color: var(--green); }
+  .section-research .num { background: var(--green); }
+  .section-research .phase-title { color: var(--green); }
+
+  .section-produce a.card { border-left-color: var(--blue); }
+  .section-produce .num { background: var(--blue); }
+  .section-produce .phase-title { color: var(--blue); }
+
+  .section-evaluate a.card { border-left-color: var(--purple); }
+  .section-evaluate .num { background: var(--purple); }
+  .section-evaluate .phase-title { color: var(--purple); }
+
+  .section-extension a.card { border-left-color: var(--grey); }
+  .section-extension .num { background: var(--grey); }
+  .section-extension .phase-title { color: var(--grey); }
+
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #ddd;
+  }
+
+  @media (max-width: 500px) {
+    .container { padding: 12px; }
+    .header { padding: 20px 16px; }
+    .header h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>&#x1F4E6; Year 8 Technology Mandatory</h1>
+    <p>Materials &amp; Production Processes — From Container to Countertop</p>
+  </div>
+
+  <!-- Section 1: Identifying & Defining -->
+  <div class="phase section-identify">
+    <div class="phase-title">Section 1 — Identifying &amp; Defining (Weeks 1–2)</div>
+    <div class="card-grid">
+      <a class="card" href="T1-L01-Worksheet.html">
+        <div class="num">01</div>
+        <div><div class="title">What is a Shipping Container?</div></div>
+      </a>
+      <a class="card" href="T1-L02-Worksheet.html">
+        <div class="num">02</div>
+        <div><div class="title">Container Features and Isometric Drawing</div></div>
+      </a>
+      <a class="card" href="T1-L03-Worksheet.html">
+        <div class="num">03</div>
+        <div><div class="title">Strength Testing and Sustainability</div></div>
+      </a>
+      <a class="card" href="T1-L04-Worksheet.html">
+        <div class="num">04</div>
+        <div><div class="title">Modern Uses of Shipping Containers</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 2: Research & Planning -->
+  <div class="phase section-research">
+    <div class="phase-title">Section 2 — Research &amp; Planning (Weeks 3–4)</div>
+    <div class="card-grid">
+      <a class="card" href="T1-L05-Worksheet.html">
+        <div class="num">05</div>
+        <div><div class="title">PMI Analysis and Local Examples</div></div>
+      </a>
+      <a class="card" href="T1-L06-Worksheet.html">
+        <div class="num">06</div>
+        <div><div class="title">Essential Spaces, Equipment and Design Brief</div></div>
+      </a>
+      <a class="card" href="T1-L07-Worksheet.html">
+        <div class="num">07</div>
+        <div><div class="title">External and Internal Design Sketches</div></div>
+      </a>
+      <a class="card" href="T1-L08-Worksheet.html">
+        <div class="num">08</div>
+        <div><div class="title">Isometric Drawing of Container Restaurant</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 3: Producing & Implementing -->
+  <div class="phase section-produce">
+    <div class="phase-title">Section 3 — Producing &amp; Implementing (Weeks 5–8)</div>
+    <div class="card-grid">
+      <a class="card" href="T1-L09-Worksheet.html">
+        <div class="num">09</div>
+        <div><div class="title">Orthographic Drawing Introduction</div></div>
+      </a>
+      <a class="card" href="T1-L10-Worksheet.html">
+        <div class="num">10</div>
+        <div><div class="title">Good Copy Orthographic Drawings</div></div>
+      </a>
+      <a class="card" href="T1-L11-Worksheet.html">
+        <div class="num">11</div>
+        <div><div class="title">Procedures, Scale and Ratio</div></div>
+      </a>
+      <a class="card" href="T1-L12-Worksheet.html">
+        <div class="num">12</div>
+        <div><div class="title">Net Construction and Architectural Symbols</div></div>
+      </a>
+      <a class="card" href="T1-L13-Worksheet.html">
+        <div class="num">13</div>
+        <div><div class="title">Digital Floor Plans</div></div>
+      </a>
+      <a class="card" href="T1-L14-Worksheet.html">
+        <div class="num">14</div>
+        <div><div class="title">Hand-Drawn Floor Plan to Scale</div></div>
+      </a>
+      <a class="card" href="T1-L15-Worksheet.html">
+        <div class="num">15</div>
+        <div><div class="title">Model Construction: Cutting and Assembly</div></div>
+      </a>
+      <a class="card" href="T1-L16-Worksheet.html">
+        <div class="num">16</div>
+        <div><div class="title">Interior Features and Model Detailing</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 4: Testing & Evaluating -->
+  <div class="phase section-evaluate">
+    <div class="phase-title">Section 4 — Testing &amp; Evaluating (Weeks 9–10)</div>
+    <div class="card-grid">
+      <a class="card" href="T1-L17-Worksheet.html">
+        <div class="num">17</div>
+        <div><div class="title">Testing and Evaluating Your Design</div></div>
+      </a>
+      <a class="card" href="T1-L18-Worksheet.html">
+        <div class="num">18</div>
+        <div><div class="title">Portfolio Completion and Self-Assessment</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Extension & Catch-Up -->
+  <div class="phase section-extension">
+    <div class="phase-title">Extension &amp; Catch-Up (Week 10)</div>
+    <div class="card-grid">
+      <a class="card" href="T1-L19-Worksheet.html">
+        <div class="num">19</div>
+        <div><div class="title">Catch-Up and Extension</div></div>
+      </a>
+      <a class="card" href="T1-L20-Worksheet.html">
+        <div class="num">20</div>
+        <div><div class="title">Presentations and Celebration</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    Year 8 Technology Mandatory — Arthur Phillip High School — 2026
+  </div>
+
+</div>
+</body>
+</html>

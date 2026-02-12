@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L14 Worksheet — Hand-Drawn Floor Plan to Scale</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Zone cards */
+.zone-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+.zone-card{background:var(--bg);border-radius:10px;padding:14px;text-align:center;border-top:4px solid var(--blue)}
+.zone-card .zc-name{font-family:var(--font-heading);font-size:.95rem;color:var(--blue);margin-bottom:4px}
+.zone-card .zc-desc{font-size:.82rem;color:var(--charcoal)}
+
+/* Checkpoint */
+.checkpoint{background:linear-gradient(135deg,#E3F2E3 0%,#F0F7ED 100%);border:2px solid var(--green);border-radius:12px;padding:20px;margin:14px 0}
+.checkpoint h3{font-family:var(--font-heading);color:var(--green);font-size:1.1rem;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cp-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;padding:10px;background:var(--white);border-radius:8px}
+.cp-item input[type="checkbox"]{width:22px;height:22px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}
+.cp-item label{font-size:.92rem;cursor:pointer}
+.cp-item .cp-detail{font-size:.82rem;color:var(--grey);margin-top:2px}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.zone-cards{grid-template-columns:1fr 1fr}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.zone-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.checkpoint{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.cp-item{break-inside:avoid}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L14</span>
+      <span class="ws-unit">Week 7 &bull; Section 3</span>
+    </div>
+    <h1 class="ws-title">Hand-Drawn Floor Plan to Scale</h1>
+    <p class="ws-subtitle">Drawing a scaled floor plan with architectural symbols and completing Checkpoint 3</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to create a hand-drawn floor plan to scale using architectural symbols.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Review Your Digital Plan</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Look at your digital floor plan from Lesson 13. List 3 things you would change or improve.</p>
+    <div class="question">
+      <textarea class="tall" data-save="doNow1" placeholder="1. I would move the ___&#10;2. I would add a ___&#10;3. I would make the ___ bigger/smaller"></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== WORKFLOW ZONES ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F501;</span> KITCHEN WORKFLOW ZONES</div>
+    <div class="info-box">
+      The <strong>Golden Triangle</strong> of kitchen workflow: food moves in ONE direction from delivery to customer. No backtracking = less contamination and more efficiency.
+    </div>
+    <div class="zone-cards">
+      <div class="zone-card"><div class="zc-name">Receive</div><div class="zc-desc">Near door &mdash; deliveries, fridge, dry storage</div></div>
+      <div class="zone-card"><div class="zc-name">Prepare</div><div class="zc-desc">Centre &mdash; bench, HWB, cutting space</div></div>
+      <div class="zone-card"><div class="zc-name">Cook</div><div class="zc-desc">Near window &mdash; grill, exhaust fan</div></div>
+      <div class="zone-card"><div class="zc-name">Serve</div><div class="zc-desc">At window &mdash; serving counter</div></div>
+      <div class="zone-card"><div class="zc-name">Wash</div><div class="zc-desc">Near water &mdash; dish sink, drying</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== FLOOR PLAN RULES ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4CF;</span> FLOOR PLAN DRAWING RULES</div>
+    <div class="info-box">
+      <strong>Your floor plan must:</strong><br>
+      &bull; Fit inside a <strong>30 cm &times; 12 cm</strong> rectangle (1:20 scale)<br>
+      &bull; Use <strong>correct architectural symbols</strong> from Lesson 12<br>
+      &bull; <strong>Label</strong> every piece of equipment in neat capital letters<br>
+      &bull; Show <strong>workflow arrows</strong> indicating food flow direction<br>
+      &bull; Leave at least <strong>3 cm</strong> aisle space between equipment (= 60 cm real)
+    </div>
+  </section>
+
+  <!-- ===================== FLOOR PLAN ACTIVITY ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270D;</span> ACTIVITY &mdash; Hand-Drawn Floor Plan (WB p. 35)</div>
+
+    <div class="self-assess">
+      <h3>Floor Plan Checklist</h3>
+      <div class="sc-check"><input type="checkbox" id="fp1" data-save="fp1"><label for="fp1">Container outline drawn: 30 cm &times; 12 cm (to scale)</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp2" data-save="fp2"><label for="fp2">Serving window marked on front wall with correct symbol</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp3" data-save="fp3"><label for="fp3">Entry door marked on short wall with correct symbol</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp4" data-save="fp4"><label for="fp4">Grill / cooktop placed using correct symbol</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp5" data-save="fp5"><label for="fp5">Preparation bench included</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp6" data-save="fp6"><label for="fp6">Dish sink with correct symbol</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp7" data-save="fp7"><label for="fp7">Hand wash basin (HWB) SEPARATE from dish sink</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp8" data-save="fp8"><label for="fp8">Refrigerator near entry door</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp9" data-save="fp9"><label for="fp9">Serving counter along window</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp10" data-save="fp10"><label for="fp10">All items labelled in neat capitals</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp11" data-save="fp11"><label for="fp11">Workflow arrows showing food flow direction</label></div>
+      <div class="sc-check"><input type="checkbox" id="fp12" data-save="fp12"><label for="fp12">Aisle space of at least 3 cm between equipment</label></div>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#x1F7E2; Support</div>
+      <ul>
+        <li>Use the pre-drawn template with zones already marked</li>
+        <li>Cut out equipment shapes and arrange before drawing</li>
+        <li>Focus on 4 essential items: grill, sink, bench, fridge</li>
+      </ul>
+    </div>
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#x1F7E3; Extension</div>
+      <ul>
+        <li>Create a second alternative layout and compare</li>
+        <li>Calculate total usable floor area after subtracting equipment</li>
+        <li>Add detailed dimensions for every piece of equipment</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== PEER REVIEW ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F91D;</span> PEER REVIEW</div>
+    <div class="question">
+      <p>Partner&rsquo;s name:</p>
+      <input type="text" data-save="peerName" placeholder="Enter your partner's name">
+    </div>
+    <div class="question">
+      <p>One thing my partner did well on their floor plan:</p>
+      <textarea data-save="peerPositive" placeholder="I like how my partner..."></textarea>
+    </div>
+    <div class="question">
+      <p>One suggestion for improvement:</p>
+      <textarea data-save="peerSuggestion" placeholder="My partner could improve by..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== CHECKPOINT 3 ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x2705;</span> CHECKPOINT 3</div>
+    <div class="checkpoint">
+      <h3>&#x1F4CB; Checkpoint 3 &mdash; Design Portfolio Progress</h3>
+      <p style="font-size:.9rem;margin-bottom:14px;color:var(--charcoal);">Your teacher will check these 4 items. Tick each one you have completed.</p>
+      <div class="cp-item">
+        <input type="checkbox" id="cp1" data-save="cp1">
+        <div><label for="cp1"><strong>Net template (Lesson 12)</strong></label><div class="cp-detail">Net drawn on cardboard with correct dimensions, fold/cut lines, and tabs</div></div>
+      </div>
+      <div class="cp-item">
+        <input type="checkbox" id="cp2" data-save="cp2">
+        <div><label for="cp2"><strong>Digital floor plan (Lesson 13)</strong></label><div class="cp-detail">Completed in floorplanner.com or Canva, exported or screenshotted</div></div>
+      </div>
+      <div class="cp-item">
+        <input type="checkbox" id="cp3" data-save="cp3">
+        <div><label for="cp3"><strong>Hand-drawn floor plan (Lesson 14)</strong></label><div class="cp-detail">To-scale drawing with symbols, labels, and workflow arrows</div></div>
+      </div>
+      <div class="cp-item">
+        <input type="checkbox" id="cp4" data-save="cp4">
+        <div><label for="cp4"><strong>Workbook pages 31&ndash;35</strong></label><div class="cp-detail">All activities complete including symbol exercises and construction notes</div></div>
+      </div>
+    </div>
+    <div class="question">
+      <p>Teacher feedback (write what your teacher tells you):</p>
+      <textarea class="tall" data-save="teacherFeedback" placeholder="My teacher said..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">&#x1F4D6;</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th>Term</th><th>Definition</th><th>My Example / Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Floor plan</td><td>Scaled drawing showing layout from above (bird&rsquo;s eye view)</td><td><textarea data-save="vocab1" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Workflow</td><td>The logical order in which tasks happen in a space</td><td><textarea data-save="vocab2" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Aisle space</td><td>The gap between equipment for people to walk through</td><td><textarea data-save="vocab3" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Zone</td><td>An area dedicated to one type of work (e.g., prep zone)</td><td><textarea data-save="vocab4" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Hand wash basin</td><td>Separate sink for handwashing only &mdash; food safety requirement</td><td><textarea data-save="vocab5" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Iterate</td><td>To repeat and improve a design based on feedback</td><td><textarea data-save="vocab6" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Checkpoint</td><td>A progress check where the teacher reviews your work</td><td><textarea data-save="vocab7" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Portfolio</td><td>A collection of your design work for assessment</td><td><textarea data-save="vocab8" placeholder="My note..."></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F3AB;</span> EXIT TICKET</div>
+    <div class="question">
+      <p>1. Name the 5 workflow zones in a commercial kitchen in order.</p>
+      <textarea data-save="exit1" placeholder="The 5 zones in order are: ..."></textarea>
+    </div>
+    <div class="question">
+      <p>2. Why must the hand wash basin be separate from the dish sink?</p>
+      <textarea data-save="exit2" placeholder="The hand wash basin must be separate because..."></textarea>
+    </div>
+    <div class="question">
+      <p>3. What scale ratio are we using and what does it mean?</p>
+      <textarea data-save="exit3" placeholder="We are using scale ___ which means..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SELF-ASSESSMENT ===================== -->
+  <section class="reflection">
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; How Did I Go?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can draw a floor plan within a 30 cm &times; 12 cm rectangle (1:20 scale)</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can include all essential equipment using correct architectural symbols</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can show kitchen workflow with clear pathways between work zones</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I completed Checkpoint 3 showing progress on all design items</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <span><strong>From Container to Countertop</strong> &mdash; Year 8 Technology (Mandatory)</span>
+    <span>TE4-DES-01 &bull; TE4-PPM-01 &bull; TE4-MSC-01</span>
+  </footer>
+
+</div>
+
+<script>
+;(function(){
+  var STORAGE_KEY='CTC-T1-L14';
+  var indicator=document.getElementById('saveIndicator');
+  var timer=null;
+  function save(){var data={};document.querySelectorAll('[data-save]').forEach(function(el){data[el.getAttribute('data-save')]=el.type==='checkbox'?el.checked:el.value});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Save failed'}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(timer);timer=setTimeout(save,400)}
+  function restoreAll(){try{var raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;var data=JSON.parse(raw);Object.keys(data).forEach(function(k){var el=document.querySelector('[data-save="'+k+'"]');if(!el)return;if(el.type==='checkbox'){el.checked=data[k]}else{el.value=data[k]}})}catch(e){}}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

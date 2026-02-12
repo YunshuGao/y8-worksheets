@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L19 Worksheet — Catch-Up and Extension</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Feedback cards */
+.feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.feedback-card{border-radius:10px;padding:14px}
+.fb-positive{background:#F0F7ED;border:2px solid var(--green)}
+.fb-suggest{background:#FFF8E6;border:2px solid var(--yellow)}
+.feedback-card h4{font-family:var(--font-heading);font-size:.9rem;margin-bottom:8px}
+.fb-positive h4{color:var(--green)}
+.fb-suggest h4{color:#B8860B}
+
+/* Pathway cards */
+.pathway-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.pathway-card{border-radius:10px;padding:18px;text-align:center}
+.pathway-catchup{background:#FFF8E6;border:2px solid var(--yellow)}
+.pathway-extension{background:#F3EDF8;border:2px solid var(--purple)}
+.pathway-card h4{font-family:var(--font-heading);font-size:1rem;margin-bottom:6px}
+.pathway-catchup h4{color:#B8860B}
+.pathway-extension h4{color:var(--purple)}
+.pathway-card p{font-size:.88rem}
+
+/* Priority list */
+.priority-list{counter-reset:priority;margin:10px 0}
+.priority-item{display:flex;align-items:flex-start;gap:14px;padding:12px 14px;margin-bottom:8px;background:var(--bg);border-radius:10px;counter-increment:priority}
+.priority-item::before{content:counter(priority);display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--orange);color:var(--white);font-family:var(--font-heading);font-size:.95rem;font-weight:700;flex-shrink:0}
+.priority-item .pi-text{font-size:.92rem}
+.priority-item .pi-text strong{color:var(--orange)}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.pathway-grid{grid-template-columns:1fr}.feedback-grid{grid-template-columns:1fr}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.feedback-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.pathway-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.priority-item{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.priority-item::before{-webkit-print-color-adjust:exact;print-color-adjust:exact}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L19</span>
+      <span class="ws-unit">Week 10 &bull; Section 4</span>
+    </div>
+    <h1 class="ws-title">Catch-Up and Extension</h1>
+    <p class="ws-subtitle">Finalising portfolio and model, peer feedback gallery walk, and presentation preparation</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to finalise our portfolio and model, give and receive constructive peer feedback, and prepare for presentation.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Pathway Check</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Open your workbook and count how many pages are still incomplete. This will determine your pathway for the lesson.</p>
+    <div class="question">
+      <p>How many workbook pages are still incomplete?</p>
+      <input type="text" data-save="doNowCount" placeholder="Number of incomplete pages...">
+    </div>
+    <div class="pathway-grid">
+      <div class="pathway-card pathway-catchup">
+        <h4>Catch-Up Pathway</h4>
+        <p>If you have <strong>3 or more</strong> incomplete pages, follow the Catch-Up Priority List below.</p>
+      </div>
+      <div class="pathway-card pathway-extension">
+        <h4>Extension Pathway</h4>
+        <p>If you have <strong>2 or fewer</strong> incomplete pages, finish those first, then move to Extension Activities.</p>
+      </div>
+    </div>
+    <div class="question">
+      <p>Which pathway are you on?</p>
+      <input type="text" data-save="doNowPathway" placeholder="Catch-Up or Extension?">
+    </div>
+  </section>
+
+  <!-- ===================== PORTFOLIO STATUS ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F4CB;</span> PORTFOLIO STATUS CHECKLIST</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">Tick each item that is <strong>complete</strong> in your workbook and portfolio. Be honest &mdash; this helps you plan your catch-up time.</p>
+
+    <div class="self-assess">
+      <h3>Section 1 &mdash; Identifying and Defining</h3>
+      <div class="sc-check"><input type="checkbox" id="ps1" data-save="ps1"><label for="ps1">Shipping container Think-Pair-Share notes</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps2" data-save="ps2"><label for="ps2">Video comprehension worksheet (fill-in-the-blanks)</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps3" data-save="ps3"><label for="ps3">Isometric drawing of a shipping container</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps4" data-save="ps4"><label for="ps4">Design terminology definitions (standardised, modular, intermodal)</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps5" data-save="ps5"><label for="ps5">Structural features brainstorm</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps6" data-save="ps6"><label for="ps6">Flat vs Folded strength challenge results</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps7" data-save="ps7"><label for="ps7">Reusing, repurposing and recycling notes</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps8" data-save="ps8"><label for="ps8">Crossword challenge</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps9" data-save="ps9"><label for="ps9">Modern uses video comprehension</label></div>
+    </div>
+
+    <div class="self-assess">
+      <h3>Section 2 &mdash; Research and Planning</h3>
+      <div class="sc-check"><input type="checkbox" id="ps10" data-save="ps10"><label for="ps10">Collage of 12+ container food outlets</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps11" data-save="ps11"><label for="ps11">PMI table on 3 chosen container restaurants</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps12" data-save="ps12"><label for="ps12">Sydney container restaurant research paragraph</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps13" data-save="ps13"><label for="ps13">Essential spaces and equipment mind map</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps14" data-save="ps14"><label for="ps14">Additional features table</label></div>
+    </div>
+
+    <div class="self-assess">
+      <h3>Section 3 &mdash; Producing and Implementing</h3>
+      <div class="sc-check"><input type="checkbox" id="ps15" data-save="ps15"><label for="ps15">External structure sketch (serving window, counter, door, roof, ventilation)</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps16" data-save="ps16"><label for="ps16">Internal floor plan sketch (grill, benches, storage, sink)</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps17" data-save="ps17"><label for="ps17">Isometric drawing of container restaurant</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps18" data-save="ps18"><label for="ps18">Orthographic sketches (good copy)</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps19" data-save="ps19"><label for="ps19">Scale conversion notes (1:20)</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps20" data-save="ps20"><label for="ps20">Digital or hand-drawn floor plan to scale (30 cm x 12 cm)</label></div>
+    </div>
+
+    <div class="self-assess">
+      <h3>Section 4 &mdash; Testing and Evaluating</h3>
+      <div class="sc-check"><input type="checkbox" id="ps21" data-save="ps21"><label for="ps21">Photo of completed model inserted</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps22" data-save="ps22"><label for="ps22">Evaluation &mdash; ranked criteria with explanations</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps23" data-save="ps23"><label for="ps23">Reflection &mdash; enjoyment and improvements</label></div>
+    </div>
+
+    <div class="self-assess">
+      <h3>Model Construction</h3>
+      <div class="sc-check"><input type="checkbox" id="ps24" data-save="ps24"><label for="ps24">Box assembled (30 cm x 12 cm x 12 cm)</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps25" data-save="ps25"><label for="ps25">Serving window and door cut out</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps26" data-save="ps26"><label for="ps26">Interior equipment glued in place (4+ items)</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps27" data-save="ps27"><label for="ps27">Exterior details added (name sign, colour, awning)</label></div>
+      <div class="sc-check"><input type="checkbox" id="ps28" data-save="ps28"><label for="ps28">Photos taken from multiple angles</label></div>
+    </div>
+  </section>
+
+  <!-- ===================== CATCH-UP PRIORITY ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4CC;</span> CATCH-UP PRIORITY LIST</div>
+    <div class="info-box">
+      <strong>Work in this order.</strong> The items at the top are worth the most marks. Focus your effort where it counts most.
+    </div>
+    <div class="priority-list">
+      <div class="priority-item"><div class="pi-text"><strong>Evaluation and Reflection (Section 4)</strong> &mdash; WB pp. 38&ndash;40. Rank your criteria and write your evaluation. This is part of your assessed portfolio.</div></div>
+      <div class="priority-item"><div class="pi-text"><strong>Research and Planning (Section 2)</strong> &mdash; WB pp. 16&ndash;22. Complete the collage, PMI table and restaurant research. These show your investigation skills.</div></div>
+      <div class="priority-item"><div class="pi-text"><strong>Drawings (Section 3)</strong> &mdash; WB pp. 24&ndash;34. Complete your labelled sketches, isometric and orthographic drawings. These communicate your design ideas.</div></div>
+      <div class="priority-item"><div class="pi-text"><strong>Section 1 Tasks</strong> &mdash; WB pp. 4&ndash;14. Complete any missing comprehension, brainstorms, or terminology tasks. These carry fewer marks but should be finished if time allows.</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== EXTENSION ACTIVITIES ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F680;</span> EXTENSION ACTIVITIES</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">If your portfolio and model are complete, choose one or more extension activities to enhance your design.</p>
+
+    <div class="self-assess">
+      <h3>Extension Options &mdash; Tick What You Work On</h3>
+      <div class="sc-check"><input type="checkbox" id="ext1" data-save="ext1"><label for="ext1">Colour and paint &mdash; add realistic colours to the exterior and interior of your model</label></div>
+      <div class="sc-check"><input type="checkbox" id="ext2" data-save="ext2"><label for="ext2">Signage and branding &mdash; create a logo, menu board, or branded signage for your restaurant</label></div>
+      <div class="sc-check"><input type="checkbox" id="ext3" data-save="ext3"><label for="ext3">Tables and chairs &mdash; build scale outdoor seating for customers</label></div>
+      <div class="sc-check"><input type="checkbox" id="ext4" data-save="ext4"><label for="ext4">Greenery and landscaping &mdash; add plants, pot plants, or a small garden area</label></div>
+      <div class="sc-check"><input type="checkbox" id="ext5" data-save="ext5"><label for="ext5">Menu creation &mdash; design a printed menu for your container restaurant</label></div>
+      <div class="sc-check"><input type="checkbox" id="ext6" data-save="ext6"><label for="ext6">Interior detail &mdash; add finer details such as utensil racks, chalkboard, lighting, or tiling</label></div>
+    </div>
+    <div class="question">
+      <p>Describe what you added or improved during extension time:</p>
+      <textarea class="tall" data-save="extDesc" placeholder="During extension time, I worked on..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== GALLERY WALK — PEER FEEDBACK ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F91D;</span> GALLERY WALK &mdash; Peer Feedback</div>
+    <p style="font-size:.9rem;margin-bottom:6px;">Walk around the room and examine 4 classmates&rsquo; models and portfolios. For each, write <strong>Two Stars</strong> (things done well) and <strong>One Wish</strong> (a suggestion for improvement).</p>
+    <p class="hint" style="margin-bottom:14px;">Be specific and constructive. &ldquo;It looks good&rdquo; is not helpful. &ldquo;The serving window is neatly cut and the interior layout follows a logical workflow&rdquo; is much better.</p>
+
+    <!-- Peer 1 -->
+    <div class="feedback-grid">
+      <div class="feedback-card fb-positive">
+        <h4>Peer 1 &mdash; Two Stars</h4>
+        <span class="sub-label">Student name:</span>
+        <input type="text" data-save="gw1name" placeholder="Name" style="margin-bottom:8px">
+        <textarea data-save="gw1stars" placeholder="Star 1: I like how they...&#10;Star 2: Another strength is..."></textarea>
+      </div>
+      <div class="feedback-card fb-suggest">
+        <h4>Peer 1 &mdash; One Wish</h4>
+        <textarea data-save="gw1wish" placeholder="I wish they would..." style="margin-top:34px"></textarea>
+      </div>
+    </div>
+
+    <!-- Peer 2 -->
+    <div class="feedback-grid">
+      <div class="feedback-card fb-positive">
+        <h4>Peer 2 &mdash; Two Stars</h4>
+        <span class="sub-label">Student name:</span>
+        <input type="text" data-save="gw2name" placeholder="Name" style="margin-bottom:8px">
+        <textarea data-save="gw2stars" placeholder="Star 1: I like how they...&#10;Star 2: Another strength is..."></textarea>
+      </div>
+      <div class="feedback-card fb-suggest">
+        <h4>Peer 2 &mdash; One Wish</h4>
+        <textarea data-save="gw2wish" placeholder="I wish they would..." style="margin-top:34px"></textarea>
+      </div>
+    </div>
+
+    <!-- Peer 3 -->
+    <div class="feedback-grid">
+      <div class="feedback-card fb-positive">
+        <h4>Peer 3 &mdash; Two Stars</h4>
+        <span class="sub-label">Student name:</span>
+        <input type="text" data-save="gw3name" placeholder="Name" style="margin-bottom:8px">
+        <textarea data-save="gw3stars" placeholder="Star 1: I like how they...&#10;Star 2: Another strength is..."></textarea>
+      </div>
+      <div class="feedback-card fb-suggest">
+        <h4>Peer 3 &mdash; One Wish</h4>
+        <textarea data-save="gw3wish" placeholder="I wish they would..." style="margin-top:34px"></textarea>
+      </div>
+    </div>
+
+    <!-- Peer 4 -->
+    <div class="feedback-grid">
+      <div class="feedback-card fb-positive">
+        <h4>Peer 4 &mdash; Two Stars</h4>
+        <span class="sub-label">Student name:</span>
+        <input type="text" data-save="gw4name" placeholder="Name" style="margin-bottom:8px">
+        <textarea data-save="gw4stars" placeholder="Star 1: I like how they...&#10;Star 2: Another strength is..."></textarea>
+      </div>
+      <div class="feedback-card fb-suggest">
+        <h4>Peer 4 &mdash; One Wish</h4>
+        <textarea data-save="gw4wish" placeholder="I wish they would..." style="margin-top:34px"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESPONDING TO FEEDBACK ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F4AC;</span> RESPONDING TO FEEDBACK</div>
+    <div class="question">
+      <p>What feedback did you receive from your classmates during the gallery walk?</p>
+      <textarea class="tall" data-save="fbReceived" placeholder="The feedback I received included:&#10;Stars: &#10;Wishes: "></textarea>
+    </div>
+    <div class="question">
+      <p>Based on the feedback, what changes did you make (or would you make if you had more time)?</p>
+      <textarea class="tall" data-save="fbChanges" placeholder="Based on the feedback, I changed / would change..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PRESENTATION PREPARATION ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F399;</span> PRESENTATION PREPARATION</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">Next lesson you will present your container restaurant to the class. Use the prompts below to prepare your talking points.</p>
+
+    <div class="question">
+      <p>What is your restaurant called and what is its concept?</p>
+      <p class="hint">e.g. &ldquo;Flame Box &mdash; a gourmet burger bar specialising in flame-grilled patties with locally sourced ingredients.&rdquo;</p>
+      <textarea data-save="prepName" placeholder="My restaurant is called... Its concept is..."></textarea>
+    </div>
+    <div class="question">
+      <p>Name 2&ndash;3 key design features of your container restaurant.</p>
+      <p class="hint">Think about: serving window, awning, layout, sustainable features, branding.</p>
+      <textarea data-save="prepFeatures" placeholder="Key feature 1: &#10;Key feature 2: &#10;Key feature 3: "></textarea>
+    </div>
+    <div class="question">
+      <p>Describe the workflow inside your restaurant (how food moves from delivery to customer).</p>
+      <textarea data-save="prepWorkflow" placeholder="Food enters through the... then it is stored in... prepared at... cooked on... and served through the..."></textarea>
+    </div>
+    <div class="question">
+      <p>What was one challenge you faced during the project and how did you overcome it?</p>
+      <textarea data-save="prepChallenge" placeholder="One challenge was... I overcame it by..."></textarea>
+    </div>
+    <div class="question">
+      <p>What is one important thing you learned during this 10-week unit?</p>
+      <textarea data-save="prepLearned" placeholder="One important thing I learned was..."></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#x1F7E2; Support</div>
+      <ul>
+        <li>Use the sentence starters provided in each text box</li>
+        <li>Focus on completing the catch-up priority list &mdash; evaluation first</li>
+        <li>Presentation can be short &mdash; aim for 3&ndash;4 sentences covering your restaurant name, one feature, and one thing you learned</li>
+      </ul>
+    </div>
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#x1F7E3; Extension</div>
+      <ul>
+        <li>Include sustainability features in your presentation (e.g. solar panels, recycled materials, water recycling)</li>
+        <li>Explain how your design solves a specific problem at festivals or events</li>
+        <li>Compare your design to a real-world container restaurant you researched</li>
+        <li>Prepare a &ldquo;pitch&rdquo; as if selling your design to a festival organiser</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">&#x1F4D6;</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th>Term</th><th>Definition</th><th>My Example / Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Gallery walk</td><td>A structured activity where students move around the room to view and assess each other&rsquo;s work</td><td><textarea data-save="vocab1" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Peer feedback</td><td>Comments and suggestions given by classmates to help improve work</td><td><textarea data-save="vocab2" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Two Stars and a Wish</td><td>A feedback strategy: two positive comments (stars) and one suggestion for improvement (wish)</td><td><textarea data-save="vocab3" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Constructive</td><td>Feedback that is helpful, specific and focused on improvement rather than criticism</td><td><textarea data-save="vocab4" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Presentation</td><td>Sharing your design work and process with an audience, explaining decisions and outcomes</td><td><textarea data-save="vocab5" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Transferable skills</td><td>Skills learned in one context that can be applied in other situations or subjects</td><td><textarea data-save="vocab6" placeholder="My note..."></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F3AB;</span> EXIT TICKET</div>
+    <div class="question">
+      <p>1. What is the most important piece of peer feedback you gave or received today?</p>
+      <textarea data-save="exit1" placeholder="The most important feedback was..."></textarea>
+    </div>
+    <div class="question">
+      <p>2. What is the ONE thing you still need to finish before the final lesson?</p>
+      <textarea data-save="exit2" placeholder="I still need to..."></textarea>
+    </div>
+    <div class="question">
+      <p>3. What will your opening sentence be when you present your restaurant next lesson?</p>
+      <textarea data-save="exit3" placeholder="My opening sentence will be..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SELF-ASSESSMENT ===================== -->
+  <section class="reflection">
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; How Did I Go?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can identify incomplete work and prioritise tasks to finalise my portfolio</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can give specific, constructive peer feedback using the Two Stars and a Wish strategy</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can respond to peer feedback and use it to improve my design</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can prepare structured presentation notes about my container restaurant design</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <span><strong>From Container to Countertop</strong> &mdash; Year 8 Technology (Mandatory)</span>
+    <span>TE4-DES-01 &bull; TE4-PPM-01 &bull; TE4-PDP-01</span>
+  </footer>
+
+</div>
+
+<script>
+;(function(){
+  var STORAGE_KEY='CTC-T1-L19';
+  var indicator=document.getElementById('saveIndicator');
+  var timer=null;
+  function save(){var data={};document.querySelectorAll('[data-save]').forEach(function(el){data[el.getAttribute('data-save')]=el.type==='checkbox'?el.checked:el.value});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Save failed'}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(timer);timer=setTimeout(save,400)}
+  function restoreAll(){try{var raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;var data=JSON.parse(raw);Object.keys(data).forEach(function(k){var el=document.querySelector('[data-save="'+k+'"]');if(!el)return;if(el.type==='checkbox'){el.checked=data[k]}else{el.value=data[k]}})}catch(e){}}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

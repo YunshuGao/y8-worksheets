@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L05 Worksheet — PMI Analysis and Local Examples</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* PMI table */
+.pmi-table{width:100%;border-collapse:collapse;margin:14px 0;border-radius:8px;overflow:hidden}
+.pmi-table th{font-family:var(--font-heading);font-size:.9rem;padding:12px 14px;text-align:left;color:var(--white)}
+.pmi-table .col-plus{background:#2E7D32}.pmi-table .col-minus{background:#C62828}.pmi-table .col-interest{background:var(--blue)}
+.pmi-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top}
+.pmi-table td textarea{min-height:80px;font-size:.85rem;padding:6px 10px}
+
+/* TEEL box */
+.teel-box{border:2px solid var(--blue);border-radius:10px;overflow:hidden;margin:14px 0}
+.teel-letter{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--orange);color:var(--white);font-family:var(--font-heading);font-size:.9rem;font-weight:700;margin-right:8px;flex-shrink:0}
+.teel-row{padding:14px 18px;border-bottom:1px solid var(--light-grey)}
+.teel-row:last-child{border-bottom:none}
+.teel-row p{display:flex;align-items:center;font-weight:600;margin-bottom:8px}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.pmi-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.teel-letter{-webkit-print-color-adjust:exact;print-color-adjust:exact}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L05</span>
+      <span class="ws-unit">Week 3 &bull; Section 2</span>
+    </div>
+    <h1 class="ws-title">PMI Analysis and Local Examples</h1>
+    <p class="ws-subtitle">Analysing container restaurants using PMI tables, writing TEEL paragraphs, and exploring food safety</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to analyse container restaurants using PMI thinking and write a structured research paragraph.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Partner Share</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Share one favourite container restaurant from your collage with your partner. Explain WHY you chose it.</p>
+    <div class="question">
+      <p>My favourite container restaurant from my collage:</p>
+      <span class="hint">Use specific reasons: design, colour, layout, location, food type, sustainability features</span>
+      <textarea data-save="doNow1" placeholder="I chose _________ because..."></textarea>
+    </div>
+    <div class="question">
+      <p>My partner&rsquo;s favourite and their reason:</p>
+      <textarea data-save="doNow2" placeholder="My partner chose _________ because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PMI EXPLANATION ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4DD;</span> CLASS NOTES &mdash; What is PMI Analysis?</div>
+    <div class="info-box">
+      <strong>PMI</strong> = <strong>P</strong>lus, <strong>M</strong>inus, <strong>I</strong>nteresting &mdash; a structured thinking tool invented by Edward de Bono. It forces balanced analysis by looking at ALL sides of a design, not just likes and dislikes.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0;">
+      <div style="background:#E8F5E9;border-radius:8px;padding:14px;border-top:4px solid #2E7D32;text-align:center;">
+        <div style="font-family:var(--font-heading);color:#2E7D32;font-size:1.1rem;">PLUS</div>
+        <div style="font-size:.85rem;color:var(--grey);margin-top:4px;">What is good? Strengths?</div>
+      </div>
+      <div style="background:#FFEBEE;border-radius:8px;padding:14px;border-top:4px solid #C62828;text-align:center;">
+        <div style="font-family:var(--font-heading);color:#C62828;font-size:1.1rem;">MINUS</div>
+        <div style="font-size:.85rem;color:var(--grey);margin-top:4px;">What are the downsides?</div>
+      </div>
+      <div style="background:#E3F2FD;border-radius:8px;padding:14px;border-top:4px solid var(--blue);text-align:center;">
+        <div style="font-family:var(--font-heading);color:var(--blue);font-size:1.1rem;">INTERESTING</div>
+        <div style="font-size:.85rem;color:var(--grey);margin-top:4px;">What is unique or surprising?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PMI TABLE 1 (GUIDED) ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270F;</span> PMI TABLE 1 &mdash; Guided Practice (Class)</div>
+    <div class="info-box"><strong>Workbook page 15:</strong> Complete this PMI table as a class, copying from the board into your workbook.</div>
+    <div class="question"><p>Restaurant name:</p><input type="text" data-save="pmi1name" placeholder="e.g. Smoke and Barrel, Barangaroo"></div>
+    <table class="pmi-table">
+      <thead><tr><th class="col-plus" style="width:33%">Plus (+)</th><th class="col-minus" style="width:33%">Minus (&minus;)</th><th class="col-interest" style="width:34%">Interesting (?)</th></tr></thead>
+      <tbody><tr>
+        <td><textarea data-save="pmi1plus" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea></td>
+        <td><textarea data-save="pmi1minus" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea></td>
+        <td><textarea data-save="pmi1int" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea></td>
+      </tr></tbody>
+    </table>
+  </section>
+
+  <!-- ===================== PMI TABLE 2 ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270F;</span> PMI TABLE 2 &mdash; Independent</div>
+    <div class="question"><p>Restaurant name:</p><input type="text" data-save="pmi2name" placeholder="Choose from your collage"></div>
+    <table class="pmi-table">
+      <thead><tr><th class="col-plus" style="width:33%">Plus (+)</th><th class="col-minus" style="width:33%">Minus (&minus;)</th><th class="col-interest" style="width:34%">Interesting (?)</th></tr></thead>
+      <tbody><tr>
+        <td><textarea data-save="pmi2plus" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea></td>
+        <td><textarea data-save="pmi2minus" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea></td>
+        <td><textarea data-save="pmi2int" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea></td>
+      </tr></tbody>
+    </table>
+  </section>
+
+  <!-- ===================== PMI TABLE 3 ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270F;</span> PMI TABLE 3 &mdash; Independent</div>
+    <div class="question"><p>Restaurant name:</p><input type="text" data-save="pmi3name" placeholder="Choose from your collage"></div>
+    <table class="pmi-table">
+      <thead><tr><th class="col-plus" style="width:33%">Plus (+)</th><th class="col-minus" style="width:33%">Minus (&minus;)</th><th class="col-interest" style="width:34%">Interesting (?)</th></tr></thead>
+      <tbody><tr>
+        <td><textarea data-save="pmi3plus" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea></td>
+        <td><textarea data-save="pmi3minus" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea></td>
+        <td><textarea data-save="pmi3int" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea></td>
+      </tr></tbody>
+    </table>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support &mdash; PMI Sentence Starters</div>
+      <ul>
+        <li><strong>Plus:</strong> <em>A positive feature is&hellip; because&hellip;</em></li>
+        <li><strong>Minus:</strong> <em>A limitation is&hellip; which means&hellip;</em></li>
+        <li><strong>Interesting:</strong> <em>An interesting aspect is&hellip; because it suggests&hellip;</em></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== TEEL PARAGRAPH ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4DD;</span> TEEL PARAGRAPH STRUCTURE</div>
+
+    <div class="info-box"><strong>TEEL</strong> is a paragraph structure for research and analytical writing. Your paragraph should be <strong>6&ndash;8 sentences</strong> long.</div>
+
+    <div class="teel-box">
+      <div class="teel-row"><p><span class="teel-letter">T</span> Topic sentence</p><span class="sub-label">Introduce the main idea &mdash; name the restaurant and make a claim</span></div>
+      <div class="teel-row"><p><span class="teel-letter">E</span> Evidence</p><span class="sub-label">Provide specific facts, details, or examples</span></div>
+      <div class="teel-row"><p><span class="teel-letter">E</span> Explain</p><span class="sub-label">Explain HOW the evidence supports your topic sentence</span></div>
+      <div class="teel-row"><p><span class="teel-letter">L</span> Link</p><span class="sub-label">Connect back to the topic or link to the next point</span></div>
+    </div>
+  </section>
+
+  <!-- ===================== YOUR TEEL PARAGRAPH ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270F;</span> YOUR RESEARCH PARAGRAPH &mdash; Workbook Page 16</div>
+
+    <div class="info-box"><strong>Workbook page 16:</strong> Research ONE container restaurant in Sydney and write a TEEL paragraph of 6&ndash;8 sentences.</div>
+
+    <div class="question"><p>Restaurant name and location:</p><input type="text" data-save="teelRestaurant" placeholder="e.g. Smoke and Barrel, Barangaroo, Sydney"></div>
+
+    <div class="question">
+      <p>Your TEEL paragraph:</p>
+      <span class="hint">T = name and claim | E = specific facts | E = explain WHY it matters | L = connect to bigger picture</span>
+      <textarea data-save="teelParagraph" style="min-height:180px;" placeholder="[T] _________ in _________, Sydney, is an excellent example of...&#10;&#10;[E] The restaurant features...&#10;&#10;[E] This is sustainable because...&#10;&#10;[L] This demonstrates that container restaurants..."></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support &mdash; TEEL Scaffold</div>
+      <p>Use these sentence frames:</p>
+      <ul>
+        <li><strong>T:</strong> <em>The restaurant called ___ is located in ___.</em></li>
+        <li><strong>E:</strong> <em>It uses a shipping container by ___.</em></li>
+        <li><strong>E:</strong> <em>One key feature is ___. This is sustainable because ___.</em></li>
+        <li><strong>L:</strong> <em>This shows that container restaurants ___.</em></li>
+      </ul>
+    </div>
+
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#9650; Extension</div>
+      <p>Write a <strong>second TEEL paragraph</strong> comparing two container restaurants for sustainability.</p>
+      <textarea data-save="teelExt" class="tall" placeholder="[T] When comparing... and..., both demonstrate..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PEER REVIEW ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F91D;</span> PEER REVIEW</div>
+    <div class="question"><p>Partner&rsquo;s name:</p><input type="text" data-save="peerName" placeholder="Partner name"></div>
+    <div class="question"><p>One positive comment about their paragraph:</p><textarea data-save="peerPositive" placeholder="I liked how you..."></textarea></div>
+    <div class="question"><p>One suggestion for improvement:</p><textarea data-save="peerSuggest" placeholder="To improve, you could..."></textarea></div>
+  </section>
+
+  <!-- ===================== CONTAINER VS TRADITIONAL ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x2696;</span> CONTAINER VS TRADITIONAL RESTAURANT</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin:14px 0;border:2px solid var(--light-grey);border-radius:10px;overflow:hidden;">
+      <div style="padding:14px 18px;background:#E3F2FD;border-right:1px solid var(--light-grey);">
+        <div style="font-family:var(--font-heading);color:var(--blue);font-size:1rem;margin-bottom:8px;">Container Restaurant</div>
+        <ul style="margin-left:16px;font-size:.88rem;">
+          <li>Cost: $30,000&ndash;$80,000</li>
+          <li>Time: 2&ndash;6 months</li>
+          <li>Portable: Yes</li>
+          <li>Sustainable: Reuses existing structure</li>
+          <li>Width: Only 2.44 m</li>
+        </ul>
+      </div>
+      <div style="padding:14px 18px;background:#FFF8E1;">
+        <div style="font-family:var(--font-heading);color:var(--orange);font-size:1rem;margin-bottom:8px;">Traditional Restaurant</div>
+        <ul style="margin-left:16px;font-size:.88rem;">
+          <li>Cost: $200,000+</li>
+          <li>Time: 6&ndash;18 months</li>
+          <li>Portable: No (permanent)</li>
+          <li>Sustainable: All new materials</li>
+          <li>Width: Customisable</li>
+        </ul>
+      </div>
+    </div>
+    <div class="question">
+      <p>Which would YOU choose if opening a burger restaurant? Why?</p>
+      <textarea data-save="comparison" placeholder="I would choose a... because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== FOOD SAFETY INTRO ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F321;</span> FOOD SAFETY INTRODUCTION</div>
+    <div style="background:#FFEBEE;border:2px solid #C62828;border-radius:10px;padding:16px 20px;margin:14px 0;text-align:center;">
+      <div style="font-family:var(--font-heading);color:#C62828;font-size:1.2rem;">TEMPERATURE DANGER ZONE</div>
+      <div style="font-size:2rem;font-family:var(--font-heading);color:#C62828;margin:8px 0;">5&deg;C &mdash; 60&deg;C</div>
+      <div style="font-size:.9rem;color:var(--charcoal);">Bacteria multiply rapidly in this range. Food must not sit here for more than 4 hours.</div>
+    </div>
+    <div class="question">
+      <p>List 3 food safety requirements that will shape YOUR restaurant design:</p>
+      <textarea data-save="foodSafety" placeholder="1. &#10;2. &#10;3. "></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">Aa</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th style="width:28%">Term</th><th style="width:72%">Definition</th></tr></thead>
+      <tbody>
+        <tr><td class="term">PMI</td><td><textarea data-save="v1" placeholder="Plus, Minus, Interesting — a structured evaluation tool"></textarea></td></tr>
+        <tr><td class="term">TEEL</td><td><textarea data-save="v2" placeholder="Topic, Evidence, Explain, Link — a paragraph structure"></textarea></td></tr>
+        <tr><td class="term">Analysis</td><td><textarea data-save="v3" placeholder="Detailed examination to understand nature"></textarea></td></tr>
+        <tr><td class="term">Evaluation</td><td><textarea data-save="v4" placeholder="Judging quality, value or effectiveness"></textarea></td></tr>
+        <tr><td class="term">Portability</td><td><textarea data-save="v5" placeholder="Ability to be easily moved"></textarea></td></tr>
+        <tr><td class="term">Food safety</td><td><textarea data-save="v6" placeholder="Practices preventing foodborne illness"></textarea></td></tr>
+        <tr><td class="term">Temperature danger zone</td><td><textarea data-save="v7" placeholder="5–60°C — bacteria multiply rapidly"></textarea></td></tr>
+        <tr><td class="term">Insulation</td><td><textarea data-save="v8" placeholder="Material reducing heat transfer"></textarea></td></tr>
+        <tr><td class="term">Ventilation</td><td><textarea data-save="v9" placeholder="System for air circulation and extraction"></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x2714;</span> EXIT TICKET &mdash; Reflection</div>
+    <div class="question">
+      <p>Q1: What is one advantage and one disadvantage of a container restaurant compared to a traditional restaurant?</p>
+      <textarea data-save="exit1" class="tall" placeholder="Advantage: ...&#10;&#10;Disadvantage: ..."></textarea>
+    </div>
+    <div class="question">
+      <p>Q2: Name the 4 letters of TEEL and what each stands for.</p>
+      <textarea data-save="exit2" placeholder="T = &#10;E = &#10;E = &#10;L = "></textarea>
+    </div>
+
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; Did I Achieve the Success Criteria?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can complete a PMI table for 3 container restaurants with detailed points</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can research a local Sydney container restaurant</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can write a structured paragraph using TEEL format</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can compare container restaurants to traditional restaurants</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <div><strong>Outcomes:</strong> TE4-PDP-01 &bull; TE4-SDP-01 &bull; TE4-DES-01</div>
+    <div><strong>Workbook:</strong> Section 2, pp. 15&ndash;16</div>
+    <div>Keep this worksheet in your design folio</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const STORAGE_KEY='CTC-T1-L05';const indicator=document.getElementById('saveIndicator');let saveTimeout;
+  function saveAll(){const data={};document.querySelectorAll('[data-save]').forEach(function(el){const key=el.getAttribute('data-save');if(el.type==='checkbox'){data[key]=el.checked}else{data[key]=el.value}});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Could not save (storage full)'}}
+  function restoreAll(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;const data=JSON.parse(raw);document.querySelectorAll('[data-save]').forEach(function(el){const key=el.getAttribute('data-save');if(key in data){if(el.type==='checkbox'){el.checked=data[key]}else{el.value=data[key]}}})}catch(e){}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(saveTimeout);saveTimeout=setTimeout(saveAll,400)}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

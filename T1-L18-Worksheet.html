@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L18 Worksheet — Portfolio Completion and Self-Assessment</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"],select{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}select{resize:none;cursor:pointer}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Grade level boxes */
+.grade-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}
+.grade-card{border-radius:10px;padding:12px;text-align:center;font-size:.82rem}
+.grade-card .gc-letter{font-family:var(--font-heading);font-size:1.6rem;margin-bottom:4px}
+.grade-card .gc-label{font-weight:600;margin-bottom:4px}
+.grade-a{background:#E8F5E9;border:2px solid #4CAF50}.grade-a .gc-letter{color:#4CAF50}
+.grade-b{background:#E3F2FD;border:2px solid #2196F3}.grade-b .gc-letter{color:#2196F3}
+.grade-c{background:#FFF8E1;border:2px solid #FFC107}.grade-c .gc-letter{color:#FFC107}
+.grade-d{background:#FFF3E0;border:2px solid #FF9800}.grade-d .gc-letter{color:#FF9800}
+.grade-e{background:#FFEBEE;border:2px solid #F44336}.grade-e .gc-letter{color:#F44336}
+
+/* Assessment card */
+.assess-card{border-radius:10px;padding:18px 20px;margin-bottom:16px;border:2px solid var(--light-grey);border-left-width:5px;border-left-color:var(--orange)}
+.assess-card h4{font-family:var(--font-heading);font-size:1rem;color:var(--orange);margin-bottom:12px}
+.assess-field{margin-bottom:12px}
+.assess-field .sub-label{font-size:.85rem;color:var(--grey);font-weight:600;margin-bottom:4px;display:block}
+
+/* Checkpoint box */
+.checkpoint-box{background:var(--bg);border-radius:10px;padding:18px 22px;margin:14px 0;border:3px solid var(--blue)}
+.checkpoint-box h3{font-family:var(--font-heading);font-size:1.1rem;color:var(--blue);margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+
+/* Priority cards */
+.priority-cards{display:grid;grid-template-columns:1fr;gap:12px;margin:14px 0}
+.priority-card{background:var(--bg);border-radius:10px;padding:16px;border-left:5px solid var(--orange);counter-increment:priority}
+.priority-card .pc-num{font-family:var(--font-heading);font-size:1.1rem;color:var(--orange);margin-bottom:8px}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.grade-cards{grid-template-columns:repeat(3,1fr)}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"],select{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.grade-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.grade-a,.grade-b,.grade-c,.grade-d,.grade-e{-webkit-print-color-adjust:exact;print-color-adjust:exact}.assess-card{break-inside:avoid}.checkpoint-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.priority-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}.info-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L18</span>
+      <span class="ws-unit">Week 9 &bull; Section 4</span>
+    </div>
+    <h1 class="ws-title">Portfolio Completion and Self-Assessment</h1>
+    <p class="ws-subtitle">Self-assessing against the marking rubric and improving portfolio quality</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to self-assess our portfolio against the marking rubric and improve the quality of our work.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Workbook Audit</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Flip through every page of your workbook. Count how many pages are blank or incomplete.</p>
+    <div class="question">
+      <p>How many blank or incomplete pages do you have?</p>
+      <input type="text" data-save="doNowCount" placeholder="e.g. 4 pages">
+    </div>
+    <div class="question">
+      <p>List the page numbers that need work:</p>
+      <textarea data-save="doNowPages" placeholder="Pages that are blank or incomplete:&#10;p. &#10;p. &#10;p. &#10;p. "></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PORTFOLIO CHECKLIST ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F4CB;</span> PORTFOLIO CHECKLIST</div>
+    <div class="info-box">
+      <strong>Your portfolio = your workbook + your model + your photos.</strong> Use this checklist to confirm every section is complete before submission. Tick each item as you verify it.
+    </div>
+
+    <div class="self-assess">
+      <h3>Section 1 &mdash; Identifying and Defining</h3>
+      <div class="sc-check"><input type="checkbox" id="pc1" data-save="pc1"><label for="pc1">Think-Pair-Share: What is a shipping container? (p. 3)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc2" data-save="pc2"><label for="pc2">Video comprehension: How shipping containers are made (pp. 4&ndash;5)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc3" data-save="pc3"><label for="pc3">Isometric drawing of a shipping container (p. 6)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc4" data-save="pc4"><label for="pc4">Design terminology: Standardised, modular, intermodal (p. 7)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc5" data-save="pc5"><label for="pc5">Structural features brainstorm (p. 8)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc6" data-save="pc6"><label for="pc6">Flat vs Folded Strength Challenge (p. 9)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc7" data-save="pc7"><label for="pc7">Reusing, repurposing and recycling (p. 10)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc8" data-save="pc8"><label for="pc8">Crossword challenge (p. 11)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc9" data-save="pc9"><label for="pc9">Modern uses of shipping containers (p. 12)</label></div>
+    </div>
+
+    <div class="self-assess">
+      <h3>Section 2 &mdash; Research and Planning</h3>
+      <div class="sc-check"><input type="checkbox" id="pc10" data-save="pc10"><label for="pc10">Research collage: 12+ container food outlets (p. 14)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc11" data-save="pc11"><label for="pc11">PMI table on 3 container restaurants (p. 15)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc12" data-save="pc12"><label for="pc12">Sydney container restaurant research paragraph (p. 16)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc13" data-save="pc13"><label for="pc13">Essential spaces and equipment mind map (p. 17)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc14" data-save="pc14"><label for="pc14">Additional features table (p. 18)</label></div>
+    </div>
+
+    <div class="self-assess">
+      <h3>Section 3 &mdash; Producing and Implementing</h3>
+      <div class="sc-check"><input type="checkbox" id="pc15" data-save="pc15"><label for="pc15">External structure sketch with labels (pp. 20&ndash;21)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc16" data-save="pc16"><label for="pc16">Internal floor plan sketch with labels (pp. 22&ndash;23)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc17" data-save="pc17"><label for="pc17">Isometric drawing of container restaurant (pp. 24&ndash;25)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc18" data-save="pc18"><label for="pc18">Orthographic sketches &mdash; rough copy (p. 26)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc19" data-save="pc19"><label for="pc19">Orthographic sketches &mdash; good copy (p. 27)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc20" data-save="pc20"><label for="pc20">Scale and ratio calculations (p. 29)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc21" data-save="pc21"><label for="pc21">Digital or hand-drawn floor plan to scale (pp. 33&ndash;34)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc22" data-save="pc22"><label for="pc22">Model construction complete (pp. 36&ndash;37)</label></div>
+    </div>
+
+    <div class="self-assess">
+      <h3>Section 4 &mdash; Testing and Evaluating</h3>
+      <div class="sc-check"><input type="checkbox" id="pc23" data-save="pc23"><label for="pc23">Photos of completed model inserted (p. 38)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc24" data-save="pc24"><label for="pc24">Evaluation: 4 criteria ranked and explained (p. 39)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc25" data-save="pc25"><label for="pc25">Reflection: enjoyment, challenges, improvements (p. 40)</label></div>
+    </div>
+
+    <div class="self-assess">
+      <h3>Model and Photos</h3>
+      <div class="sc-check"><input type="checkbox" id="pc26" data-save="pc26"><label for="pc26">1:20 scale model fully assembled and complete</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc27" data-save="pc27"><label for="pc27">Model has interior equipment glued in place</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc28" data-save="pc28"><label for="pc28">Model has exterior details (signage, colour, awning)</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc29" data-save="pc29"><label for="pc29">Name written on the bottom of the model</label></div>
+      <div class="sc-check"><input type="checkbox" id="pc30" data-save="pc30"><label for="pc30">Multiple photos taken and printed or inserted digitally</label></div>
+    </div>
+  </section>
+
+  <!-- ===================== MARKING RUBRIC OVERVIEW ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4CA;</span> MARKING RUBRIC OVERVIEW</div>
+    <div class="info-box">
+      <strong>Understanding the rubric:</strong> Your assessment task is marked using a five-level rubric from A (Outstanding) to E (Limited). Read each level carefully to understand what the markers are looking for. Use this to set a target grade and identify what you need to do to reach it.
+    </div>
+    <div class="grade-cards">
+      <div class="grade-card grade-a">
+        <div class="gc-letter">A</div>
+        <div class="gc-label">Outstanding</div>
+        <div>Detailed, thorough work across all sections. Creative and well-communicated design ideas. Excellent model quality.</div>
+      </div>
+      <div class="grade-card grade-b">
+        <div class="gc-letter">B</div>
+        <div class="gc-label">High</div>
+        <div>Thorough work with clear design communication. Strong model construction with good detail.</div>
+      </div>
+      <div class="grade-card grade-c">
+        <div class="gc-letter">C</div>
+        <div class="gc-label">Sound</div>
+        <div>Satisfactory work across most sections. Design ideas are communicated adequately. Model is functional.</div>
+      </div>
+      <div class="grade-card grade-d">
+        <div class="gc-letter">D</div>
+        <div class="gc-label">Basic</div>
+        <div>Some sections incomplete. Design ideas are partially communicated. Model lacks detail.</div>
+      </div>
+      <div class="grade-card grade-e">
+        <div class="gc-letter">E</div>
+        <div class="gc-label">Limited</div>
+        <div>Many sections incomplete or missing. Minimal design communication. Model incomplete or not attempted.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SELF-ASSESSMENT ACTIVITY ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270D;</span> SELF-ASSESSMENT &mdash; Grade Yourself</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">For each rubric area below, select the grade you believe you deserve and explain <strong>why</strong> with specific evidence from your work.</p>
+
+    <!-- Area 1: Design Communication -->
+    <div class="assess-card">
+      <h4>Area 1 &mdash; Design Communication (Sketches, Drawings, Labels)</h4>
+      <div class="assess-field">
+        <span class="sub-label">What grade do you give yourself? (A&ndash;E)</span>
+        <select data-save="grade1">
+          <option value="">-- Select a grade --</option>
+          <option value="A">A &mdash; Outstanding</option>
+          <option value="B">B &mdash; High</option>
+          <option value="C">C &mdash; Sound</option>
+          <option value="D">D &mdash; Basic</option>
+          <option value="E">E &mdash; Limited</option>
+        </select>
+      </div>
+      <div class="assess-field">
+        <span class="sub-label">Why? Give specific evidence from your workbook.</span>
+        <textarea data-save="grade1why" placeholder="I gave myself this grade because my sketches..."></textarea>
+      </div>
+    </div>
+
+    <!-- Area 2: Research -->
+    <div class="assess-card">
+      <h4>Area 2 &mdash; Research (Collage, PMI, Sydney Restaurant, Mind Map)</h4>
+      <div class="assess-field">
+        <span class="sub-label">What grade do you give yourself? (A&ndash;E)</span>
+        <select data-save="grade2">
+          <option value="">-- Select a grade --</option>
+          <option value="A">A &mdash; Outstanding</option>
+          <option value="B">B &mdash; High</option>
+          <option value="C">C &mdash; Sound</option>
+          <option value="D">D &mdash; Basic</option>
+          <option value="E">E &mdash; Limited</option>
+        </select>
+      </div>
+      <div class="assess-field">
+        <span class="sub-label">Why? Give specific evidence from your workbook.</span>
+        <textarea data-save="grade2why" placeholder="I gave myself this grade because my research..."></textarea>
+      </div>
+    </div>
+
+    <!-- Area 3: Technical Drawings -->
+    <div class="assess-card">
+      <h4>Area 3 &mdash; Technical Drawings (Isometric, Orthographic, Floor Plan)</h4>
+      <div class="assess-field">
+        <span class="sub-label">What grade do you give yourself? (A&ndash;E)</span>
+        <select data-save="grade3">
+          <option value="">-- Select a grade --</option>
+          <option value="A">A &mdash; Outstanding</option>
+          <option value="B">B &mdash; High</option>
+          <option value="C">C &mdash; Sound</option>
+          <option value="D">D &mdash; Basic</option>
+          <option value="E">E &mdash; Limited</option>
+        </select>
+      </div>
+      <div class="assess-field">
+        <span class="sub-label">Why? Give specific evidence from your workbook.</span>
+        <textarea data-save="grade3why" placeholder="I gave myself this grade because my technical drawings..."></textarea>
+      </div>
+    </div>
+
+    <!-- Area 4: Construction -->
+    <div class="assess-card">
+      <h4>Area 4 &mdash; Construction (Scale Model Quality, Accuracy, Detail)</h4>
+      <div class="assess-field">
+        <span class="sub-label">What grade do you give yourself? (A&ndash;E)</span>
+        <select data-save="grade4">
+          <option value="">-- Select a grade --</option>
+          <option value="A">A &mdash; Outstanding</option>
+          <option value="B">B &mdash; High</option>
+          <option value="C">C &mdash; Sound</option>
+          <option value="D">D &mdash; Basic</option>
+          <option value="E">E &mdash; Limited</option>
+        </select>
+      </div>
+      <div class="assess-field">
+        <span class="sub-label">Why? Give specific evidence from your model.</span>
+        <textarea data-save="grade4why" placeholder="I gave myself this grade because my model..."></textarea>
+      </div>
+    </div>
+
+    <!-- Area 5: Evaluation -->
+    <div class="assess-card">
+      <h4>Area 5 &mdash; Evaluation (Criteria Analysis, Reflection, Improvements)</h4>
+      <div class="assess-field">
+        <span class="sub-label">What grade do you give yourself? (A&ndash;E)</span>
+        <select data-save="grade5">
+          <option value="">-- Select a grade --</option>
+          <option value="A">A &mdash; Outstanding</option>
+          <option value="B">B &mdash; High</option>
+          <option value="C">C &mdash; Sound</option>
+          <option value="D">D &mdash; Basic</option>
+          <option value="E">E &mdash; Limited</option>
+        </select>
+      </div>
+      <div class="assess-field">
+        <span class="sub-label">Why? Give specific evidence from your workbook.</span>
+        <textarea data-save="grade5why" placeholder="I gave myself this grade because my evaluation..."></textarea>
+      </div>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#x1F7E2; Support</div>
+      <ul>
+        <li>Compare your work to the grade descriptions above &mdash; which one sounds most like your work?</li>
+        <li>Use sentence starters: &ldquo;I gave myself a ___ because my work shows...&rdquo;</li>
+        <li>Ask a partner to check your self-assessment and give honest feedback</li>
+      </ul>
+    </div>
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#x1F7E3; Extension</div>
+      <ul>
+        <li>For each area, identify the specific difference between your current grade and the grade above</li>
+        <li>Write an action step that would move your work from your current grade to the next level</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== TOP 3 PRIORITIES ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F3AF;</span> TOP 3 IMPROVEMENT PRIORITIES</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">Based on your self-assessment, identify the <strong>three most important things</strong> you need to improve before submitting your portfolio.</p>
+
+    <div class="priority-cards">
+      <div class="priority-card">
+        <div class="pc-num">Priority 1 &mdash; Most Urgent</div>
+        <div class="question" style="margin-bottom:0">
+          <span class="sub-label">What do you need to fix or complete?</span>
+          <textarea data-save="priority1" placeholder="The most important thing I need to do is..."></textarea>
+        </div>
+      </div>
+      <div class="priority-card">
+        <div class="pc-num">Priority 2</div>
+        <div class="question" style="margin-bottom:0">
+          <span class="sub-label">What do you need to fix or complete?</span>
+          <textarea data-save="priority2" placeholder="The second thing I need to do is..."></textarea>
+        </div>
+      </div>
+      <div class="priority-card">
+        <div class="pc-num">Priority 3</div>
+        <div class="question" style="margin-bottom:0">
+          <span class="sub-label">What do you need to fix or complete?</span>
+          <textarea data-save="priority3" placeholder="The third thing I need to do is..."></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHECKPOINT 4 ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x2705;</span> CHECKPOINT 4 &mdash; Final Submission Check</div>
+    <div class="checkpoint-box">
+      <h3>Submission Readiness Checklist</h3>
+      <div class="sc-check"><input type="checkbox" id="cp1" data-save="cp1"><label for="cp1">Section 1 (Identifying and Defining) &mdash; ALL pages complete</label></div>
+      <div class="sc-check"><input type="checkbox" id="cp2" data-save="cp2"><label for="cp2">Section 2 (Research and Planning) &mdash; ALL pages complete</label></div>
+      <div class="sc-check"><input type="checkbox" id="cp3" data-save="cp3"><label for="cp3">Section 3 (Producing and Implementing) &mdash; ALL pages complete</label></div>
+      <div class="sc-check"><input type="checkbox" id="cp4" data-save="cp4"><label for="cp4">Section 4 (Testing and Evaluating) &mdash; ALL pages complete</label></div>
+      <div class="sc-check"><input type="checkbox" id="cp5" data-save="cp5"><label for="cp5">1:20 scale model &mdash; fully assembled with interior and exterior details</label></div>
+      <div class="sc-check"><input type="checkbox" id="cp6" data-save="cp6"><label for="cp6">Model photos &mdash; inserted into workbook page 38</label></div>
+      <div class="sc-check"><input type="checkbox" id="cp7" data-save="cp7"><label for="cp7">Name and class on the front cover of the workbook</label></div>
+      <div class="sc-check"><input type="checkbox" id="cp8" data-save="cp8"><label for="cp8">Name on the bottom of the model</label></div>
+    </div>
+  </section>
+
+  <!-- ===================== TEACHER FEEDBACK ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F4E3;</span> TEACHER FEEDBACK</div>
+    <div class="info-box">
+      <strong>This section is for your teacher.</strong> Your teacher will provide written feedback on your portfolio during or after this lesson. You may also receive verbal feedback &mdash; write it down here so you remember it.
+    </div>
+    <div class="question">
+      <p>Teacher feedback:</p>
+      <textarea class="tall" data-save="teacherFeedback" placeholder="Teacher comments will go here..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">&#x1F4D6;</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th>Term</th><th>Definition</th><th>My Example / Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Self-assessment</td><td>Judging the quality of your own work against set criteria</td><td><textarea data-save="vocab1" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Rubric</td><td>A guide that describes what is expected at each level of achievement</td><td><textarea data-save="vocab2" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Portfolio</td><td>A collection of work that demonstrates skills and progress over time</td><td><textarea data-save="vocab3" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Criterion / Criteria</td><td>A standard or rule used to judge something (singular / plural)</td><td><textarea data-save="vocab4" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Quality</td><td>The standard of something when compared against expectations</td><td><textarea data-save="vocab5" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Improvement</td><td>Making something better or of a higher standard</td><td><textarea data-save="vocab6" placeholder="My note..."></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F3AB;</span> EXIT TICKET</div>
+    <div class="question">
+      <p>1. What is the purpose of self-assessment? Why is it useful for students?</p>
+      <textarea data-save="exit1" placeholder="Self-assessment is useful because..."></textarea>
+    </div>
+    <div class="question">
+      <p>2. Which rubric area (Design Communication, Research, Technical Drawings, Construction, or Evaluation) is your strongest? Give one reason why.</p>
+      <textarea data-save="exit2" placeholder="My strongest area is... because..."></textarea>
+    </div>
+    <div class="question">
+      <p>3. What is the ONE most important thing you still need to complete or improve before submission?</p>
+      <textarea data-save="exit3" placeholder="The most important thing I need to do is..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SELF-ASSESSMENT ===================== -->
+  <section class="reflection">
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; How Did I Go?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can use a portfolio checklist to identify incomplete work in my workbook</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can self-assess my work against a marking rubric and justify my grade</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can identify my top improvement priorities and create a plan to address them</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can confirm my portfolio is complete and ready for submission</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <span><strong>From Container to Countertop</strong> &mdash; Year 8 Technology (Mandatory)</span>
+    <span>TE4-DES-01 &bull; TE4-PPM-01</span>
+  </footer>
+
+</div>
+
+<script>
+;(function(){
+  var STORAGE_KEY='CTC-T1-L18';
+  var indicator=document.getElementById('saveIndicator');
+  var timer=null;
+  function save(){var data={};document.querySelectorAll('[data-save]').forEach(function(el){var key=el.getAttribute('data-save');if(el.type==='checkbox'){data[key]=el.checked}else{data[key]=el.value}});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Save failed'}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(timer);timer=setTimeout(save,400)}
+  function restoreAll(){try{var raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;var data=JSON.parse(raw);Object.keys(data).forEach(function(k){var el=document.querySelector('[data-save="'+k+'"]');if(!el)return;if(el.type==='checkbox'){el.checked=data[k]}else{el.value=data[k]}})}catch(e){}}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

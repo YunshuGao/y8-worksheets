@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L08 Worksheet — Isometric Drawing of Container Restaurant</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Principle cards */
+.principle-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+.principle-card{background:var(--bg);border-radius:10px;padding:14px;text-align:center;border-top:4px solid var(--blue)}
+.principle-card .pc-title{font-family:var(--font-heading);font-size:.9rem;color:var(--blue);margin-bottom:4px}
+.principle-card .pc-desc{font-size:.82rem;color:var(--charcoal)}
+
+/* Line weight table */
+.lw-table{width:100%;border-collapse:collapse;margin:14px 0}
+.lw-table th{background:var(--orange);color:var(--white);font-family:var(--font-heading);font-size:.85rem;padding:10px 14px;text-align:left}
+.lw-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}
+
+/* Error cards */
+.error-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.error-card{background:#FFEBEE;border-radius:10px;padding:12px;border-left:4px solid #C62828}
+.error-card .ec-title{font-family:var(--font-heading);font-size:.88rem;color:#C62828;margin-bottom:4px}
+.error-card .ec-desc{font-size:.82rem;color:var(--charcoal)}
+
+/* Draw area */
+.draw-area{border:2px dashed var(--grey);border-radius:10px;min-height:200px;display:flex;align-items:center;justify-content:center;margin:14px 0;color:var(--grey);font-size:.9rem;font-style:italic;padding:20px;text-align:center}
+
+/* Check table */
+.check-table{width:100%;border-collapse:collapse;margin:14px 0}
+.check-table th{background:var(--green);color:var(--white);font-family:var(--font-heading);font-size:.85rem;padding:10px 14px;text-align:left}
+.check-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:middle}
+.check-table td:first-child{font-weight:600}
+.check-table select{padding:6px 10px;border:1.5px solid var(--light-grey);border-radius:6px;font-family:var(--font-body);font-size:.85rem;background:#FAFAF8}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.principle-cards{grid-template-columns:1fr}.error-cards{grid-template-columns:1fr}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th,.lw-table th,.check-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.principle-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.error-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}.draw-area{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L08</span>
+      <span class="ws-unit">Week 4 &bull; Section 3</span>
+    </div>
+    <h1 class="ws-title">Isometric Drawing of Container Restaurant</h1>
+    <p class="ws-subtitle">Drawing your container burger restaurant design in 3D isometric view with annotations</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to draw our container burger restaurant design in isometric view.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Isometric Warm-Up</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Draw a simple rectangular box on isometric dot paper using 30-degree angles.</p>
+    <span class="hint" style="display:block;margin-bottom:14px;">Start from a single corner point. Count across 2 dots, up 1 dot for the correct 30&deg; angle.</span>
+    <div class="draw-area">Practice your isometric box here (or use dot paper)</div>
+    <div class="question">
+      <p>What angle do the receding lines go at in isometric drawing?</p>
+      <input type="text" data-save="doNow1" placeholder="____ degrees">
+    </div>
+  </section>
+
+  <!-- ===================== ISOMETRIC PRINCIPLES ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4D0;</span> REVIEW &mdash; Isometric Drawing Principles</div>
+
+    <div class="principle-cards">
+      <div class="principle-card">
+        <div class="pc-title">Equal Measure</div>
+        <div class="pc-desc">Three axes at 120&deg; apart</div>
+      </div>
+      <div class="principle-card">
+        <div class="pc-title">Vertical Lines</div>
+        <div class="pc-desc">Always stay perfectly vertical</div>
+      </div>
+      <div class="principle-card">
+        <div class="pc-title">30&deg; Receding</div>
+        <div class="pc-desc">Horizontal lines at 30&deg;</div>
+      </div>
+      <div class="principle-card">
+        <div class="pc-title">No Vanishing Point</div>
+        <div class="pc-desc">Unlike perspective drawing</div>
+      </div>
+      <div class="principle-card">
+        <div class="pc-title">Parallel Lines</div>
+        <div class="pc-desc">Stay parallel &mdash; never converge</div>
+      </div>
+      <div class="principle-card">
+        <div class="pc-title">Same Scale</div>
+        <div class="pc-desc">Equal scale on all three axes</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>In your own words, how is isometric drawing different from perspective drawing?</p>
+      <textarea data-save="principles" placeholder="Isometric is different because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== CONTAINER DIMENSIONS ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4CF;</span> CONTAINER DIMENSIONS FOR DRAWING</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0;">
+      <div style="background:#E3F2FD;border-radius:10px;padding:16px;border-top:4px solid var(--blue);text-align:center;">
+        <div style="font-family:var(--font-heading);color:var(--blue);font-size:1rem;">Real Container</div>
+        <div style="font-size:1.4rem;font-family:var(--font-heading);color:var(--charcoal);margin:8px 0;">6.1 m &times; 2.44 m &times; 2.59 m</div>
+        <div style="font-size:.85rem;color:var(--grey);">Length &times; Width &times; Height</div>
+      </div>
+      <div style="background:#FFF8E1;border-radius:10px;padding:16px;border-top:4px solid var(--orange);text-align:center;">
+        <div style="font-family:var(--font-heading);color:var(--orange);font-size:1rem;">Drawing Size (approx.)</div>
+        <div style="font-size:1.4rem;font-family:var(--font-heading);color:var(--charcoal);margin:8px 0;">~20 cm &times; ~8 cm &times; ~8 cm</div>
+        <div style="font-size:.85rem;color:var(--grey);">Proportional, not to exact scale</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== LINE WEIGHT ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x270F;</span> LINE WEIGHT FOR DEPTH AND CLARITY</div>
+
+    <table class="lw-table">
+      <thead><tr><th style="width:25%">Line Type</th><th style="width:25%">Thickness</th><th style="width:25%">Pencil</th><th style="width:25%">Used For</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Outline</strong></td><td>0.5&ndash;0.7 mm</td><td>2B / 4B</td><td>Main structure edges</td></tr>
+        <tr><td><strong>Detail</strong></td><td>0.3 mm</td><td>HB</td><td>Windows, doors, features</td></tr>
+        <tr><td><strong>Hidden</strong></td><td>Dashed, thin</td><td>HB</td><td>Edges you cannot see</td></tr>
+        <tr><td><strong>Dimension</strong></td><td>Thin with arrows</td><td>2H</td><td>Measurements</td></tr>
+        <tr><td><strong>Leader</strong></td><td>Thin</td><td>2H</td><td>Connecting labels to features</td></tr>
+      </tbody>
+    </table>
+
+    <div class="question">
+      <p>Why is line weight important in technical drawings?</p>
+      <textarea data-save="lineWeight" placeholder="Line weight is important because it helps..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN ACTIVITY ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F4D0;</span> ACTIVITY &mdash; Isometric Drawing (Workbook pp. 23&ndash;24)</div>
+
+    <div class="info-box">
+      <strong>Workbook Section 3, Item 18 (pp. 23&ndash;24):</strong> Draw your container burger restaurant in <strong>isometric view</strong>. This is the main drawing activity for this lesson.
+    </div>
+
+    <div class="question">
+      <p>Before you draw, plan which features you will include:</p>
+      <textarea data-save="isoFeatures" class="tall" placeholder="External features I will include:&#10;1. Serving window (on which face?)&#10;2. Entry door (on which face?)&#10;3. Awning (extending from where?)&#10;4. Signage (on which face?)&#10;5. Ventilation (on which face?)&#10;6. Steps/ramp (at which end?)"></textarea>
+    </div>
+
+    <div class="question">
+      <p>Drawing Progress Checklist:</p>
+    </div>
+    <table class="check-table">
+      <thead><tr><th style="width:60%">Step</th><th style="width:40%">Done?</th></tr></thead>
+      <tbody>
+        <tr><td>Container shell drawn with 30&deg; angles</td><td><select data-save="iso1"><option value="">Select</option><option value="yes">Yes &#x2714;</option><option value="no">Not yet</option></select></td></tr>
+        <tr><td>All vertical lines truly vertical</td><td><select data-save="iso2"><option value="">Select</option><option value="yes">Yes &#x2714;</option><option value="no">Not yet</option></select></td></tr>
+        <tr><td>At least 3 external features added</td><td><select data-save="iso3"><option value="">Select</option><option value="yes">Yes &#x2714;</option><option value="no">Not yet</option></select></td></tr>
+        <tr><td>Correct line weight (thick outlines, thin details)</td><td><select data-save="iso4"><option value="">Select</option><option value="yes">Yes &#x2714;</option><option value="no">Not yet</option></select></td></tr>
+        <tr><td>Annotations with leader lines</td><td><select data-save="iso5"><option value="">Select</option><option value="yes">Yes &#x2714;</option><option value="no">Not yet</option></select></td></tr>
+        <tr><td>Name and title included</td><td><select data-save="iso6"><option value="">Select</option><option value="yes">Yes &#x2714;</option><option value="no">Not yet</option></select></td></tr>
+      </tbody>
+    </table>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <ul>
+        <li>Use the pre-drawn template with the container outline already provided</li>
+        <li>Focus on drawing the shell first, then add window + door only</li>
+        <li>Use dot paper &mdash; count across 2, up 1 for the correct angle</li>
+        <li>Ask a peer buddy or teacher for help with angles</li>
+      </ul>
+    </div>
+
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#9650; Extension</div>
+      <p>Add <strong>shading and hatching</strong> to show different materials. Draw an <strong>exploded isometric view</strong> or include a <strong>human figure for scale</strong>.</p>
+      <textarea data-save="isoExt" placeholder="Additional techniques I used:&#10;1. &#10;2. "></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PEER REVIEW ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F91D;</span> PEER REVIEW &mdash; Swap and Check</div>
+    <div class="question"><p>Partner&rsquo;s name:</p><input type="text" data-save="peerName" placeholder="Partner name"></div>
+    <div class="question">
+      <p>Are their 30-degree angles correct?</p>
+      <select data-save="peer1" style="width:200px;padding:8px 12px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.9rem;">
+        <option value="">Select...</option>
+        <option value="yes">Yes &mdash; correct</option>
+        <option value="mostly">Mostly correct</option>
+        <option value="no">Need adjustment</option>
+      </select>
+    </div>
+    <div class="question">
+      <p>Are parallel lines truly parallel?</p>
+      <select data-save="peer2" style="width:200px;padding:8px 12px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.9rem;">
+        <option value="">Select...</option>
+        <option value="yes">Yes</option>
+        <option value="no">Some converge</option>
+      </select>
+    </div>
+    <div class="question"><p>One positive comment:</p><textarea data-save="peerPositive" placeholder="I liked how you..."></textarea></div>
+    <div class="question"><p>One suggestion:</p><textarea data-save="peerSuggest" placeholder="To improve, you could..."></textarea></div>
+  </section>
+
+  <!-- ===================== COMMON ERRORS ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x26A0;</span> COMMON ISOMETRIC ERRORS TO AVOID</div>
+
+    <div class="error-cards">
+      <div class="error-card">
+        <div class="ec-title">45&deg; instead of 30&deg;</div>
+        <div class="ec-desc">Most common error! Use dot paper or set square to check.</div>
+      </div>
+      <div class="error-card">
+        <div class="ec-title">Leaning Verticals</div>
+        <div class="ec-desc">Vertical lines MUST be perfectly vertical &mdash; use a ruler.</div>
+      </div>
+      <div class="error-card">
+        <div class="ec-title">Wrong Face Angle</div>
+        <div class="ec-desc">Features must follow the angle of the face they sit on.</div>
+      </div>
+      <div class="error-card">
+        <div class="ec-title">Incorrect Proportions</div>
+        <div class="ec-desc">Container is 2.5&times; longer than it is wide &mdash; check ratio.</div>
+      </div>
+      <div class="error-card">
+        <div class="ec-title">Freehand Lines</div>
+        <div class="ec-desc">Use a ruler for all straight lines &mdash; freehand looks messy.</div>
+      </div>
+      <div class="error-card">
+        <div class="ec-title">Missing Labels</div>
+        <div class="ec-desc">Always annotate your drawing with leader lines and labels.</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>Which error did you need to watch out for most?</p>
+      <textarea data-save="errorWatch" placeholder="I needed to be careful about..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">Aa</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th style="width:28%">Term</th><th style="width:72%">Definition</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Isometric drawing</td><td><textarea data-save="v1" placeholder="3D drawing using equal 30° angles on all axes"></textarea></td></tr>
+        <tr><td class="term">30-degree angle</td><td><textarea data-save="v2" placeholder="Angle of receding lines from horizontal"></textarea></td></tr>
+        <tr><td class="term">Line weight</td><td><textarea data-save="v3" placeholder="Thickness of lines for different purposes"></textarea></td></tr>
+        <tr><td class="term">Annotation</td><td><textarea data-save="v4" placeholder="Written description on a drawing"></textarea></td></tr>
+        <tr><td class="term">Proportion</td><td><textarea data-save="v5" placeholder="Correct size relationship between parts"></textarea></td></tr>
+        <tr><td class="term">Parallel lines</td><td><textarea data-save="v6" placeholder="Lines that never meet — same direction and spacing"></textarea></td></tr>
+        <tr><td class="term">Leader line</td><td><textarea data-save="v7" placeholder="Thin line connecting a label to a feature"></textarea></td></tr>
+        <tr><td class="term">Depth</td><td><textarea data-save="v8" placeholder="Illusion of 3D space in a drawing"></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x2714;</span> EXIT TICKET &mdash; Reflection</div>
+
+    <div class="question">
+      <p>Q1: Name two key rules about angles in isometric drawing.</p>
+      <textarea data-save="exit1" placeholder="1. &#10;2. "></textarea>
+    </div>
+    <div class="question">
+      <p>Q2: List three external features you included in your isometric drawing.</p>
+      <textarea data-save="exit2" placeholder="1. &#10;2. &#10;3. "></textarea>
+    </div>
+    <div class="question">
+      <p>Q3: What is one thing you would improve about your drawing?</p>
+      <textarea data-save="exit3" placeholder="I would improve..."></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <ul>
+        <li>Angle rules: receding lines at 30&deg;, vertical lines stay vertical, parallel lines stay parallel</li>
+        <li>Features: serving window, door, awning, signage, ventilation, steps/ramp</li>
+      </ul>
+    </div>
+
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; Did I Achieve the Success Criteria?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can draw an isometric view using 30-degree angles</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can include external features from my design</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can use line weight variation for depth and clarity</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can add annotations and labels to my drawing</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <div><strong>Outcomes:</strong> TE4-DES-01 &bull; TE4-PPM-01</div>
+    <div><strong>Workbook:</strong> Section 3, pp. 23&ndash;24</div>
+    <div>Keep this worksheet in your design folio</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const STORAGE_KEY='CTC-T1-L08';const indicator=document.getElementById('saveIndicator');let saveTimeout;
+  function saveAll(){const data={};document.querySelectorAll('[data-save]').forEach(function(el){const key=el.getAttribute('data-save');if(el.type==='checkbox'){data[key]=el.checked}else{data[key]=el.value}});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Could not save (storage full)'}}
+  function restoreAll(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;const data=JSON.parse(raw);document.querySelectorAll('[data-save]').forEach(function(el){const key=el.getAttribute('data-save');if(key in data){if(el.type==='checkbox'){el.checked=data[key]}else{el.value=data[key]}}})}catch(e){}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(saveTimeout);saveTimeout=setTimeout(saveAll,400)}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

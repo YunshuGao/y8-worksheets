@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L02 Worksheet — Container Features and Isometric Drawing</title>
+<style>
+/* ============================================================
+   FROM CONTAINER TO COUNTERTOP — WORKSHEET THEME
+   Year 8 Technology Mandatory | Term 1, 2026
+   ============================================================ */
+
+:root {
+  --blue: #1B4965;
+  --orange: #E07A3A;
+  --grey: #5C6B73;
+  --yellow: #F2C744;
+  --bg: #F5F0EB;
+  --charcoal: #2D3142;
+  --green: #7FB069;
+  --purple: #8E5DB2;
+  --white: #FFFFFF;
+  --light-grey: #E8E4E0;
+  --font-heading: "Franklin Gothic Medium", "DIN Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--light-grey);
+  color: var(--charcoal);
+  line-height: 1.55;
+  padding-top: 56px;
+}
+
+/* ---- TOOLBAR ---- */
+.toolbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--charcoal); color: var(--white);
+  padding: 10px 24px; height: 56px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.toolbar-left { display: flex; align-items: center; gap: 14px; }
+.toolbar-title { font-family: var(--font-heading); font-size: 1rem; letter-spacing: .5px; }
+.save-indicator { font-size: .8rem; opacity: .7; transition: opacity .3s; }
+.save-indicator.saving { opacity: 1; color: var(--yellow); }
+.toolbar-right { display: flex; gap: 10px; }
+.toolbar-right button {
+  font-family: var(--font-body); font-size: .85rem; font-weight: 600;
+  border: none; border-radius: 6px; padding: 8px 16px; cursor: pointer;
+  transition: transform .1s, box-shadow .15s;
+}
+.toolbar-right button:hover { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+.btn-pdf { background: var(--orange); color: var(--white); }
+.btn-clear { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.3) !important; }
+.btn-clear:hover { border-color: #ff6b6b !important; color: #ff6b6b; }
+
+/* ---- WORKSHEET CONTAINER ---- */
+.worksheet {
+  max-width: 860px; margin: 24px auto; background: var(--white);
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,.08);
+}
+
+/* ---- HEADER ---- */
+.ws-header {
+  background: linear-gradient(135deg, var(--blue) 0%, #234E6F 100%);
+  color: var(--white); padding: 32px 36px 28px;
+  position: relative; overflow: hidden;
+}
+.ws-header::after {
+  content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 220px;
+  background: repeating-linear-gradient(
+    90deg, transparent, transparent 18px,
+    rgba(255,255,255,.04) 18px, rgba(255,255,255,.04) 20px
+  );
+}
+.ws-header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+.ws-badge {
+  font-family: var(--font-heading); font-size: .85rem;
+  background: var(--orange); padding: 4px 14px; border-radius: 20px;
+  letter-spacing: 1px; font-weight: 700; white-space: nowrap;
+}
+.ws-unit { font-size: .8rem; opacity: .75; font-style: italic; }
+.ws-title { font-family: var(--font-heading); font-size: 1.8rem; margin: 8px 0 4px; letter-spacing: .5px; }
+.ws-subtitle { font-size: .95rem; opacity: .85; }
+.ws-meta {
+  display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px;
+  border-top: 1px solid rgba(255,255,255,.2); padding-top: 14px;
+}
+.ws-meta label { font-size: .8rem; opacity: .7; display: block; margin-bottom: 2px; }
+.ws-meta input {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+  color: var(--white); padding: 6px 12px; border-radius: 6px;
+  font-family: var(--font-body); font-size: .9rem; width: 200px;
+}
+.ws-meta input::placeholder { color: rgba(255,255,255,.4); }
+.ws-meta input:focus { outline: none; border-color: var(--yellow); background: rgba(255,255,255,.18); }
+
+/* ---- LEARNING INTENTION BAR ---- */
+.li-bar {
+  background: var(--bg); border-left: 5px solid var(--blue);
+  padding: 16px 28px; font-size: .9rem;
+}
+.li-bar strong { color: var(--blue); }
+
+/* ---- SECTIONS ---- */
+section { padding: 28px 36px; border-top: 1px solid var(--light-grey); }
+.section-label {
+  font-family: var(--font-heading); font-size: 1.15rem; text-transform: uppercase;
+  letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.section-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 8px; font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* Section colour themes */
+.do-now .section-label { color: var(--charcoal); }
+.do-now .section-icon { background: var(--yellow); }
+.vocabulary .section-label { color: var(--blue); }
+.vocabulary .section-icon { background: var(--blue); color: var(--white); }
+.class-notes .section-label { color: var(--charcoal); }
+.class-notes .section-icon { background: var(--grey); color: var(--white); }
+.activity .section-label { color: var(--charcoal); }
+.activity .section-icon { background: var(--orange); color: var(--white); }
+.reflection .section-label { color: var(--charcoal); }
+.reflection .section-icon { background: var(--blue); color: var(--white); }
+
+/* ---- INPUTS ---- */
+textarea, input[type="text"] {
+  width: 100%; border: 1.5px solid var(--light-grey); border-radius: 8px;
+  padding: 10px 14px; font-family: var(--font-body); font-size: .92rem;
+  line-height: 1.6; color: var(--charcoal); background: #FAFAF8;
+  transition: border-color .2s, box-shadow .2s; resize: vertical;
+}
+textarea:focus, input[type="text"]:focus {
+  outline: none; border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(27,73,101,.12);
+}
+textarea { min-height: 70px; }
+textarea.tall { min-height: 100px; }
+
+/* ---- QUESTION BLOCKS ---- */
+.question { margin-bottom: 20px; }
+.question p { margin-bottom: 8px; font-weight: 600; }
+.question .hint { font-weight: 400; font-size: .85rem; color: var(--grey); font-style: italic; margin-bottom: 8px; }
+.sub-label { font-size: .82rem; color: var(--grey); margin-bottom: 4px; display: block; }
+
+/* ---- DO NOW: TPS steps ---- */
+.tps-steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  margin-bottom: 18px;
+}
+.tps-step {
+  background: var(--bg); border-radius: 10px; padding: 14px; text-align: center;
+}
+.tps-step .step-icon { font-size: 1.6rem; margin-bottom: 4px; }
+.tps-step .step-title {
+  font-family: var(--font-heading); font-size: .9rem;
+  text-transform: uppercase; letter-spacing: 1px; color: var(--charcoal);
+}
+.tps-step .step-desc { font-size: .8rem; color: var(--grey); margin-top: 2px; }
+
+/* ---- VOCABULARY TABLE ---- */
+.vocab-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+.vocab-table th {
+  background: var(--blue); color: var(--white);
+  font-family: var(--font-heading); font-size: .85rem;
+  text-transform: uppercase; letter-spacing: 1px;
+  padding: 10px 14px; text-align: left;
+}
+.vocab-table td {
+  padding: 8px 14px; border-bottom: 1px solid var(--light-grey);
+  vertical-align: top; font-size: .9rem;
+}
+.vocab-table tr:nth-child(even) td { background: #FAFAF8; }
+.vocab-table .term { font-weight: 700; color: var(--blue); white-space: nowrap; }
+.vocab-table td textarea {
+  min-height: 40px; font-size: .85rem; padding: 6px 10px;
+}
+
+/* ---- DIFFERENTIATION BOXES ---- */
+.diff-box {
+  border-radius: 10px; padding: 16px 20px; margin-top: 16px;
+  font-size: .88rem;
+}
+.diff-box .diff-label {
+  font-family: var(--font-heading); font-size: .8rem;
+  text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.diff-support {
+  background: #F0F7ED; border: 2px solid var(--green); border-left-width: 5px;
+}
+.diff-support .diff-label { color: var(--green); }
+.diff-extension {
+  background: #F3EDF8; border: 2px solid var(--purple); border-left-width: 5px;
+}
+.diff-extension .diff-label { color: var(--purple); }
+.diff-box ul { margin-left: 18px; margin-top: 4px; }
+.diff-box li { margin-bottom: 4px; }
+
+/* ---- FACT CARDS ---- */
+.fact-cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.fact-card {
+  border: 2px solid var(--light-grey); border-radius: 10px;
+  padding: 16px; background: #FAFAF8;
+}
+.fact-card-header {
+  font-family: var(--font-heading); font-size: .9rem;
+  color: var(--orange); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.fact-card-header .num {
+  background: var(--orange); color: var(--white);
+  width: 26px; height: 26px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: .8rem; font-weight: 700;
+}
+
+/* ---- INFO BOX ---- */
+.info-box {
+  background: var(--bg); border-radius: 10px; padding: 16px 20px;
+  margin: 14px 0; font-size: .9rem;
+  border-left: 5px solid var(--blue);
+}
+.info-box strong { color: var(--blue); }
+
+/* ---- SELF-ASSESSMENT ---- */
+.self-assess {
+  background: var(--bg); border-radius: 10px; padding: 18px 22px;
+  margin-top: 20px;
+}
+.self-assess h3 {
+  font-family: var(--font-heading); font-size: 1rem;
+  color: var(--blue); margin-bottom: 12px;
+}
+.sc-check { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.sc-check input[type="checkbox"] {
+  width: 20px; height: 20px; margin-top: 2px; accent-color: var(--green);
+  flex-shrink: 0; cursor: pointer;
+}
+.sc-check label { font-size: .9rem; cursor: pointer; }
+
+/* ---- FOOTER ---- */
+.ws-footer {
+  background: var(--charcoal); color: rgba(255,255,255,.7);
+  padding: 18px 36px; font-size: .78rem;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+.ws-footer strong { color: var(--white); }
+
+/* ---- DRAWING GRID ---- */
+.draw-area {
+  border: 2px dashed var(--blue); border-radius: 10px;
+  background: #FAFAF8; padding: 16px; margin: 14px 0; text-align: center;
+}
+.draw-area p { font-size: .85rem; color: var(--grey); margin-bottom: 8px; }
+
+/* ---- FEATURE CARDS ---- */
+.feature-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.feature-card {
+  background: var(--bg); border-radius: 8px; padding: 14px;
+  border-left: 4px solid var(--orange);
+}
+.feature-card .fc-title {
+  font-family: var(--font-heading); font-size: .9rem;
+  color: var(--orange); margin-bottom: 4px;
+}
+.feature-card .fc-desc { font-size: .85rem; color: var(--charcoal); }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 700px) {
+  section { padding: 20px 18px; }
+  .ws-header { padding: 24px 18px 20px; }
+  .tps-steps { grid-template-columns: 1fr; }
+  .feature-cards { grid-template-columns: 1fr; }
+  .ws-meta input { width: 150px; }
+}
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+@media print {
+  @page { size: A4; margin: 15mm 12mm; }
+  body { padding-top: 0; background: white; font-size: 12px; }
+  .toolbar { display: none !important; }
+  .worksheet { max-width: 100%; margin: 0; box-shadow: none; border-radius: 0; }
+  .ws-header { padding: 20px 24px 16px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .ws-header::after { display: none; }
+  section { padding: 16px 24px; }
+  .ws-footer { -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 12px 24px; }
+  .li-bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  textarea, input[type="text"] { border: 1.5px solid #ccc; min-height: 50px; background: white !important; }
+  .vocab-table th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .diff-support, .diff-extension { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .section-icon { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .tps-step { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .fact-card { break-inside: avoid; }
+  .question { break-inside: avoid; }
+  .self-assess { break-inside: avoid; }
+  .feature-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .draw-area { break-inside: avoid; }
+  .ws-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<!-- ======== TOOLBAR ======== -->
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<!-- ======== WORKSHEET ======== -->
+<div class="worksheet">
+
+  <!-- HEADER -->
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L02</span>
+      <span class="ws-unit">Week 1 &bull; Section 1</span>
+    </div>
+    <h1 class="ws-title">Container Features and Isometric Drawing</h1>
+    <p class="ws-subtitle">Drawing shipping containers in isometric view and identifying key structural features</p>
+    <div class="ws-meta">
+      <div>
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" data-save="studentName" placeholder="Enter your name">
+      </div>
+      <div>
+        <label for="studentDate">Date</label>
+        <input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026">
+      </div>
+    </div>
+  </header>
+
+  <!-- LEARNING INTENTION -->
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to draw a shipping container in isometric view and identify its key structural features.
+  </div>
+
+  <!-- ===================== SECTION 1: DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label">
+      <span class="section-icon">?</span>
+      DO NOW &mdash; Quick Sketch Challenge
+    </div>
+
+    <p style="font-weight:600; font-size:1.05rem; margin-bottom:14px;">
+      Draw a 3D box from memory on scrap paper. Freehand only &mdash; no rulers!
+    </p>
+
+    <div class="tps-steps">
+      <div class="tps-step">
+        <div class="step-icon">&#x270D;</div>
+        <div class="step-title">Draw</div>
+        <div class="step-desc">Freehand 3D box</div>
+      </div>
+      <div class="tps-step">
+        <div class="step-icon">&#x1F441;</div>
+        <div class="step-title">Compare</div>
+        <div class="step-desc">Look at your partner&rsquo;s</div>
+      </div>
+      <div class="tps-step">
+        <div class="step-icon">&#x1F4AC;</div>
+        <div class="step-title">Discuss</div>
+        <div class="step-desc">What makes it look 3D?</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>What techniques did you use to make your box look three-dimensional?</p>
+      <textarea data-save="doNow1" placeholder="I tried to make it look 3D by..."></textarea>
+    </div>
+    <div class="question">
+      <p>What was difficult about drawing a 3D shape on a flat page?</p>
+      <textarea data-save="doNow2" placeholder="The hardest part was..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 2: KEY VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label">
+      <span class="section-icon">Aa</span>
+      KEY VOCABULARY
+    </div>
+
+    <p style="margin-bottom:14px;">Complete the definitions as we learn each term. Then write your own sentence using the word.</p>
+
+    <table class="vocab-table">
+      <thead>
+        <tr>
+          <th style="width:22%">Term</th>
+          <th style="width:38%">Definition</th>
+          <th style="width:40%">Use It in a Sentence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="term">Isometric drawing</td>
+          <td><textarea data-save="vocab1def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab1sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="term">30-degree angle</td>
+          <td><textarea data-save="vocab2def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab2sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="term">Parallel lines</td>
+          <td><textarea data-save="vocab3def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab3sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="term">Rectangular prism</td>
+          <td><textarea data-save="vocab4def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab4sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="term">Corner castings</td>
+          <td><textarea data-save="vocab5def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab5sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="term">Corrugated walls</td>
+          <td><textarea data-save="vocab6def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab6sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="term">Standardised</td>
+          <td><textarea data-save="vocab7def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab7sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="term">Modular</td>
+          <td><textarea data-save="vocab8def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab8sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="term">Intermodal</td>
+          <td><textarea data-save="vocab9def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab9sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="term">Forklift pockets</td>
+          <td><textarea data-save="vocab10def" placeholder="Define this term..."></textarea></td>
+          <td><textarea data-save="vocab10sent" placeholder="Write a sentence using this term..."></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <p>Use these sentence starters if you need help:</p>
+      <ul>
+        <li><em>Isometric drawing is a technique where&hellip;</em></li>
+        <li><em>Parallel lines are lines that&hellip;</em></li>
+        <li><em>Standardised means that something is&hellip;</em></li>
+      </ul>
+    </div>
+
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#9650; Extension</div>
+      <p>Research the difference between <strong>isometric</strong> and <strong>perspective</strong> drawing. Explain when you would use each one.</p>
+      <textarea data-save="vocabExt" placeholder="Isometric drawing is different from perspective drawing because..." class="tall"></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 3: CLASS NOTES — ISOMETRIC ===================== -->
+  <section class="class-notes">
+    <div class="section-label">
+      <span class="section-icon">&#x1F4DD;</span>
+      CLASS NOTES &mdash; Isometric Drawing
+    </div>
+
+    <h3 style="font-family:var(--font-heading); color:var(--blue); margin-bottom:12px; font-size:1.05rem;">What is Isometric Drawing?</h3>
+
+    <div class="info-box">
+      <strong>Key fact:</strong> <em>Isometric</em> means <strong>equal measure</strong> (iso = equal, metric = measure). All three axes are equally spaced at 120&deg; apart. Lines stay <strong>parallel</strong> &mdash; there are no vanishing points.
+    </div>
+
+    <div class="question">
+      <p>List 5 key rules of isometric drawing:</p>
+      <textarea data-save="isoRules" class="tall" placeholder="1. Uses 30-degree angles from the horizontal&#10;2. No vanishing points&#10;3. Vertical lines stay vertical&#10;4. Shows three faces of an object equally&#10;5. "></textarea>
+    </div>
+
+    <h3 style="font-family:var(--font-heading); color:var(--blue); margin:20px 0 12px; font-size:1.05rem;">Guided Practice: Drawing an Isometric Box</h3>
+
+    <div class="draw-area">
+      <p>Use the space in your workbook (page 6) to practise drawing an isometric box following the teacher&rsquo;s step-by-step instructions. Record the steps below.</p>
+    </div>
+
+    <div class="question">
+      <p>Write out the steps for drawing an isometric box:</p>
+      <textarea data-save="isoSteps" class="tall" placeholder="Step 1: Draw a vertical line for the front edge (height)&#10;Step 2: Draw two 30-degree lines from the bottom of the vertical line&#10;Step 3: &#10;Step 4: &#10;Step 5: &#10;Step 6: &#10;Step 7: "></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support &mdash; Step-by-Step Guide</div>
+      <p>Follow these steps carefully with your isometric dot paper:</p>
+      <ul>
+        <li><strong>Step 1:</strong> Draw a vertical line through 6 dots (this is the height)</li>
+        <li><strong>Step 2:</strong> From the bottom dot, draw a line going down-left following the dots (30&deg;)</li>
+        <li><strong>Step 3:</strong> From the bottom dot, draw a line going down-right following the dots (30&deg;)</li>
+        <li><strong>Step 4:</strong> Repeat from the top dot &mdash; two more 30&deg; lines</li>
+        <li><strong>Step 5:</strong> Add vertical lines from the ends of the bottom lines</li>
+        <li><strong>Step 6:</strong> Connect remaining corners with parallel 30&deg; lines</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 4: STRUCTURAL FEATURES ===================== -->
+  <section class="activity">
+    <div class="section-label">
+      <span class="section-icon">&#x1F527;</span>
+      STRUCTURAL FEATURES &mdash; Shipping Container
+    </div>
+
+    <p style="margin-bottom:14px;">Label and describe each structural feature of a shipping container.</p>
+
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="fc-title">Corner Castings</div>
+        <div class="fc-desc">Heavy steel fittings at all 8 corners</div>
+        <div class="question" style="margin-top:8px; margin-bottom:0;">
+          <span class="sub-label">Purpose:</span>
+          <textarea data-save="feat1" placeholder="Used for lifting and stacking..."></textarea>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">Corrugated Side Walls</div>
+        <div class="fc-desc">Ridged steel panels</div>
+        <div class="question" style="margin-top:8px; margin-bottom:0;">
+          <span class="sub-label">Purpose:</span>
+          <textarea data-save="feat2" placeholder="The ridges add strength because..."></textarea>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">Forklift Pockets</div>
+        <div class="fc-desc">Slots in the base</div>
+        <div class="question" style="margin-top:8px; margin-bottom:0;">
+          <span class="sub-label">Purpose:</span>
+          <textarea data-save="feat3" placeholder="Allow forklifts to..."></textarea>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">Locking Bars &amp; Cam Handles</div>
+        <div class="fc-desc">Vertical bars on double doors</div>
+        <div class="question" style="margin-top:8px; margin-bottom:0;">
+          <span class="sub-label">Purpose:</span>
+          <textarea data-save="feat4" placeholder="Secure the doors by..."></textarea>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">Roof Rails</div>
+        <div class="fc-desc">Reinforced top edges</div>
+        <div class="question" style="margin-top:8px; margin-bottom:0;">
+          <span class="sub-label">Purpose:</span>
+          <textarea data-save="feat5" placeholder="Used for stacking and crane..."></textarea>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">Floor</div>
+        <div class="fc-desc">Marine-grade plywood on steel crossmembers</div>
+        <div class="question" style="margin-top:8px; margin-bottom:0;">
+          <span class="sub-label">Purpose:</span>
+          <textarea data-save="feat6" placeholder="Provides a strong, durable base that..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>Which features would be most useful for converting a container into a restaurant? Why?</p>
+      <span class="hint">Think about: customer entry, serving windows, ventilation, transport to festivals</span>
+      <textarea data-save="featRestaurant" class="tall" placeholder="The most useful features for a restaurant would be..."></textarea>
+    </div>
+
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#9650; Extension</div>
+      <p>Create a T-chart: <strong>Keep As-Is</strong> vs <strong>Modify/Add</strong>. List which container features you would keep and which you would change for a restaurant conversion.</p>
+      <textarea data-save="featExt" class="tall" placeholder="KEEP AS-IS:&#10;- Corner castings (still needed for transport)&#10;- &#10;&#10;MODIFY/ADD:&#10;- Cut serving window in wall&#10;- "></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 5: DESIGN CHALLENGE ===================== -->
+  <section class="activity">
+    <div class="section-label">
+      <span class="section-icon">&#x270F;</span>
+      DESIGN CHALLENGE &mdash; Isometric Drawing of a Container
+    </div>
+
+    <div class="info-box">
+      <strong>Workbook page 6:</strong> Draw a shipping container in isometric view on the grid provided. Use your isometric skills from the guided practice. Label at least <strong>5 structural features</strong>.
+    </div>
+
+    <div class="question">
+      <p>Self-check your drawing:</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:18px;">
+      <div style="background:var(--bg); border-radius:8px; padding:12px; text-align:center;">
+        <div style="font-size:1.4rem;">&#x1F4D0;</div>
+        <div style="font-family:var(--font-heading); font-size:.85rem; color:var(--blue);">30&deg; angles correct?</div>
+        <select data-save="selfCheck1" style="width:100%; margin-top:6px; padding:6px; border-radius:6px; border:1.5px solid var(--light-grey);">
+          <option value="">Select...</option>
+          <option value="yes">Yes</option>
+          <option value="mostly">Mostly</option>
+          <option value="no">Not yet</option>
+        </select>
+      </div>
+      <div style="background:var(--bg); border-radius:8px; padding:12px; text-align:center;">
+        <div style="font-size:1.4rem;">&#x2194;</div>
+        <div style="font-family:var(--font-heading); font-size:.85rem; color:var(--blue);">Parallel lines?</div>
+        <select data-save="selfCheck2" style="width:100%; margin-top:6px; padding:6px; border-radius:6px; border:1.5px solid var(--light-grey);">
+          <option value="">Select...</option>
+          <option value="yes">Yes</option>
+          <option value="mostly">Mostly</option>
+          <option value="no">Not yet</option>
+        </select>
+      </div>
+      <div style="background:var(--bg); border-radius:8px; padding:12px; text-align:center;">
+        <div style="font-size:1.4rem;">&#x1F3F7;</div>
+        <div style="font-family:var(--font-heading); font-size:.85rem; color:var(--blue);">5+ labels?</div>
+        <select data-save="selfCheck3" style="width:100%; margin-top:6px; padding:6px; border-radius:6px; border:1.5px solid var(--light-grey);">
+          <option value="">Select...</option>
+          <option value="yes">Yes</option>
+          <option value="mostly">Mostly</option>
+          <option value="no">Not yet</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <p>Ask your teacher for a <strong>tracing guide</strong> to help you get the basic isometric shape right. Then add your own labels.</p>
+    </div>
+
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#9650; Extension</div>
+      <p>Draw the container with <strong>doors open</strong> showing the interior. Add <strong>shading</strong> to show depth (top face lightest, right face medium, left face darkest).</p>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 6: KEY TERMS ===================== -->
+  <section class="class-notes">
+    <div class="section-label">
+      <span class="section-icon">&#x1F4D6;</span>
+      KEY TERMS &mdash; Standardised, Modular, Intermodal
+    </div>
+
+    <div class="info-box">
+      <strong>Workbook page 7:</strong> Define these three important design terms and give examples of each.
+    </div>
+
+    <div class="fact-cards">
+      <div class="fact-card">
+        <div class="fact-card-header"><span class="num">1</span> Standardised</div>
+        <p style="font-size:.88rem; margin-bottom:8px;">Made to a uniform size or specification. All 20ft containers are exactly 6.1 m &times; 2.44 m &times; 2.59 m worldwide.</p>
+        <span class="sub-label">Write your own definition:</span>
+        <textarea data-save="term1def" placeholder="Standardised means..."></textarea>
+        <span class="sub-label" style="margin-top:8px;">Give 3 examples of other standardised objects:</span>
+        <textarea data-save="term1ex" placeholder="1. A4 paper&#10;2. &#10;3. "></textarea>
+      </div>
+      <div class="fact-card">
+        <div class="fact-card-header"><span class="num">2</span> Modular</div>
+        <p style="font-size:.88rem; margin-bottom:8px;">Can be combined, stacked, or arranged in different ways. Containers can be stacked 9 high or placed side by side.</p>
+        <span class="sub-label">Write your own definition:</span>
+        <textarea data-save="term2def" placeholder="Modular means..."></textarea>
+        <span class="sub-label" style="margin-top:8px;">Give 3 examples of other modular objects:</span>
+        <textarea data-save="term2ex" placeholder="1. LEGO&#10;2. &#10;3. "></textarea>
+      </div>
+      <div class="fact-card">
+        <div class="fact-card-header"><span class="num">3</span> Intermodal</div>
+        <p style="font-size:.88rem; margin-bottom:8px;">Can be used across different transport modes. The same container goes from ship to train to truck without unpacking.</p>
+        <span class="sub-label">Write your own definition:</span>
+        <textarea data-save="term3def" placeholder="Intermodal means..."></textarea>
+        <span class="sub-label" style="margin-top:8px;">Give 3 examples of other intermodal objects:</span>
+        <textarea data-save="term3ex" placeholder="1. Luggage&#10;2. &#10;3. "></textarea>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>Why do these three features make containers PERFECT for a portable restaurant?</p>
+      <span class="hint">Think about: exact measurements for design, joining containers, transporting to different festival sites</span>
+      <textarea data-save="termConnect" class="tall" placeholder="These features are important for our design project because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 7: REFLECTION ===================== -->
+  <section class="activity">
+    <div class="section-label">
+      <span class="section-icon">&#x1F4AD;</span>
+      REFLECTION &mdash; Your Isometric Drawing
+    </div>
+
+    <div class="info-box">
+      <strong>Workbook page 6 (bottom):</strong> Complete the reflection about your isometric drawing experience.
+    </div>
+
+    <div class="question">
+      <p>What went well with your isometric drawing?</p>
+      <textarea data-save="reflectWell" placeholder="I am pleased with..."></textarea>
+    </div>
+    <div class="question">
+      <p>What did you find difficult?</p>
+      <textarea data-save="reflectDiff" placeholder="I found it challenging to..."></textarea>
+    </div>
+    <div class="question">
+      <p>What would you do differently next time?</p>
+      <span class="hint">You will use isometric drawing again in Lesson 9 for your restaurant design!</span>
+      <textarea data-save="reflectNext" placeholder="Next time I would..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 8: EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label">
+      <span class="section-icon">&#x2714;</span>
+      EXIT TICKET &mdash; Reflection
+    </div>
+
+    <div class="question">
+      <p>Q1: List 3 structural features of a shipping container that would be useful when converting it to a restaurant. Explain WHY for each one.</p>
+      <textarea data-save="exit1" class="tall" placeholder="1. Feature: _________ — This is useful because...&#10;2. Feature: _________ — This is useful because...&#10;3. Feature: _________ — This is useful because..."></textarea>
+    </div>
+
+    <div class="question">
+      <p>Q2: Draw the isometric axes (3 lines) in the space below your workbook exit ticket. What angle do the depth lines make with the horizontal?</p>
+      <textarea data-save="exit2" placeholder="The depth lines make a ____-degree angle with the horizontal. The three axes show..."></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <p>Sentence starters:</p>
+      <ul>
+        <li><em>Corner castings are useful because they allow the container to be&hellip;</em></li>
+        <li><em>The corrugated walls are strong enough to&hellip;</em></li>
+        <li><em>The floor is important because a restaurant needs&hellip;</em></li>
+      </ul>
+    </div>
+
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#9650; Extension</div>
+      <p><strong>Compare:</strong> How is isometric drawing different from perspective drawing? When would an architect choose one over the other?</p>
+      <textarea data-save="extCompare" class="tall" placeholder="Isometric and perspective drawing are different because..."></textarea>
+    </div>
+
+    <!-- SELF-ASSESSMENT -->
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; Did I Achieve the Success Criteria?</h3>
+      <div class="sc-check">
+        <input type="checkbox" id="sc1" data-save="sc1">
+        <label for="sc1">I can draw a rectangular prism using 30-degree angles on isometric dot paper</label>
+      </div>
+      <div class="sc-check">
+        <input type="checkbox" id="sc2" data-save="sc2">
+        <label for="sc2">I can label the structural features of a shipping container</label>
+      </div>
+      <div class="sc-check">
+        <input type="checkbox" id="sc3" data-save="sc3">
+        <label for="sc3">I can define standardised, modular and intermodal</label>
+      </div>
+      <div class="sc-check">
+        <input type="checkbox" id="sc4" data-save="sc4">
+        <label for="sc4">I can identify features that make containers suitable for conversion</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="ws-footer">
+    <div><strong>Outcomes:</strong> TE4-DES-01 &bull; TE4-MSC-01</div>
+    <div><strong>Workbook:</strong> Section 1, pp. 6&ndash;7</div>
+    <div>Keep this worksheet in your design folio</div>
+  </footer>
+
+</div><!-- /worksheet -->
+
+<!-- ============================================================
+     JAVASCRIPT — Auto-save & PDF
+     ============================================================ -->
+<script>
+(function() {
+  const STORAGE_KEY = 'CTC-T1-L02';
+  const indicator = document.getElementById('saveIndicator');
+  let saveTimeout;
+
+  // ---- SAVE ----
+  function saveAll() {
+    const data = {};
+    document.querySelectorAll('[data-save]').forEach(function(el) {
+      const key = el.getAttribute('data-save');
+      if (el.type === 'checkbox') {
+        data[key] = el.checked;
+      } else {
+        data[key] = el.value;
+      }
+    });
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      indicator.textContent = 'All changes saved';
+      indicator.classList.remove('saving');
+    } catch(e) {
+      indicator.textContent = 'Could not save (storage full)';
+    }
+  }
+
+  // ---- RESTORE ----
+  function restoreAll() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      document.querySelectorAll('[data-save]').forEach(function(el) {
+        const key = el.getAttribute('data-save');
+        if (key in data) {
+          if (el.type === 'checkbox') {
+            el.checked = data[key];
+          } else {
+            el.value = data[key];
+          }
+        }
+      });
+    } catch(e) { /* ignore parse errors */ }
+  }
+
+  // ---- DEBOUNCED SAVE ON INPUT ----
+  function onInput() {
+    indicator.textContent = 'Saving...';
+    indicator.classList.add('saving');
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(saveAll, 400);
+  }
+
+  // ---- ATTACH LISTENERS ----
+  document.querySelectorAll('[data-save]').forEach(function(el) {
+    el.addEventListener('input', onInput);
+    el.addEventListener('change', onInput);
+  });
+
+  // ---- RESTORE ON LOAD ----
+  restoreAll();
+
+  // ---- SAVE AS PDF ----
+  window.savePDF = function() {
+    window.print();
+  };
+
+  // ---- CLEAR ALL ----
+  window.clearAll = function() {
+    if (confirm('Are you sure you want to clear all your answers? This cannot be undone.')) {
+      document.querySelectorAll('[data-save]').forEach(function(el) {
+        if (el.type === 'checkbox') {
+          el.checked = false;
+        } else {
+          el.value = '';
+        }
+      });
+      localStorage.removeItem(STORAGE_KEY);
+      indicator.textContent = 'All answers cleared';
+      setTimeout(function() { indicator.textContent = 'No saved data'; }, 2000);
+    }
+  };
+})();
+</script>
+
+</body>
+</html>

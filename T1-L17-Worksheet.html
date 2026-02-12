@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L17 Worksheet — Testing and Evaluating Your Design</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Criteria cards */
+.criteria-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.criteria-card{background:var(--bg);border-radius:10px;padding:16px;border-top:4px solid var(--orange)}
+.criteria-card .cc-name{font-family:var(--font-heading);font-size:.95rem;color:var(--orange);margin-bottom:4px}
+.criteria-card .cc-desc{font-size:.85rem;color:var(--charcoal)}
+
+/* Photo checklist */
+.photo-list{margin:14px 0}
+.photo-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;padding:10px 14px;background:var(--bg);border-radius:8px}
+.photo-item input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0}
+.photo-item label{font-size:.9rem;cursor:pointer}
+
+/* Evaluation card */
+.eval-card{border-radius:10px;padding:18px 20px;margin-bottom:16px;border:2px solid var(--light-grey);border-left-width:5px;border-left-color:var(--blue)}
+.eval-card h4{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}
+.eval-field{margin-bottom:12px}
+.eval-field .sub-label{font-size:.85rem;color:var(--grey);font-weight:600;margin-bottom:4px;display:block}
+
+/* Rank grid */
+.rank-grid{display:grid;grid-template-columns:60px 1fr 1fr;gap:8px;align-items:start;margin:14px 0}
+.rank-num{font-family:var(--font-heading);font-size:1.4rem;color:var(--orange);text-align:center;padding-top:8px}
+.rank-label{font-size:.85rem;font-weight:600;color:var(--grey);padding-top:4px}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.criteria-cards{grid-template-columns:1fr}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.criteria-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.eval-card{break-inside:avoid}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}.info-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}.photo-item{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L17</span>
+      <span class="ws-unit">Week 9 &bull; Section 4</span>
+    </div>
+    <h1 class="ws-title">Testing and Evaluating Your Design</h1>
+    <p class="ws-subtitle">Photographing your model, evaluating against criteria, and reflecting on the design process</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning to evaluate our container restaurant design against the design brief criteria.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Model Self-Check</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Look carefully at your completed model. Identify ONE thing you could still improve before photos are taken.</p>
+    <div class="question">
+      <p>What is one thing you could improve on your model right now?</p>
+      <textarea data-save="doNow1" placeholder="One thing I could improve is..."></textarea>
+    </div>
+    <div class="question">
+      <p>How would you fix it? What materials or tools would you need?</p>
+      <textarea data-save="doNow2" placeholder="I would fix this by..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PHOTOGRAPHY CHECKLIST ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F4F7;</span> PHOTOGRAPHY CHECKLIST (WB p. 38)</div>
+    <div class="info-box">
+      <strong>Why take photos?</strong> Your photos will be inserted into your workbook (p. 38) as evidence of your completed model. Good photos show the quality and detail of your work. Take photos from multiple angles so the marker can see all features.
+    </div>
+    <div class="self-assess">
+      <h3>Photo Checklist &mdash; Tick each photo as you take it</h3>
+      <div class="sc-check"><input type="checkbox" id="ph1" data-save="ph1"><label for="ph1">Front view &mdash; showing the serving window, signage and counter</label></div>
+      <div class="sc-check"><input type="checkbox" id="ph2" data-save="ph2"><label for="ph2">Side view &mdash; showing the length and height of the container</label></div>
+      <div class="sc-check"><input type="checkbox" id="ph3" data-save="ph3"><label for="ph3">Top / interior view &mdash; showing interior equipment and layout</label></div>
+      <div class="sc-check"><input type="checkbox" id="ph4" data-save="ph4"><label for="ph4">Detail shot &mdash; close-up of one feature you are proud of</label></div>
+      <div class="sc-check"><input type="checkbox" id="ph5" data-save="ph5"><label for="ph5">Clean background &mdash; no clutter behind the model</label></div>
+      <div class="sc-check"><input type="checkbox" id="ph6" data-save="ph6"><label for="ph6">Good lighting &mdash; model is well-lit with no dark shadows</label></div>
+    </div>
+  </section>
+
+  <!-- ===================== EVALUATION CRITERIA ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4CB;</span> EVALUATION CRITERIA</div>
+    <div class="info-box">
+      <strong>What is evaluation?</strong> Evaluation means judging how well your design meets the original brief. You will assess your container restaurant against <strong>four criteria</strong>: appearance, functionality, sustainability, and safety. For each criterion, you need to explain what you did well AND what could be improved.
+    </div>
+    <div class="criteria-cards">
+      <div class="criteria-card">
+        <div class="cc-name">1. Appearance (Aesthetics)</div>
+        <div class="cc-desc">How visually appealing is your design? Does it look professional and attract customers? Consider colour, signage, branding and overall visual quality.</div>
+      </div>
+      <div class="criteria-card">
+        <div class="cc-name">2. Functionality</div>
+        <div class="cc-desc">Does your restaurant work as a real food business? Is there a logical workflow from storage to cooking to serving? Can staff move safely around the space?</div>
+      </div>
+      <div class="criteria-card">
+        <div class="cc-name">3. Sustainability</div>
+        <div class="cc-desc">Does your design consider the environment? Have you reused a shipping container, included energy-efficient features, or minimised waste in your materials?</div>
+      </div>
+      <div class="criteria-card">
+        <div class="cc-name">4. Safety</div>
+        <div class="cc-desc">Is your restaurant safe for workers and customers? Are hot surfaces away from walkways? Is there ventilation, handwashing, and separate food preparation areas?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CRITERIA RANKING ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F3AF;</span> ACTIVITY &mdash; Criteria Ranking (WB p. 39)</div>
+    <p style="font-size:.9rem;margin-bottom:14px;">Rank the four criteria from <strong>most important</strong> (1) to <strong>least important</strong> (4) for a portable food business. There is no single correct answer &mdash; justify your reasoning.</p>
+
+    <div class="question">
+      <p>Rank 1 &mdash; Most important criterion:</p>
+      <input type="text" data-save="rank1" placeholder="e.g. Safety" style="margin-bottom:8px">
+      <span class="sub-label">Why is this the most important?</span>
+      <textarea data-save="rank1why" placeholder="I ranked this first because..."></textarea>
+    </div>
+    <div class="question">
+      <p>Rank 2 &mdash; Second most important:</p>
+      <input type="text" data-save="rank2" placeholder="e.g. Functionality" style="margin-bottom:8px">
+      <span class="sub-label">Why did you rank this second?</span>
+      <textarea data-save="rank2why" placeholder="I ranked this second because..."></textarea>
+    </div>
+    <div class="question">
+      <p>Rank 3 &mdash; Third most important:</p>
+      <input type="text" data-save="rank3" placeholder="e.g. Sustainability" style="margin-bottom:8px">
+      <span class="sub-label">Why did you rank this third?</span>
+      <textarea data-save="rank3why" placeholder="I ranked this third because..."></textarea>
+    </div>
+    <div class="question">
+      <p>Rank 4 &mdash; Least important criterion:</p>
+      <input type="text" data-save="rank4" placeholder="e.g. Appearance" style="margin-bottom:8px">
+      <span class="sub-label">Why is this least important for a food business?</span>
+      <textarea data-save="rank4why" placeholder="I ranked this last because..."></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#x1F7E2; Support</div>
+      <ul>
+        <li>Think about what could go wrong if each criterion was ignored &mdash; the one with the worst consequence should be ranked highest</li>
+        <li>Use sentence starters: &ldquo;I ranked ___ first because without it, a food business would...&rdquo;</li>
+      </ul>
+    </div>
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#x1F7E3; Extension</div>
+      <ul>
+        <li>Discuss whether the ranking would change for a permanent restaurant versus a portable one</li>
+        <li>Consider how Australian food safety regulations (e.g. NSW Food Authority) would influence the ranking</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== EVALUATION WRITING ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270D;</span> EVALUATION WRITING &mdash; Claim, Evidence, Explanation (WB p. 39)</div>
+    <div class="info-box">
+      <strong>How to write an evaluation:</strong> For each criterion, write a <strong>Claim</strong> (what you believe about your design), provide <strong>Evidence</strong> (specific features or details from your model), give an <strong>Explanation</strong> (why this matters), and identify a <strong>Weakness / Improvement</strong> (what you would change next time).
+    </div>
+
+    <!-- Criterion 1: Appearance -->
+    <div class="eval-card">
+      <h4>Criterion 1 &mdash; Appearance (Aesthetics)</h4>
+      <div class="eval-field">
+        <span class="sub-label">Claim &mdash; How well does your design look overall?</span>
+        <textarea data-save="eval1claim" placeholder="My container restaurant looks... because..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Evidence &mdash; What specific features make it visually appealing?</span>
+        <textarea data-save="eval1evidence" placeholder="For example, I included... The colours I used are..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Explanation &mdash; Why do these features matter for a food business?</span>
+        <textarea data-save="eval1explain" placeholder="This is important because customers..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Weakness / Improvement &mdash; What would you change to improve the appearance?</span>
+        <textarea data-save="eval1improve" placeholder="If I could improve one thing about the appearance, I would..."></textarea>
+      </div>
+    </div>
+
+    <!-- Criterion 2: Functionality -->
+    <div class="eval-card">
+      <h4>Criterion 2 &mdash; Functionality</h4>
+      <div class="eval-field">
+        <span class="sub-label">Claim &mdash; How well does your restaurant function as a working food business?</span>
+        <textarea data-save="eval2claim" placeholder="My restaurant functions well because..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Evidence &mdash; What features support the workflow (store, prepare, cook, serve)?</span>
+        <textarea data-save="eval2evidence" placeholder="I included... which allows the worker to..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Explanation &mdash; Why is workflow important in a food business?</span>
+        <textarea data-save="eval2explain" placeholder="Good workflow matters because..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Weakness / Improvement &mdash; What would you change to improve functionality?</span>
+        <textarea data-save="eval2improve" placeholder="If I could improve one thing about functionality, I would..."></textarea>
+      </div>
+    </div>
+
+    <!-- Criterion 3: Sustainability -->
+    <div class="eval-card">
+      <h4>Criterion 3 &mdash; Sustainability</h4>
+      <div class="eval-field">
+        <span class="sub-label">Claim &mdash; How sustainable is your container restaurant design?</span>
+        <textarea data-save="eval3claim" placeholder="My design is sustainable because..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Evidence &mdash; What sustainable features did you include?</span>
+        <textarea data-save="eval3evidence" placeholder="I included features such as..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Explanation &mdash; Why does sustainability matter for a portable restaurant?</span>
+        <textarea data-save="eval3explain" placeholder="Sustainability is important because..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Weakness / Improvement &mdash; What sustainable feature could you add?</span>
+        <textarea data-save="eval3improve" placeholder="To make my design more sustainable, I could..."></textarea>
+      </div>
+    </div>
+
+    <!-- Criterion 4: Safety -->
+    <div class="eval-card">
+      <h4>Criterion 4 &mdash; Safety</h4>
+      <div class="eval-field">
+        <span class="sub-label">Claim &mdash; How safe is your container restaurant for workers and customers?</span>
+        <textarea data-save="eval4claim" placeholder="My restaurant is safe because..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Evidence &mdash; What safety features are included in your design?</span>
+        <textarea data-save="eval4evidence" placeholder="Safety features I included are..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Explanation &mdash; Why are these safety features essential for a food business?</span>
+        <textarea data-save="eval4explain" placeholder="These safety features are essential because..."></textarea>
+      </div>
+      <div class="eval-field">
+        <span class="sub-label">Weakness / Improvement &mdash; What safety feature could you add or improve?</span>
+        <textarea data-save="eval4improve" placeholder="To improve safety, I could..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REFLECTION ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F4AD;</span> REFLECTION (WB p. 40)</div>
+    <div class="question">
+      <p>What did you enjoy most about this project?</p>
+      <textarea class="tall" data-save="reflectEnjoy" placeholder="The part I enjoyed most was... because..."></textarea>
+    </div>
+    <div class="question">
+      <p>What was the most challenging part of the project?</p>
+      <textarea class="tall" data-save="reflectChallenge" placeholder="The most challenging part was... because..."></textarea>
+    </div>
+    <div class="question">
+      <p>What is the most important thing you learned?</p>
+      <textarea class="tall" data-save="reflectLearned" placeholder="The most important thing I learned was..."></textarea>
+    </div>
+    <div class="question">
+      <p>If you could start the project again, what would you do differently?</p>
+      <textarea class="tall" data-save="reflectChange" placeholder="If I started again, I would change..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">&#x1F4D6;</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th>Term</th><th>Definition</th><th>My Example / Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Evaluate</td><td>To judge the quality or value of something against set criteria</td><td><textarea data-save="vocab1" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Criteria</td><td>The standards or rules used to judge or evaluate something</td><td><textarea data-save="vocab2" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Functionality</td><td>How well something works for its intended purpose</td><td><textarea data-save="vocab3" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Sustainability</td><td>Meeting current needs without harming the environment for future generations</td><td><textarea data-save="vocab4" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Aesthetics</td><td>The visual appearance and beauty of a design</td><td><textarea data-save="vocab5" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Reflection</td><td>Thinking carefully about what you did, what you learned and what you could improve</td><td><textarea data-save="vocab6" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Evidence</td><td>Specific examples or proof to support a claim or judgement</td><td><textarea data-save="vocab7" placeholder="My note..."></textarea></td></tr>
+        <tr><td class="term">Portfolio</td><td>A collection of work that demonstrates skills and progress over time</td><td><textarea data-save="vocab8" placeholder="My note..."></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x1F3AB;</span> EXIT TICKET</div>
+    <div class="question">
+      <p>1. Name the four evaluation criteria used to judge your container restaurant design.</p>
+      <textarea data-save="exit1" placeholder="The four criteria are..."></textarea>
+    </div>
+    <div class="question">
+      <p>2. What does the &ldquo;E&rdquo; in a Claim-Evidence-Explanation structure stand for and why is it important?</p>
+      <textarea data-save="exit2" placeholder="The E stands for... It is important because..."></textarea>
+    </div>
+    <div class="question">
+      <p>3. Describe one improvement you would make to your design and explain how it would improve safety OR functionality.</p>
+      <textarea data-save="exit3" placeholder="One improvement I would make is... This would improve... because..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== SELF-ASSESSMENT ===================== -->
+  <section class="reflection">
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; How Did I Go?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can photograph my model from multiple angles to show quality and detail</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can rank and justify the importance of evaluation criteria for a food business</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can evaluate my design using Claim, Evidence and Explanation for each criterion</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can reflect on the design process by identifying strengths, challenges and improvements</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <span><strong>From Container to Countertop</strong> &mdash; Year 8 Technology (Mandatory)</span>
+    <span>TE4-DES-01 &bull; TE4-SDP-01 &bull; TE4-PDP-01</span>
+  </footer>
+
+</div>
+
+<script>
+;(function(){
+  var STORAGE_KEY='CTC-T1-L17';
+  var indicator=document.getElementById('saveIndicator');
+  var timer=null;
+  function save(){var data={};document.querySelectorAll('[data-save]').forEach(function(el){data[el.getAttribute('data-save')]=el.type==='checkbox'?el.checked:el.value});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Save failed'}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(timer);timer=setTimeout(save,400)}
+  function restoreAll(){try{var raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;var data=JSON.parse(raw);Object.keys(data).forEach(function(k){var el=document.querySelector('[data-save="'+k+'"]');if(!el)return;if(el.type==='checkbox'){el.checked=data[k]}else{el.value=data[k]}})}catch(e){}}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>

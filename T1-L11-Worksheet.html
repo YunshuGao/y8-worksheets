@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T1-L11 Worksheet — Procedures, Scale and Ratio</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.55;padding-top:56px}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);color:var(--white);padding:10px 24px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.25)}.toolbar-left{display:flex;align-items:center;gap:14px}.toolbar-title{font-family:var(--font-heading);font-size:1rem;letter-spacing:.5px}.save-indicator{font-size:.8rem;opacity:.7;transition:opacity .3s}.save-indicator.saving{opacity:1;color:var(--yellow)}.toolbar-right{display:flex;gap:10px}.toolbar-right button{font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:transform .1s,box-shadow .15s}.toolbar-right button:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.3)}.btn-pdf{background:var(--orange);color:var(--white)}.btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}.btn-clear:hover{border-color:#ff6b6b!important;color:#ff6b6b}
+.worksheet{max-width:860px;margin:24px auto;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.ws-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:32px 36px 28px;position:relative;overflow:hidden}.ws-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}.ws-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}.ws-badge{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:4px 14px;border-radius:20px;letter-spacing:1px;font-weight:700;white-space:nowrap}.ws-unit{font-size:.8rem;opacity:.75;font-style:italic}.ws-title{font-family:var(--font-heading);font-size:1.8rem;margin:8px 0 4px;letter-spacing:.5px}.ws-subtitle{font-size:.95rem;opacity:.85}.ws-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.ws-meta label{font-size:.8rem;opacity:.7;display:block;margin-bottom:2px}.ws-meta input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 12px;border-radius:6px;font-family:var(--font-body);font-size:.9rem;width:200px}.ws-meta input::placeholder{color:rgba(255,255,255,.4)}.ws-meta input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,.18)}
+.li-bar{background:var(--bg);border-left:5px solid var(--blue);padding:16px 28px;font-size:.9rem}.li-bar strong{color:var(--blue)}
+section{padding:28px 36px;border-top:1px solid var(--light-grey)}.section-label{font-family:var(--font-heading);font-size:1.15rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px;margin-bottom:16px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:1.1rem;flex-shrink:0}
+.do-now .section-label{color:var(--charcoal)}.do-now .section-icon{background:var(--yellow)}.class-notes .section-label{color:var(--charcoal)}.class-notes .section-icon{background:var(--grey);color:var(--white)}.activity .section-label{color:var(--charcoal)}.activity .section-icon{background:var(--orange);color:var(--white)}.reflection .section-label{color:var(--charcoal)}.reflection .section-icon{background:var(--blue);color:var(--white)}.vocabulary .section-label{color:var(--blue)}.vocabulary .section-icon{background:var(--blue);color:var(--white)}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;font-family:var(--font-body);font-size:.92rem;line-height:1.6;color:var(--charcoal);background:#FAFAF8;transition:border-color .2s,box-shadow .2s;resize:vertical}textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.12)}textarea{min-height:70px}textarea.tall{min-height:100px}
+.question{margin-bottom:20px}.question p{margin-bottom:8px;font-weight:600}.question .hint{font-weight:400;font-size:.85rem;color:var(--grey);font-style:italic;margin-bottom:8px}.sub-label{font-size:.82rem;color:var(--grey);margin-bottom:4px;display:block}
+.diff-box{border-radius:10px;padding:16px 20px;margin-top:16px;font-size:.88rem}.diff-box .diff-label{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.diff-support{background:#F0F7ED;border:2px solid var(--green);border-left-width:5px}.diff-support .diff-label{color:var(--green)}.diff-extension{background:#F3EDF8;border:2px solid var(--purple);border-left-width:5px}.diff-extension .diff-label{color:var(--purple)}.diff-box ul{margin-left:18px;margin-top:4px}.diff-box li{margin-bottom:4px}
+.info-box{background:var(--bg);border-radius:10px;padding:16px 20px;margin:14px 0;font-size:.9rem;border-left:5px solid var(--blue)}.info-box strong{color:var(--blue)}
+.self-assess{background:var(--bg);border-radius:10px;padding:18px 22px;margin-top:20px}.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}.sc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.sc-check input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.sc-check label{font-size:.9rem;cursor:pointer}
+.ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:12px}.vocab-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}.vocab-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:.9rem}.vocab-table tr:nth-child(even) td{background:#FAFAF8}.vocab-table .term{font-weight:700;color:var(--blue);white-space:nowrap}.vocab-table td textarea{min-height:40px;font-size:.85rem;padding:6px 10px}
+
+/* Action verb cards */
+.verb-cards{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin:14px 0}
+.verb-card{background:var(--bg);border-radius:10px;padding:12px;text-align:center;border-top:4px solid var(--orange)}
+.verb-card .vc-verb{font-family:var(--font-heading);font-size:1rem;color:var(--orange);margin-bottom:4px}
+.verb-card .vc-def{font-size:.8rem;color:var(--charcoal)}
+
+/* Procedure structure */
+.proc-struct{border:2px solid var(--blue);border-radius:10px;overflow:hidden;margin:14px 0}
+.proc-row{padding:14px 18px;border-bottom:1px solid var(--light-grey);display:flex;align-items:flex-start;gap:12px}
+.proc-row:last-child{border-bottom:none}
+.proc-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.9rem;font-weight:700;flex-shrink:0}
+.proc-label{font-weight:700;color:var(--blue)}
+.proc-desc{font-size:.9rem;color:var(--charcoal)}
+
+/* Scale conversion table */
+.scale-table{width:100%;border-collapse:collapse;margin:14px 0}
+.scale-table th{background:var(--orange);color:var(--white);font-family:var(--font-heading);font-size:.85rem;padding:10px 14px;text-align:center}
+.scale-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);text-align:center;font-size:.9rem}
+.scale-table td input[type="text"]{text-align:center;width:100px}
+
+/* Formula box */
+.formula-box{background:#E3F2FD;border:2px solid var(--blue);border-radius:10px;padding:20px;margin:14px 0;text-align:center}
+.formula-box .formula{font-family:var(--font-heading);font-size:1.3rem;color:var(--blue);margin:8px 0}
+
+/* Quick reference */
+.qr-table{width:100%;border-collapse:collapse;margin:14px 0}
+.qr-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;padding:10px 14px;text-align:center}
+.qr-table td{padding:8px 14px;border-bottom:1px solid var(--light-grey);text-align:center;font-size:.9rem;font-weight:600}
+
+@media (max-width:700px){section{padding:20px 18px}.ws-header{padding:24px 18px 20px}.verb-cards{grid-template-columns:1fr 1fr}.ws-meta input{width:150px}}
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.worksheet{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}.li-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.vocab-table th,.scale-table th,.qr-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support,.diff-extension{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section-icon{-webkit-print-color-adjust:exact;print-color-adjust:exact}.verb-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}.proc-num{-webkit-print-color-adjust:exact;print-color-adjust:exact}.formula-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}.question{break-inside:avoid}.self-assess{break-inside:avoid}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div class="toolbar-left">
+    <span class="toolbar-title">From Container to Countertop</span>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<div class="worksheet">
+
+  <header class="ws-header">
+    <div class="ws-header-top">
+      <span class="ws-badge">T1-L11</span>
+      <span class="ws-unit">Week 6 &bull; Section 3</span>
+    </div>
+    <h1 class="ws-title">Procedures, Scale and Ratio</h1>
+    <p class="ws-subtitle">Writing construction procedures with action verbs and converting real dimensions to 1:20 scale</p>
+    <div class="ws-meta">
+      <div><label for="studentName">Student Name</label><input type="text" id="studentName" data-save="studentName" placeholder="Enter your name"></div>
+      <div><label for="studentDate">Date</label><input type="text" id="studentDate" data-save="studentDate" placeholder="DD / MM / 2026"></div>
+    </div>
+  </header>
+
+  <div class="li-bar">
+    <strong>Learning Intention:</strong> We are learning about text types used in design (procedures) and how to apply scale and ratio for model construction.
+  </div>
+
+  <!-- ===================== DO NOW ===================== -->
+  <section class="do-now">
+    <div class="section-label"><span class="section-icon">?</span> DO NOW &mdash; Sandwich Challenge</div>
+    <p style="font-weight:600;font-size:1.05rem;margin-bottom:14px;">Write 3 steps to make a peanut butter sandwich using action verbs (e.g., spread, place, cut).</p>
+    <span class="hint" style="display:block;margin-bottom:14px;">Each step MUST start with an action verb. Think about the correct ORDER!</span>
+    <div class="question">
+      <textarea data-save="doNow1" placeholder="Step 1: &#10;Step 2: &#10;Step 3: "></textarea>
+    </div>
+    <div class="question">
+      <p>What would happen if you did Step 3 before Step 1?</p>
+      <textarea data-save="doNow2" placeholder="If I did the steps out of order..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PART 1: PROCEDURES ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4DD;</span> PART 1 &mdash; What is a Procedure?</div>
+
+    <div class="info-box">
+      A <strong>procedure</strong> tells someone HOW to do something. It uses <strong>action verbs</strong> (imperative words) and steps must be in <strong>sequential order</strong>.
+    </div>
+
+    <div class="proc-struct">
+      <div class="proc-row"><span class="proc-num">1</span><div><span class="proc-label">Title</span> &mdash; <span class="proc-desc">What the procedure is about</span></div></div>
+      <div class="proc-row"><span class="proc-num">2</span><div><span class="proc-label">Aim</span> &mdash; <span class="proc-desc">What you are trying to achieve</span></div></div>
+      <div class="proc-row"><span class="proc-num">3</span><div><span class="proc-label">Materials</span> &mdash; <span class="proc-desc">What you need (listed)</span></div></div>
+      <div class="proc-row"><span class="proc-num">4</span><div><span class="proc-label">Steps</span> &mdash; <span class="proc-desc">Numbered instructions in order</span></div></div>
+      <div class="proc-row"><span class="proc-num">5</span><div><span class="proc-label">Safety</span> &mdash; <span class="proc-desc">Warnings and precautions</span></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== ACTION VERBS ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4AA;</span> ACTION VERBS FOR MODEL CONSTRUCTION</div>
+
+    <div class="verb-cards">
+      <div class="verb-card"><div class="vc-verb">Measure</div><div class="vc-def">Use ruler to find exact length</div></div>
+      <div class="verb-card"><div class="vc-verb">Mark</div><div class="vc-def">Use pencil to indicate a point</div></div>
+      <div class="verb-card"><div class="vc-verb">Cut</div><div class="vc-def">Separate using scissors/knife</div></div>
+      <div class="verb-card"><div class="vc-verb">Score</div><div class="vc-def">Cut partway for fold line</div></div>
+      <div class="verb-card"><div class="vc-verb">Fold</div><div class="vc-def">Bend along scored line</div></div>
+      <div class="verb-card"><div class="vc-verb">Glue</div><div class="vc-def">Join surfaces with PVA</div></div>
+      <div class="verb-card"><div class="vc-verb">Align</div><div class="vc-def">Line up edges precisely</div></div>
+      <div class="verb-card"><div class="vc-verb">Assemble</div><div class="vc-def">Put parts together in order</div></div>
+    </div>
+
+    <div style="background:#FFF8E1;border:2px solid var(--yellow);border-radius:10px;padding:14px 18px;margin:14px 0;">
+      <strong style="color:var(--charcoal);">&#x26A0; Score &ne; Cut!</strong>
+      <span style="font-size:.88rem;color:var(--charcoal);"> Scoring means cutting <em>partway</em> through the cardboard to create a fold line. You do NOT cut all the way through!</span>
+    </div>
+  </section>
+
+  <!-- ===================== PROCEDURE ACTIVITY ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x270F;</span> ACTIVITY &mdash; Write Your Construction Procedure (Workbook p. 29)</div>
+
+    <div class="info-box"><strong>Workbook Section 3, Item 21 (p. 29):</strong> Write a procedure for constructing YOUR container restaurant model. Use at least 6 action verbs and include specific measurements.</div>
+
+    <div class="question">
+      <p>Title:</p>
+      <input type="text" data-save="procTitle" placeholder="e.g. How to Construct a 1:20 Scale Container Burger Restaurant Model">
+    </div>
+    <div class="question">
+      <p>Aim:</p>
+      <input type="text" data-save="procAim" placeholder="e.g. To build an accurate scale model of my container restaurant using cardboard">
+    </div>
+    <div class="question">
+      <p>Materials needed:</p>
+      <textarea data-save="procMaterials" placeholder="- A2 cardboard&#10;- Ruler (30 cm)&#10;- Pencil&#10;- Scissors&#10;- Craft knife&#10;- Cutting mat&#10;- PVA glue&#10;- Set square"></textarea>
+    </div>
+    <div class="question">
+      <p>Steps (8&ndash;12 numbered steps, each starting with an action verb):</p>
+      <textarea data-save="procSteps" style="min-height:200px;" placeholder="Step 1: Measure and mark the net dimensions on the cardboard: 30 cm (length) × 12 cm (width) × 13 cm (height).&#10;Step 2: &#10;Step 3: &#10;Step 4: &#10;Step 5: &#10;Step 6: &#10;Step 7: &#10;Step 8: &#10;Step 9: &#10;Step 10: "></textarea>
+    </div>
+    <div class="question">
+      <p>Safety notes:</p>
+      <textarea data-save="procSafety" placeholder="- Always use a cutting mat when using a craft knife&#10;- Cut away from your body&#10;- Keep fingers behind the blade&#10;- Clean up scraps to avoid slipping"></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <ul>
+        <li>Use the action verb cards above to start each step</li>
+        <li>Follow this order: measure &rarr; mark &rarr; cut &rarr; score &rarr; fold &rarr; glue &rarr; assemble</li>
+        <li>Copy the first 3 steps from the worked example, then continue with your own</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== PEER REVIEW ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F91D;</span> PEER REVIEW &mdash; Procedure Check</div>
+    <div class="question"><p>Partner&rsquo;s name:</p><input type="text" data-save="peerName" placeholder="Partner name"></div>
+    <div class="question">
+      <p>Could you follow their procedure step-by-step without asking questions?</p>
+      <select data-save="peerFollow" style="width:250px;padding:8px 12px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.9rem;">
+        <option value="">Select...</option>
+        <option value="yes">Yes &mdash; completely clear</option>
+        <option value="mostly">Mostly &mdash; one or two unclear steps</option>
+        <option value="no">No &mdash; several steps need more detail</option>
+      </select>
+    </div>
+    <div class="question">
+      <p>One suggestion for improvement:</p>
+      <textarea data-save="peerSuggest" placeholder="To improve, you could..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== PART 2: SCALE ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4CF;</span> PART 2 &mdash; What is Scale?</div>
+
+    <div class="formula-box">
+      <div style="font-size:.9rem;color:var(--charcoal);">Scale is the ratio between the model and real object</div>
+      <div class="formula">1:20 &nbsp;&mdash;&nbsp; 1 cm on model = 20 cm in real life</div>
+      <div style="font-size:.9rem;color:var(--charcoal);margin-top:8px;">
+        <strong>Real &rarr; Model:</strong> divide by 20 &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Model &rarr; Real:</strong> multiply by 20
+      </div>
+    </div>
+
+    <div style="background:#FFF8E1;border:2px solid var(--yellow);border-radius:10px;padding:14px 18px;margin:14px 0;">
+      <strong style="color:var(--charcoal);">&#x26A0; Two-Step Process:</strong>
+      <span style="font-size:.88rem;color:var(--charcoal);"> Convert <strong>metres to centimetres FIRST</strong>, then divide by 20. Do NOT divide metres by 20 directly!</span>
+    </div>
+  </section>
+
+  <!-- ===================== WORKED EXAMPLE ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4D6;</span> WORKED EXAMPLE &mdash; Scale Conversions</div>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:8px;margin:14px 0;">
+      <div style="background:var(--bg);padding:12px 18px;border-radius:8px;border-left:4px solid var(--orange);">
+        <strong style="color:var(--orange);">Container length:</strong> 6.1 m = 610 cm &divide; 20 = <strong>30.5 cm</strong> &rarr; round to <strong>30 cm</strong>
+      </div>
+      <div style="background:var(--bg);padding:12px 18px;border-radius:8px;border-left:4px solid var(--orange);">
+        <strong style="color:var(--orange);">Container width:</strong> 2.44 m = 244 cm &divide; 20 = <strong>12.2 cm</strong> &rarr; round to <strong>12 cm</strong>
+      </div>
+      <div style="background:var(--bg);padding:12px 18px;border-radius:8px;border-left:4px solid var(--orange);">
+        <strong style="color:var(--orange);">Container height:</strong> 2.59 m = 259 cm &divide; 20 = <strong>12.95 cm</strong> &rarr; round to <strong>13 cm</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SCALE CONVERSION ACTIVITY ===================== -->
+  <section class="activity">
+    <div class="section-label"><span class="section-icon">&#x1F522;</span> ACTIVITY &mdash; Scale Conversion Practice (Workbook p. 30)</div>
+
+    <div class="info-box"><strong>Workbook Section 3, Item 22 (p. 30):</strong> Complete the scale conversion table. Show your working!</div>
+
+    <table class="scale-table">
+      <thead><tr><th style="width:30%">Feature</th><th style="width:20%">Real Size</th><th style="width:25%">Working (cm &divide; 20)</th><th style="width:25%">Model Size</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Serving window width</strong></td><td>1.5 m</td><td><input type="text" data-save="sc1w" placeholder="150 ÷ 20 ="></td><td><input type="text" data-save="sc1a" placeholder="____ cm"></td></tr>
+        <tr><td><strong>Door height</strong></td><td>2.1 m</td><td><input type="text" data-save="sc2w" placeholder="210 ÷ 20 ="></td><td><input type="text" data-save="sc2a" placeholder="____ cm"></td></tr>
+        <tr><td><strong>Counter height</strong></td><td>0.9 m</td><td><input type="text" data-save="sc3w" placeholder="90 ÷ 20 ="></td><td><input type="text" data-save="sc3a" placeholder="____ cm"></td></tr>
+        <tr><td><strong>Bench depth</strong></td><td>0.6 m</td><td><input type="text" data-save="sc4w" placeholder="60 ÷ 20 ="></td><td><input type="text" data-save="sc4a" placeholder="____ cm"></td></tr>
+        <tr><td><strong>Awning extension</strong></td><td>1.2 m</td><td><input type="text" data-save="sc5w" placeholder="120 ÷ 20 ="></td><td><input type="text" data-save="sc5a" placeholder="____ cm"></td></tr>
+        <tr><td><strong>Aisle width</strong></td><td>0.9 m</td><td><input type="text" data-save="sc6w" placeholder="90 ÷ 20 ="></td><td><input type="text" data-save="sc6a" placeholder="____ cm"></td></tr>
+        <tr><td><strong>Fridge height</strong></td><td>1.8 m</td><td><input type="text" data-save="sc7w" placeholder="180 ÷ 20 ="></td><td><input type="text" data-save="sc7a" placeholder="____ cm"></td></tr>
+        <tr><td><strong>Steps/ramp length</strong></td><td>1.0 m</td><td><input type="text" data-save="sc8w" placeholder="100 ÷ 20 ="></td><td><input type="text" data-save="sc8a" placeholder="____ cm"></td></tr>
+      </tbody>
+    </table>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <ul>
+        <li>Step 1: Multiply the metres number by 100 to get centimetres (e.g., 1.5 m &times; 100 = 150 cm)</li>
+        <li>Step 2: Divide the centimetres by 20 (e.g., 150 &divide; 20 = 7.5 cm)</li>
+        <li>Use a calculator if needed</li>
+      </ul>
+    </div>
+
+    <div class="diff-box diff-extension">
+      <div class="diff-label">&#9650; Extension</div>
+      <p>Calculate the <strong>floor area</strong> of your container at both scales. How does area scale compare to length scale?</p>
+      <textarea data-save="scaleExt" placeholder="Real floor area: 6.1 × 2.44 = _____ m²&#10;Model floor area: 30 × 12 = _____ cm²&#10;The area scale factor is..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===================== QUICK REFERENCE ===================== -->
+  <section class="class-notes">
+    <div class="section-label"><span class="section-icon">&#x1F4CB;</span> QUICK REFERENCE &mdash; Common Conversions at 1:20</div>
+
+    <table class="qr-table">
+      <thead><tr><th>Real Size</th><th>0.5 m</th><th>1.0 m</th><th>1.5 m</th><th>2.0 m</th><th>2.5 m</th><th>3.0 m</th></tr></thead>
+      <tbody>
+        <tr><td style="font-family:var(--font-heading);color:var(--blue);">Model Size</td><td>2.5 cm</td><td>5 cm</td><td>7.5 cm</td><td>10 cm</td><td>12.5 cm</td><td>15 cm</td></tr>
+      </tbody>
+    </table>
+
+    <div style="background:#FFEBEE;border:2px solid #C62828;border-radius:10px;padding:14px 18px;margin:14px 0;text-align:center;">
+      <strong style="color:#C62828;">Sense Check:</strong>
+      <span style="font-size:.88rem;color:var(--charcoal);"> If your model door is 20 cm tall, that would be 4 m in real life &mdash; that cannot be right! Check your working.</span>
+    </div>
+  </section>
+
+  <!-- ===================== VOCABULARY ===================== -->
+  <section class="vocabulary">
+    <div class="section-label"><span class="section-icon">Aa</span> KEY VOCABULARY</div>
+    <table class="vocab-table">
+      <thead><tr><th style="width:28%">Term</th><th style="width:72%">Definition</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Procedure</td><td><textarea data-save="v1" placeholder="Step-by-step instructions for completing a task"></textarea></td></tr>
+        <tr><td class="term">Action verb</td><td><textarea data-save="v2" placeholder="Command word: cut, fold, measure, glue, mark"></textarea></td></tr>
+        <tr><td class="term">Sequential</td><td><textarea data-save="v3" placeholder="In correct order from first to last"></textarea></td></tr>
+        <tr><td class="term">Scale</td><td><textarea data-save="v4" placeholder="Ratio between model size and real size"></textarea></td></tr>
+        <tr><td class="term">Ratio</td><td><textarea data-save="v5" placeholder="Relationship between two quantities (e.g. 1:20)"></textarea></td></tr>
+        <tr><td class="term">1:20 scale</td><td><textarea data-save="v6" placeholder="1 cm on model = 20 cm in real life"></textarea></td></tr>
+        <tr><td class="term">Conversion</td><td><textarea data-save="v7" placeholder="Changing from one unit or scale to another"></textarea></td></tr>
+        <tr><td class="term">Score (cardboard)</td><td><textarea data-save="v8" placeholder="Cut partway through to create a fold line"></textarea></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== EXIT TICKET ===================== -->
+  <section class="reflection">
+    <div class="section-label"><span class="section-icon">&#x2714;</span> EXIT TICKET &mdash; Reflection</div>
+
+    <div class="question">
+      <p>Q1: Write one step of a procedure using an action verb.</p>
+      <textarea data-save="exit1" placeholder="Step: "></textarea>
+    </div>
+    <div class="question">
+      <p>Q2: A real window is 1.2 m wide. What is the model size at 1:20 scale? Show your working.</p>
+      <textarea data-save="exit2" placeholder="1.2 m = _____ cm&#10;_____ ÷ 20 = _____ cm"></textarea>
+    </div>
+    <div class="question">
+      <p>Q3: Why is it important to write procedures in the correct sequential order?</p>
+      <textarea data-save="exit3" placeholder="Sequential order is important because..."></textarea>
+    </div>
+
+    <div class="diff-box diff-support">
+      <div class="diff-label">&#9733; Support</div>
+      <ul>
+        <li>Action verbs: measure, mark, cut, score, fold, glue, align, assemble</li>
+        <li>Q2 answer: 1.2 m = 120 cm &divide; 20 = 6 cm</li>
+      </ul>
+    </div>
+
+    <div class="self-assess">
+      <h3>Self-Assessment &mdash; Did I Achieve the Success Criteria?</h3>
+      <div class="sc-check"><input type="checkbox" id="sc1" data-save="sc1"><label for="sc1">I can identify action verbs used in procedures</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc2" data-save="sc2"><label for="sc2">I can write a procedure using correct structure</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc3" data-save="sc3"><label for="sc3">I can explain what 1:20 scale means</label></div>
+      <div class="sc-check"><input type="checkbox" id="sc4" data-save="sc4"><label for="sc4">I can convert real dimensions to 1:20 scale model dimensions</label></div>
+    </div>
+  </section>
+
+  <footer class="ws-footer">
+    <div><strong>Outcomes:</strong> TE4-PPM-01 &bull; TE4-DES-01 &bull; TE4-MSC-01</div>
+    <div><strong>Workbook:</strong> Section 3, pp. 29&ndash;30</div>
+    <div>Keep this worksheet in your design folio</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const STORAGE_KEY='CTC-T1-L11';const indicator=document.getElementById('saveIndicator');let saveTimeout;
+  function saveAll(){const data={};document.querySelectorAll('[data-save]').forEach(function(el){const key=el.getAttribute('data-save');if(el.type==='checkbox'){data[key]=el.checked}else{data[key]=el.value}});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));indicator.textContent='All changes saved';indicator.classList.remove('saving')}catch(e){indicator.textContent='Could not save (storage full)'}}
+  function restoreAll(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;const data=JSON.parse(raw);document.querySelectorAll('[data-save]').forEach(function(el){const key=el.getAttribute('data-save');if(key in data){if(el.type==='checkbox'){el.checked=data[key]}else{el.value=data[key]}}})}catch(e){}}
+  function onInput(){indicator.textContent='Saving...';indicator.classList.add('saving');clearTimeout(saveTimeout);saveTimeout=setTimeout(saveAll,400)}
+  document.querySelectorAll('[data-save]').forEach(function(el){el.addEventListener('input',onInput);el.addEventListener('change',onInput)});
+  restoreAll();
+  window.savePDF=function(){window.print()};
+  window.clearAll=function(){if(confirm('Are you sure you want to clear all your answers? This cannot be undone.')){document.querySelectorAll('[data-save]').forEach(function(el){if(el.type==='checkbox'){el.checked=false}else{el.value=''}});localStorage.removeItem(STORAGE_KEY);indicator.textContent='All answers cleared';setTimeout(function(){indicator.textContent='No saved data'},2000)}};
+})();
+</script>
+
+</body>
+</html>
