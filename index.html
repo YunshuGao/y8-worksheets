@@ -125,6 +125,32 @@
     border-top: 1px solid #ddd;
   }
 
+  
+  .section-interactive a.card {
+    border-left-color: #f97316;
+    background: linear-gradient(135deg, #fff7ed, #ffffff);
+  }
+  .section-interactive .num {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    width: 40px; height: 40px;
+    font-size: 16px;
+  }
+  .section-interactive .phase-title { color: #ea580c; }
+  .section-interactive a.card:hover {
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.2);
+  }
+  .card .badge {
+    display: inline-block;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
   @media (max-width: 500px) {
     .container { padding: 12px; }
     .header { padding: 20px 16px; }
@@ -138,6 +164,21 @@
   <div class="header">
     <h1>&#x1F4E6; Year 8 Technology Mandatory</h1>
     <p>Materials &amp; Production Processes — From Container to Countertop</p>
+  </div>
+
+
+  <!-- Interactive Tools -->
+  <div class="phase section-interactive">
+    <div class="phase-title">&#x1F4BB; Interactive Tools</div>
+    <div class="card-grid">
+      <a class="card" href="T1-L06-Scale-Explorer-Interactive.html">
+        <div class="num">&#x1F4D0;</div>
+        <div>
+          <div class="title">Scale Explorer<span class="badge">Interactive</span></div>
+          <div class="subtitle">Learn scale with live visuals, practice challenges (10 questions), model planner &amp; save/share your work via link</div>
+        </div>
+      </a>
+    </div>
   </div>
 
   <!-- Section 1: Identifying & Defining -->
