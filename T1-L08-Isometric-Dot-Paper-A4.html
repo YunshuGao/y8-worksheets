@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Isometric Dot Paper — A4</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 12mm;
+    }
+    body {
+      margin: 0;
+      padding: 10mm;
+      font-family: system-ui, sans-serif;
+    }
+    .title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+      margin-bottom: 6mm;
+      font-size: 10pt;
+      color: #555;
+    }
+    .title-bar .left { font-weight: 600; }
+    .title-bar .right { font-size: 9pt; }
+    .name-line {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 4mm;
+      font-size: 9pt;
+      color: #666;
+    }
+    .name-line span { border-bottom: 1px solid #999; min-width: 120px; display: inline-block; }
+    svg { width: 100%; display: block; }
+
+    /* Print styles */
+    @media print {
+      body { padding: 0; }
+      .no-print { display: none !important; }
+    }
+
+    /* Print button */
+    .print-controls {
+      text-align: center;
+      padding: 1rem;
+      background: #f0f0f0;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+    .print-controls button {
+      padding: 0.6rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .print-controls button:hover { background: #2563eb; }
+    .print-controls p { font-size: 0.85rem; color: #666; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+
+  <div class="print-controls no-print">
+    <button onclick="window.print()">Print Isometric Dot Paper</button>
+    <p>Print at 100% scale (no "fit to page") for accurate spacing. Print as many copies as needed.</p>
+  </div>
+
+  <div class="title-bar">
+    <div class="left">Isometric Dot Paper — From Container to Countertop | T1-L08</div>
+    <div class="right">Year 8 Technology | 1:20 Scale</div>
+  </div>
+  <div class="name-line">
+    Name: <span>&nbsp;</span> &nbsp;&nbsp; Class: <span style="min-width:60px;">&nbsp;</span> &nbsp;&nbsp; Date: <span style="min-width:80px;">&nbsp;</span>
+  </div>
+
+  <svg viewBox="0 0 570 780" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Isometric dot pattern: dots at 60° intervals, 8mm spacing -->
+      <!-- Row spacing: 8mm vertical between alternating rows -->
+      <!-- Column spacing: 8mm horizontal -->
+    </defs>
+
+    <!-- Light border -->
+    <rect x="0" y="0" width="570" height="780" fill="none" stroke="#ddd" stroke-width="0.5"/>
+
+    <!-- Generate isometric dots -->
+    <!-- Even rows: x starts at 0, spacing 16px (representing ~5.6mm) -->
+    <!-- Odd rows: x starts at 8, offset by half -->
+    <!-- Vertical spacing: 13.86px (8 * sqrt(3)) for true isometric -->
+    <g fill="#9ca3af">
+      <script type="text/javascript">
+        // This won't run in static SVG, so we generate dots inline
+      </script>
+    </g>
+
+    <!-- Pre-generated isometric dots -->
+    <!-- Row pitch: ~4.5mm vertical, ~5.2mm horizontal for good A4 coverage -->
+    <!-- Using 10px horizontal, 8.66px vertical (10 * sin(60°)) -->
+    <g fill="#94a3b8" id="dots"></g>
+
+    <!-- Scale reference at bottom -->
+    <g transform="translate(10, 750)">
+      <line x1="0" y1="0" x2="170" y2="0" stroke="#3b82f6" stroke-width="1"/>
+      <line x1="0" y1="-3" x2="0" y2="3" stroke="#3b82f6" stroke-width="1"/>
+      <line x1="170" y1="-3" x2="170" y2="3" stroke="#3b82f6" stroke-width="1"/>
+      <text x="85" y="12" font-size="7" fill="#3b82f6" text-anchor="middle" font-family="system-ui">30 cm = 6 m at 1:20 (container length)</text>
+    </g>
+    <g transform="translate(10, 750)">
+      <line x1="0" y1="-18" x2="68" y2="-18" stroke="#f97316" stroke-width="1"/>
+      <line x1="0" y1="-21" x2="0" y2="-15" stroke="#f97316" stroke-width="1"/>
+      <line x1="68" y1="-21" x2="68" y2="-15" stroke="#f97316" stroke-width="1"/>
+      <text x="34" y="-22" font-size="7" fill="#f97316" text-anchor="middle" font-family="system-ui">12 cm = 2.4 m at 1:20 (width/height)</text>
+    </g>
+
+    <!-- Tip text -->
+    <text x="285" y="775" font-size="6.5" fill="#94a3b8" text-anchor="middle" font-family="system-ui">Tip: Follow the diagonal dots to draw 30° lines. Every 2 dots across and 1 dot up = 30°.</text>
+  </svg>
+
+  <script>
+    // Generate isometric dot grid
+    const svg = document.querySelector('svg');
+    const dotsGroup = document.getElementById('dots');
+    const hSpacing = 10;  // horizontal spacing between dots
+    const vSpacing = hSpacing * Math.sqrt(3) / 2;  // vertical spacing for equilateral triangles (~8.66)
+
+    const cols = Math.floor(570 / hSpacing) + 1;
+    const rows = Math.floor(740 / vSpacing) + 1;
+
+    let dotsHtml = '';
+    for (let row = 0; row < rows; row++) {
+      const y = 5 + row * vSpacing;
+      const offset = (row % 2 === 1) ? hSpacing / 2 : 0;
+      for (let col = 0; col < cols; col++) {
+        const x = 5 + offset + col * hSpacing;
+        if (x <= 565 && y <= 740) {
+          dotsHtml += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.2"/>`;
+        }
+      }
+    }
+    dotsGroup.innerHTML = dotsHtml;
+  </script>
+</body>
+</html>

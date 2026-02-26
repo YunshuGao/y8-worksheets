@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projection Explorer — From Container to Countertop</title>
+  <style>
+    /* =========================================
+       CSS VARIABLES & RESET (matches Scale Explorer)
+       ========================================= */
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-light: #dbeafe;
+      --accent: #f97316;
+      --accent-dark: #ea580c;
+      --accent-light: #fff7ed;
+      --success: #22c55e;
+      --success-light: #dcfce7;
+      --error: #ef4444;
+      --error-light: #fee2e2;
+      --warning: #eab308;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* =========================================
+       HEADER
+       ========================================= */
+    .header {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .header-left h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; }
+    .header-left p { font-size: 0.875rem; opacity: 0.9; }
+    .header-right {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .header-badge {
+      background: rgba(255,255,255,0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .header-input {
+      padding: 0.35rem 0.75rem;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 0.85rem;
+      outline: none;
+      width: 140px;
+    }
+    .header-input::placeholder { color: rgba(255,255,255,0.6); }
+    .header-input:focus { border-color: white; background: rgba(255,255,255,0.25); }
+
+    /* =========================================
+       LEVEL SELECTOR
+       ========================================= */
+    .level-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+    .level-btn {
+      padding: 0.35rem 1rem;
+      border: 2px solid var(--border);
+      background: var(--card);
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .level-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .level-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* =========================================
+       TAB NAVIGATION
+       ========================================= */
+    .tab-nav {
+      display: flex;
+      background: var(--card);
+      border-bottom: 2px solid var(--border);
+      padding: 0;
+      overflow-x: auto;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .tab-btn {
+      flex: 1;
+      min-width: 130px;
+      padding: 1rem 1.25rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      font-weight: 600;
+      background: var(--primary-light);
+    }
+    .tab-btn:hover { color: var(--primary); background: rgba(59,130,246,0.05); }
+    .tab-icon { font-size: 1.2rem; }
+
+    /* =========================================
+       TAB CONTENT
+       ========================================= */
+    .tab-content {
+      display: none;
+      padding: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-content.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================
+       CARDS & COMPONENTS
+       ========================================= */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.25rem;
+    }
+    .card h2 {
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .card p { color: var(--text-muted); margin-bottom: 0.75rem; }
+
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 1rem 1.25rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    .callout strong { color: var(--primary-dark); }
+    .callout.accent {
+      border-left-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .callout.accent strong { color: var(--accent-dark); }
+    .callout.success {
+      border-left-color: var(--success);
+      background: var(--success-light);
+    }
+
+    /* =========================================
+       3D CONTAINER SCENE
+       ========================================= */
+    .scene-wrapper {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .scene-area {
+      flex: 1;
+      min-width: 320px;
+    }
+    .info-area {
+      flex: 1;
+      min-width: 280px;
+    }
+    .scene {
+      width: 100%;
+      max-width: 500px;
+      height: 340px;
+      perspective: 800px;
+      margin: 0 auto;
+      position: relative;
+      background: #f8fafc;
+      border-radius: var(--radius);
+      border: 2px solid var(--border);
+      overflow: hidden;
+    }
+    .container3d {
+      width: 240px;
+      height: 96px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translate(-50%, -50%) rotateX(-20deg) rotateY(-30deg);
+    }
+    .face {
+      position: absolute;
+      border: 2px solid #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #475569;
+      backface-visibility: visible;
+    }
+    /* Container dimensions: 240px long (L), 96px wide (W), 96px tall (H) */
+    .face-front {
+      width: 96px; height: 96px;
+      background: linear-gradient(180deg, #94a3b8 0%, #b0bec5 100%);
+      transform: translateZ(120px);
+    }
+    .face-back {
+      width: 96px; height: 96px;
+      background: linear-gradient(180deg, #94a3b8 0%, #b0bec5 100%);
+      transform: translateZ(-120px) rotateY(180deg);
+    }
+    .face-left {
+      width: 240px; height: 96px;
+      background: repeating-linear-gradient(0deg, #b0bec5 0px, #b0bec5 6px, #9caabc 6px, #9caabc 8px);
+      transform: rotateY(-90deg) translateZ(48px);
+    }
+    .face-right {
+      width: 240px; height: 96px;
+      background: repeating-linear-gradient(0deg, #b0bec5 0px, #b0bec5 6px, #9caabc 6px, #9caabc 8px);
+      transform: rotateY(90deg) translateZ(48px);
+    }
+    .face-top {
+      width: 240px; height: 96px;
+      background: linear-gradient(90deg, #cdd5de 0%, #d4dbe4 100%);
+      transform: rotateX(90deg) translateZ(48px);
+    }
+    .face-bottom {
+      width: 240px; height: 96px;
+      background: #7a8a9e;
+      transform: rotateX(-90deg) translateZ(48px);
+    }
+
+    /* Features on faces */
+    .feature {
+      position: absolute;
+      border: 2px solid rgba(0,0,0,0.3);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .feature:hover, .feature.highlighted {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(249,115,22,0.5);
+      z-index: 10;
+    }
+    .feature-label {
+      position: absolute;
+      font-size: 0.6rem;
+      color: white;
+      background: rgba(0,0,0,0.6);
+      padding: 1px 4px;
+      border-radius: 3px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    /* Serving window on left face */
+    .serving-window {
+      width: 80px; height: 40px;
+      background: rgba(249,115,22,0.3);
+      top: 18px; left: 80px;
+    }
+    .serving-window .feature-label { bottom: -16px; left: 50%; transform: translateX(-50%); }
+    /* Counter shelf below window */
+    .counter-shelf {
+      width: 80px; height: 6px;
+      background: #8B5E3C;
+      top: 58px; left: 80px;
+    }
+    /* Door on front face */
+    .entry-door {
+      width: 30px; height: 60px;
+      background: rgba(59,130,246,0.3);
+      bottom: 0; right: 10px;
+      border-bottom: none;
+    }
+    .entry-door .feature-label { top: -16px; left: 50%; transform: translateX(-50%); }
+    /* Awning on left face */
+    .awning {
+      width: 120px; height: 10px;
+      background: rgba(239,68,68,0.4);
+      top: 0; left: 60px;
+      border-top: none;
+      transform: translateY(-5px);
+    }
+    /* Roof vent on top face */
+    .roof-vent {
+      width: 40px; height: 20px;
+      background: rgba(100,116,139,0.5);
+      top: 10px; right: 30px;
+      border-radius: 4px;
+    }
+    .roof-vent .feature-label { top: -16px; left: 50%; transform: translateX(-50%); }
+    /* Exhaust on right face */
+    .exhaust-vent {
+      width: 30px; height: 30px;
+      background: rgba(100,116,139,0.3);
+      top: 10px; left: 40px;
+      border-radius: 50%;
+    }
+
+    /* View buttons */
+    .view-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+      justify-content: center;
+    }
+    .view-btn {
+      padding: 0.6rem 1.2rem;
+      border: 2px solid var(--border);
+      background: var(--card);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .view-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .view-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Teaching box that updates with each view */
+    .teaching-box {
+      background: var(--primary-light);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-top: 1rem;
+      transition: all 0.3s;
+    }
+    .teaching-box h3 { color: var(--primary-dark); margin-bottom: 0.5rem; }
+    .teaching-box p { color: var(--text); margin-bottom: 0.25rem; }
+    .teaching-box .dim-info {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+    }
+
+    /* =========================================
+       COMPARE TAB
+       ========================================= */
+    .compare-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .compare-layout { grid-template-columns: 1fr; }
+    }
+    .compare-panel {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 2px solid var(--border);
+      overflow: hidden;
+    }
+    .compare-panel-header {
+      background: var(--primary);
+      color: white;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+    .compare-panel-header.ortho-header { background: var(--accent); }
+    .compare-panel-body { padding: 1rem; }
+
+    .feature-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+      justify-content: center;
+    }
+    .feature-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--border);
+      background: var(--card);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .feature-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .feature-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+    /* SVG drawing styles */
+    .drawing-svg {
+      width: 100%;
+      max-height: 260px;
+    }
+    .svg-feature { transition: all 0.3s; }
+    .svg-feature.highlighted { stroke: var(--accent); stroke-width: 3; fill-opacity: 0.3; }
+    .ortho-views {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 0.75rem;
+      padding: 0.5rem;
+    }
+    .ortho-view {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem;
+      text-align: center;
+      background: #f8fafc;
+    }
+    .ortho-view h4 {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+    .ortho-view svg { width: 100%; }
+    .top-view-panel { grid-column: 1 / -1; }
+
+    /* =========================================
+       QUIZ TAB
+       ========================================= */
+    .quiz-progress {
+      display: flex;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+    .quiz-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.3s;
+    }
+    .quiz-dot.current { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .quiz-dot.correct { border-color: var(--success); color: white; background: var(--success); }
+    .quiz-dot.wrong { border-color: var(--error); color: white; background: var(--error); }
+
+    .quiz-question-area {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    .quiz-image-box {
+      display: inline-block;
+      background: #f8fafc;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    .quiz-options {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .quiz-option {
+      padding: 0.75rem 1.5rem;
+      border: 2px solid var(--border);
+      background: var(--card);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      min-width: 120px;
+    }
+    .quiz-option:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+    .quiz-option.selected { border-color: var(--primary); background: var(--primary-light); color: var(--primary-dark); }
+    .quiz-option.correct-answer { border-color: var(--success); background: var(--success-light); color: #166534; }
+    .quiz-option.wrong-answer { border-color: var(--error); background: var(--error-light); color: #991b1b; }
+    .quiz-option:disabled { cursor: default; transform: none; }
+
+    .quiz-feedback {
+      padding: 1rem;
+      border-radius: var(--radius);
+      margin: 1rem 0;
+      font-weight: 500;
+      display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: var(--success-light); color: #166534; border: 1px solid var(--success); }
+    .quiz-feedback.incorrect { background: var(--error-light); color: #991b1b; border: 1px solid var(--error); }
+
+    .hint-btn {
+      padding: 0.4rem 0.8rem;
+      border: 1px dashed var(--warning);
+      background: #fefce8;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: #854d0e;
+      margin-top: 0.5rem;
+    }
+    .hint-text {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background: #fefce8;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: #854d0e;
+    }
+    .hint-text.show { display: block; }
+
+    .quiz-score-card {
+      text-align: center;
+      padding: 2rem;
+    }
+    .score-big {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* =========================================
+       MY PROJECT TAB
+       ========================================= */
+    .config-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 600px) { .config-grid { grid-template-columns: 1fr; } }
+
+    .config-item {
+      background: #f8fafc;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .config-item label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .config-item select, .config-item input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: white;
+    }
+    .config-item select:focus, .config-item input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .preview-box {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem;
+      text-align: center;
+    }
+    .preview-box h4 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .preview-box svg {
+      width: 100%;
+      max-height: 180px;
+    }
+    .preview-box.wide { grid-column: 1 / -1; }
+
+    .timeline {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--primary-light);
+      border-radius: var(--radius);
+    }
+    .timeline h3 { color: var(--primary-dark); margin-bottom: 0.75rem; }
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.4rem 0;
+      font-size: 0.9rem;
+    }
+    .timeline-dot {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .timeline-dot.done { background: var(--success); color: white; }
+    .timeline-dot.current { background: var(--accent); color: white; }
+    .timeline-dot.upcoming { background: var(--border); color: var(--text-muted); }
+
+    /* =========================================
+       VOCABULARY TOOLTIP
+       ========================================= */
+    .vocab {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+      cursor: help;
+      position: relative;
+      color: var(--primary-dark);
+      font-weight: 500;
+    }
+    .vocab-tip {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text);
+      color: white;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 400;
+      white-space: nowrap;
+      max-width: 260px;
+      white-space: normal;
+      z-index: 200;
+      box-shadow: var(--shadow-lg);
+      pointer-events: none;
+    }
+    .vocab:hover .vocab-tip { display: block; }
+
+    /* =========================================
+       BUTTONS & UTILITIES
+       ========================================= */
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: var(--accent-dark); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-outline {
+      background: white;
+      border: 2px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 0.5rem; }
+    .flex-center { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+
+    /* Next button for quiz */
+    .next-btn {
+      display: none;
+      margin: 1rem auto;
+    }
+    .next-btn.show { display: inline-block; }
+
+    /* Print styles */
+    @media print {
+      .header, .tab-nav, .level-bar, .view-buttons, .feature-buttons, .btn { display: none !important; }
+      .tab-content { display: block !important; padding: 0 !important; }
+      .card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+    }
+
+    /* Save area */
+    .save-area {
+      background: var(--success-light);
+      border: 2px solid var(--success);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .save-link {
+      display: none;
+      margin-top: 0.75rem;
+      padding: 0.5rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      width: 100%;
+      word-break: break-all;
+    }
+    .save-link.show { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Projection Explorer</h1>
+      <p>From Container to Countertop | T1-L08 | Year 8 Technology</p>
+    </div>
+    <div class="header-right">
+      <input type="text" class="header-input" id="studentName" placeholder="Your name">
+      <input type="text" class="header-input" id="studentClass" placeholder="Class" style="width:80px">
+      <span class="header-badge">TE4-DES-01</span>
+      <span class="header-badge">TE4-PDP-01</span>
+    </div>
+  </div>
+
+  <!-- LEVEL SELECTOR -->
+  <div class="level-bar">
+    <button class="level-btn" data-level="guided" onclick="setLevel('guided')">Guided</button>
+    <button class="level-btn active" data-level="standard" onclick="setLevel('standard')">Standard</button>
+    <button class="level-btn" data-level="challenge" onclick="setLevel('challenge')">Challenge</button>
+  </div>
+
+  <!-- TAB NAVIGATION -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('explore')">
+      <span class="tab-icon">&#x1F4D0;</span> EXPLORE
+    </button>
+    <button class="tab-btn" onclick="switchTab('compare')">
+      <span class="tab-icon">&#x1F50D;</span> COMPARE
+    </button>
+    <button class="tab-btn" onclick="switchTab('quiz')">
+      <span class="tab-icon">&#x2753;</span> QUIZ
+    </button>
+    <button class="tab-btn" onclick="switchTab('project')">
+      <span class="tab-icon">&#x1F3E0;</span> MY PROJECT
+    </button>
+  </nav>
+
+  <!-- =============================================
+       TAB 1: EXPLORE — 3D Container Viewer
+       ============================================= -->
+  <div id="tab-explore" class="tab-content active">
+    <div class="card">
+      <h2>&#x1F4D0; 3D Container Viewer</h2>
+      <p>Click the buttons below to rotate the container and see how it looks from different directions. Each direction gives us a different <span class="vocab">projection<span class="vocab-tip">A projection is a way of representing a 3D object on a 2D surface (flat paper).</span></span>.</p>
+
+      <div class="scene-wrapper">
+        <div class="scene-area">
+          <div class="scene" id="scene">
+            <div class="container3d" id="container3d">
+              <!-- Front face (short end - entry side) -->
+              <div class="face face-front">
+                <div class="feature entry-door" data-feature="door">
+                  <span class="feature-label">Door</span>
+                </div>
+                <span style="font-size:0.6rem;position:absolute;top:4px;left:4px;">FRONT (2.4m)</span>
+              </div>
+              <!-- Back face -->
+              <div class="face face-back">
+                <span style="font-size:0.6rem;position:absolute;top:4px;left:4px;">BACK</span>
+              </div>
+              <!-- Left face (long side - serving side) -->
+              <div class="face face-left">
+                <div class="feature serving-window" data-feature="window">
+                  <span class="feature-label">Serving Window</span>
+                </div>
+                <div class="feature counter-shelf" data-feature="counter"></div>
+                <div class="feature awning" data-feature="awning"></div>
+                <span style="font-size:0.6rem;position:absolute;top:4px;left:4px;">LEFT SIDE (6m) — Serving Side</span>
+              </div>
+              <!-- Right face (long side - back wall) -->
+              <div class="face face-right">
+                <div class="feature exhaust-vent" data-feature="exhaust"></div>
+                <span style="font-size:0.6rem;position:absolute;top:4px;left:4px;">RIGHT SIDE (6m)</span>
+              </div>
+              <!-- Top face -->
+              <div class="face face-top">
+                <div class="feature roof-vent" data-feature="vent">
+                  <span class="feature-label">Roof Vent</span>
+                </div>
+                <span style="font-size:0.6rem;position:absolute;top:4px;left:4px;">ROOF</span>
+              </div>
+              <!-- Bottom face -->
+              <div class="face face-bottom"></div>
+            </div>
+          </div>
+
+          <div class="view-buttons">
+            <button class="view-btn active" onclick="setView('3d')">&#x1F4D0; 3D View</button>
+            <button class="view-btn" onclick="setView('front')">&#x25A0; Front</button>
+            <button class="view-btn" onclick="setView('side')">&#x25AE; Side</button>
+            <button class="view-btn" onclick="setView('top')">&#x25A3; Top</button>
+          </div>
+        </div>
+
+        <div class="info-area">
+          <div class="teaching-box" id="teachingBox">
+            <h3 id="teachTitle">&#x1F4D0; 3D View (Isometric-like)</h3>
+            <p id="teachText">This view shows <strong>3 faces at once</strong> — just like an isometric drawing. You can see the front, the side, and the top of the container all in one picture.</p>
+            <p id="teachDetail">In an <span class="vocab">isometric drawing<span class="vocab-tip">Isometric drawing uses 30-degree angles to show 3D objects on flat paper. All 3 dimensions are visible.</span></span>, we use 30-degree angles to create this 3D effect on flat paper.</p>
+            <div id="teachDims">
+              <span class="dim-info">Shows: Length + Width + Height</span>
+            </div>
+            <p id="teachUse" class="mt-1" style="font-size:0.85rem; color:var(--text-muted)"><strong>Best for:</strong> Showing the overall shape and appearance of your container restaurant design.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout accent">
+      <strong>Key Idea:</strong> <span class="vocab">Isometric<span class="vocab-tip">Isometric means 'equal measure'. All three axes are drawn at equal angles (30 degrees) so no dimension is distorted.</span></span> shows 3 faces at once — great for showing the overall shape. <span class="vocab">Orthographic<span class="vocab-tip">Orthographic means 'straight drawing'. Each view shows one face head-on with exact measurements.</span></span> shows 1 face at a time — great for showing exact measurements and details.
+    </div>
+
+    <div class="card">
+      <h2>&#x1F3AF; Why Do We Need Both?</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div style="background:var(--primary-light); padding:1rem; border-radius:8px; border-left:4px solid var(--primary);">
+          <h3 style="color:var(--primary-dark);">Isometric Drawing</h3>
+          <ul style="font-size:0.9rem; margin-left:1.2rem; color:var(--text);">
+            <li>Shows the 3D shape at a glance</li>
+            <li>Great for <strong>presenting</strong> your design</li>
+            <li>Helps others visualise the concept</li>
+            <li>Uses 30-degree angles</li>
+          </ul>
+        </div>
+        <div style="background:var(--accent-light); padding:1rem; border-radius:8px; border-left:4px solid var(--accent);">
+          <h3 style="color:var(--accent-dark);">Orthographic Drawing</h3>
+          <ul style="font-size:0.9rem; margin-left:1.2rem; color:var(--text);">
+            <li>Shows exact measurements</li>
+            <li>Great for <strong>building</strong> from</li>
+            <li>Shows details you can't see in 3D</li>
+            <li>The TOP view = your floor plan!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       TAB 2: COMPARE — Isometric vs Orthographic
+       ============================================= -->
+  <div id="tab-compare" class="tab-content">
+    <div class="card">
+      <h2>&#x1F50D; Compare: Isometric vs Orthographic</h2>
+      <p>Click a <strong>feature</strong> below to highlight it in both the isometric view and all three orthographic views. Watch how the same feature looks different depending on the viewing direction!</p>
+
+      <div class="feature-buttons">
+        <button class="feature-btn active" data-feature="none" onclick="highlightFeature('none')">Show All</button>
+        <button class="feature-btn" data-feature="window" onclick="highlightFeature('window')">Serving Window</button>
+        <button class="feature-btn" data-feature="door" onclick="highlightFeature('door')">Entry Door</button>
+        <button class="feature-btn" data-feature="awning" onclick="highlightFeature('awning')">Awning</button>
+        <button class="feature-btn" data-feature="vent" onclick="highlightFeature('vent')">Roof Vent</button>
+        <button class="feature-btn" data-feature="counter" onclick="highlightFeature('counter')">Counter</button>
+      </div>
+    </div>
+
+    <div class="compare-layout">
+      <!-- Isometric View -->
+      <div class="compare-panel">
+        <div class="compare-panel-header">Isometric View (3D)</div>
+        <div class="compare-panel-body" style="text-align:center;">
+          <svg viewBox="0 0 400 300" class="drawing-svg" id="isoSvg">
+            <!-- Isometric container -->
+            <g transform="translate(200,250)">
+              <!-- Bottom edges -->
+              <line x1="0" y1="0" x2="-150" y2="-75" stroke="#475569" stroke-width="2"/>
+              <line x1="0" y1="0" x2="75" y2="-37" stroke="#475569" stroke-width="2"/>
+              <!-- Left face (serving side) -->
+              <polygon points="0,0 -150,-75 -150,-175 0,-100" fill="#b0bec5" stroke="#475569" stroke-width="2" class="svg-feature" data-face="left"/>
+              <!-- Right face (front end) -->
+              <polygon points="0,0 75,-37 75,-137 0,-100" fill="#94a3b8" stroke="#475569" stroke-width="2" class="svg-feature" data-face="front"/>
+              <!-- Top face -->
+              <polygon points="0,-100 -150,-175 -75,-212 75,-137" fill="#cdd5de" stroke="#475569" stroke-width="2" class="svg-feature" data-face="top"/>
+
+              <!-- Serving window on left face -->
+              <rect x="-110" y="-145" width="55" height="30" fill="rgba(249,115,22,0.4)" stroke="#ea580c" stroke-width="2" class="svg-feature" data-highlight="window" transform="skewY(-26.57) translate(0, 62)"/>
+              <!-- Simplified window -->
+              <polygon points="-100,-128 -55,-105 -55,-80 -100,-103" fill="rgba(249,115,22,0.3)" stroke="#ea580c" stroke-width="2" class="svg-feature" data-highlight="window"/>
+              <text x="-78" y="-72" font-size="9" fill="#ea580c" font-weight="600" text-anchor="middle" class="svg-feature" data-highlight="window">Window</text>
+
+              <!-- Counter below window -->
+              <line x1="-100" y1="-78" x2="-55" y2="-55" stroke="#8B5E3C" stroke-width="3" class="svg-feature" data-highlight="counter"/>
+              <text x="-78" y="-50" font-size="8" fill="#8B5E3C" font-weight="600" text-anchor="middle" class="svg-feature" data-highlight="counter">Counter</text>
+
+              <!-- Door on front face -->
+              <polygon points="25,-30 60,-47 60,-97 25,-80" fill="rgba(59,130,246,0.3)" stroke="#2563eb" stroke-width="2" class="svg-feature" data-highlight="door"/>
+              <text x="42" y="-55" font-size="8" fill="#2563eb" font-weight="600" text-anchor="middle" class="svg-feature" data-highlight="door">Door</text>
+
+              <!-- Awning on left face (above window) -->
+              <polygon points="-110,-140 -40,-105 -35,-108 -105,-143" fill="rgba(239,68,68,0.4)" stroke="#dc2626" stroke-width="1.5" class="svg-feature" data-highlight="awning"/>
+              <text x="-73" y="-138" font-size="8" fill="#dc2626" font-weight="600" text-anchor="middle" class="svg-feature" data-highlight="awning">Awning</text>
+
+              <!-- Roof vent on top face -->
+              <polygon points="-20,-170 10,-185 25,-177 -5,-162" fill="rgba(100,116,139,0.5)" stroke="#475569" stroke-width="1.5" class="svg-feature" data-highlight="vent"/>
+              <text x="3" y="-155" font-size="8" fill="#475569" font-weight="600" text-anchor="middle" class="svg-feature" data-highlight="vent">Vent</text>
+
+              <!-- Dimension labels -->
+              <text x="-85" y="8" font-size="9" fill="#64748b" text-anchor="middle" transform="rotate(-26.57, -85, 8)">6 m (length)</text>
+              <text x="48" y="5" font-size="9" fill="#64748b" text-anchor="middle" transform="rotate(26.57, 48, 5)">2.4 m (width)</text>
+              <text x="85" y="-87" font-size="9" fill="#64748b" text-anchor="middle">2.4 m (height)</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Orthographic Views -->
+      <div class="compare-panel">
+        <div class="compare-panel-header ortho-header">Orthographic Views (2D)</div>
+        <div class="compare-panel-body">
+          <div class="ortho-views">
+            <!-- Front View -->
+            <div class="ortho-view">
+              <h4>Front View (Elevation)</h4>
+              <svg viewBox="0 0 160 140" style="max-height:120px;">
+                <rect x="30" y="10" width="100" height="100" fill="#94a3b8" stroke="#475569" stroke-width="2" class="svg-feature" data-oface="front"/>
+                <!-- Door -->
+                <rect x="85" y="40" width="30" height="60" fill="rgba(59,130,246,0.3)" stroke="#2563eb" stroke-width="2" class="svg-feature" data-highlight="door"/>
+                <text x="100" y="73" font-size="8" fill="#2563eb" text-anchor="middle" class="svg-feature" data-highlight="door">Door</text>
+                <!-- Labels -->
+                <text x="80" y="125" font-size="8" fill="#64748b" text-anchor="middle">2.4 m wide x 2.4 m tall</text>
+              </svg>
+            </div>
+            <!-- Side View -->
+            <div class="ortho-view">
+              <h4>Side View (Elevation)</h4>
+              <svg viewBox="0 0 280 140" style="max-height:120px;">
+                <rect x="15" y="10" width="250" height="100" fill="#b0bec5" stroke="#475569" stroke-width="2" class="svg-feature" data-oface="left"/>
+                <!-- Serving window -->
+                <rect x="95" y="30" width="80" height="40" fill="rgba(249,115,22,0.3)" stroke="#ea580c" stroke-width="2" class="svg-feature" data-highlight="window"/>
+                <text x="135" y="55" font-size="8" fill="#ea580c" text-anchor="middle" class="svg-feature" data-highlight="window">Window</text>
+                <!-- Counter -->
+                <line x1="95" y1="70" x2="175" y2="70" stroke="#8B5E3C" stroke-width="3" class="svg-feature" data-highlight="counter"/>
+                <!-- Awning -->
+                <line x1="85" y1="25" x2="185" y2="25" stroke="#dc2626" stroke-width="3" class="svg-feature" data-highlight="awning"/>
+                <text x="135" y="20" font-size="8" fill="#dc2626" text-anchor="middle" class="svg-feature" data-highlight="awning">Awning</text>
+                <!-- Labels -->
+                <text x="140" y="125" font-size="8" fill="#64748b" text-anchor="middle">6 m long x 2.4 m tall</text>
+              </svg>
+            </div>
+            <!-- Top View -->
+            <div class="ortho-view top-view-panel">
+              <h4>Top View (Plan View) — This becomes your FLOOR PLAN!</h4>
+              <svg viewBox="0 0 320 120" style="max-height:110px;">
+                <rect x="10" y="10" width="300" height="90" fill="#cdd5de" stroke="#475569" stroke-width="2" class="svg-feature" data-oface="top"/>
+                <!-- Window opening on bottom edge -->
+                <line x1="110" y1="100" x2="190" y2="100" stroke="#ea580c" stroke-width="4" class="svg-feature" data-highlight="window"/>
+                <text x="150" y="93" font-size="8" fill="#ea580c" text-anchor="middle" class="svg-feature" data-highlight="window">Window</text>
+                <!-- Door opening on right edge -->
+                <line x1="300" y1="40" x2="300" y2="80" stroke="#2563eb" stroke-width="4" class="svg-feature" data-highlight="door"/>
+                <!-- Door swing arc -->
+                <path d="M 300 80 Q 270 80 270 50" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,3" class="svg-feature" data-highlight="door"/>
+                <text x="275" y="60" font-size="8" fill="#2563eb" text-anchor="middle" class="svg-feature" data-highlight="door">Door</text>
+                <!-- Vent on top -->
+                <rect x="200" y="20" width="40" height="25" fill="rgba(100,116,139,0.4)" stroke="#475569" stroke-width="1.5" class="svg-feature" data-highlight="vent"/>
+                <text x="220" y="36" font-size="7" fill="#475569" text-anchor="middle" class="svg-feature" data-highlight="vent">Vent</text>
+                <!-- Labels -->
+                <text x="160" y="115" font-size="8" fill="#64748b" text-anchor="middle">6 m long x 2.4 m wide</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="compareExplanation" class="callout accent mt-2">
+      <strong>Click a feature above</strong> to see how it appears differently in each view. For example, the serving window is a rectangle on the side view but just a line on the top view!
+    </div>
+
+    <div class="card mt-2">
+      <h2>&#x1F4A1; Key Observation</h2>
+      <p>Notice how the <strong>Top View</strong> (plan view) looks exactly like a floor plan? That's because it IS a floor plan! When you draw your restaurant layout in later lessons, you're drawing the orthographic <span class="vocab">plan view<span class="vocab-tip">The plan view is what you see when looking straight down from above. It shows the length and width of the object.</span></span>.</p>
+    </div>
+  </div>
+
+  <!-- =============================================
+       TAB 3: QUIZ — Identify the View
+       ============================================= -->
+  <div id="tab-quiz" class="tab-content">
+    <div class="card">
+      <h2>&#x2753; Projection Quiz</h2>
+      <p>Identify the type of projection or view shown. Aim for 8 or more correct!</p>
+
+      <div class="quiz-progress" id="quizProgress"></div>
+
+      <div id="quizArea">
+        <div class="quiz-question-area">
+          <h3 id="quizQuestionText"></h3>
+          <div class="quiz-image-box" id="quizImageBox"></div>
+        </div>
+
+        <div class="quiz-options" id="quizOptions"></div>
+
+        <div class="text-center">
+          <button class="hint-btn" id="hintBtn" onclick="showHint()" style="display:none;">Need a hint?</button>
+          <div class="hint-text" id="hintText"></div>
+        </div>
+
+        <div class="quiz-feedback" id="quizFeedback"></div>
+
+        <div class="text-center">
+          <button class="btn btn-primary next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+        </div>
+      </div>
+
+      <div class="quiz-score-card" id="quizScoreCard" style="display:none;">
+        <div class="score-big" id="finalScore"></div>
+        <p style="font-size:1.2rem; margin:0.5rem 0;" id="scoreMessage"></p>
+        <p id="scoreDetail" style="color:var(--text-muted);"></p>
+        <button class="btn btn-accent mt-2" onclick="restartQuiz()">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       TAB 4: MY PROJECT — Configure & Preview
+       ============================================= -->
+  <div id="tab-project" class="tab-content">
+    <div class="card">
+      <h2>&#x1F3E0; Design Your Container Restaurant</h2>
+      <p>Configure your container's external features below. The preview will update to show what your isometric and orthographic drawings should look like.</p>
+
+      <div class="callout">
+        <strong>Remember:</strong> Your teacher will provide the cardboard shell (the container box). <strong>Your job</strong> is to design what goes on the outside and inside — the features, the layout, the details. These drawings are HOW you communicate your design before building it.
+      </div>
+
+      <div class="config-grid">
+        <div class="config-item">
+          <label>Restaurant Name</label>
+          <input type="text" id="restName" placeholder="e.g., Burger Box, The Container Kitchen" oninput="updateProjectPreview()">
+        </div>
+        <div class="config-item">
+          <label>Serving Window Position</label>
+          <select id="windowPos" onchange="updateProjectPreview()">
+            <option value="centre">Centre of long side</option>
+            <option value="left">Left of long side</option>
+            <option value="right">Right of long side</option>
+          </select>
+        </div>
+        <div class="config-item">
+          <label>Door Position</label>
+          <select id="doorPos" onchange="updateProjectPreview()">
+            <option value="right-end">Right end (short side)</option>
+            <option value="left-end">Left end (short side)</option>
+            <option value="back">Back (long side, opposite window)</option>
+          </select>
+        </div>
+        <div class="config-item">
+          <label>Awning Style</label>
+          <select id="awningStyle" onchange="updateProjectPreview()">
+            <option value="full">Full width</option>
+            <option value="half">Half width (over window only)</option>
+            <option value="none">No awning</option>
+          </select>
+        </div>
+        <div class="config-item">
+          <label>Roof Feature</label>
+          <select id="roofFeature" onchange="updateProjectPreview()">
+            <option value="vent">Ventilation unit</option>
+            <option value="solar">Solar panels</option>
+            <option value="green">Green roof (plants)</option>
+            <option value="signage">Rooftop signage</option>
+          </select>
+        </div>
+        <div class="config-item">
+          <label>Window Size</label>
+          <select id="windowSize" onchange="updateProjectPreview()">
+            <option value="large">Large (2m wide)</option>
+            <option value="medium">Medium (1.5m wide)</option>
+            <option value="small">Small (1m wide)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>&#x1F5BC; Your Drawing Reference</h2>
+      <p>These previews show what your hand-drawn projections should look like. Use them as a guide when drawing!</p>
+
+      <div class="preview-grid">
+        <div class="preview-box">
+          <h4>Isometric View</h4>
+          <svg id="previewIso" viewBox="0 0 400 280"></svg>
+        </div>
+        <div class="preview-box">
+          <h4>Front View</h4>
+          <svg id="previewFront" viewBox="0 0 200 170"></svg>
+        </div>
+        <div class="preview-box">
+          <h4>Side View</h4>
+          <svg id="previewSide" viewBox="0 0 300 170"></svg>
+        </div>
+        <div class="preview-box wide">
+          <h4>Top View (Plan View) — Your Floor Plan Outline!</h4>
+          <svg id="previewTop" viewBox="0 0 400 140"></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="card">
+      <div class="timeline">
+        <h3>What Comes Next</h3>
+        <div class="timeline-item">
+          <div class="timeline-dot done">&#x2713;</div>
+          <span><strong>L06</strong> — Scale: convert real measurements to 1:20 model size</span>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot current">&#x25B6;</div>
+          <span><strong>L07</strong> — Projections: learn isometric and orthographic drawing (TODAY!)</span>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot upcoming">&#x25CB;</div>
+          <span><strong>L08</strong> — Draw your isometric view (use your reference from this page)</span>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot upcoming">&#x25CB;</div>
+          <span><strong>L09-10</strong> — Draw your orthographic views (front, side, top)</span>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot upcoming">&#x25CB;</div>
+          <span><strong>L12</strong> — Build the net (measurements from your drawings)</span>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot upcoming">&#x25CB;</div>
+          <span><strong>L13-14</strong> — Floor plan = the TOP VIEW you just learned, filled with equipment!</span>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot upcoming">&#x25CB;</div>
+          <span><strong>L15-16</strong> — Build the cardboard model (bring it all together!)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save -->
+    <div class="save-area">
+      <h3>Save Your Work</h3>
+      <p>Click below to generate a link you can paste into Google Classroom.</p>
+      <button class="btn btn-success" onclick="saveWork()">Save &amp; Get Link</button>
+      <textarea class="save-link" id="saveLink" readonly></textarea>
+      <p class="mt-1" style="font-size:0.8rem; color:var(--text-muted);">Copy this link and paste it into Google Classroom.</p>
+    </div>
+  </div>
+
+  <!-- =============================================
+       JAVASCRIPT
+       ============================================= -->
+  <script>
+    // ==========================================
+    // GLOBAL STATE
+    // ==========================================
+    let currentLevel = 'standard';
+    let currentView = '3d';
+    let currentFeature = 'none';
+    let quizIndex = 0;
+    let quizScore = 0;
+    let quizAnswers = [];
+    let quizTotal = 10;
+
+    // ==========================================
+    // LEVEL SELECTOR
+    // ==========================================
+    function setLevel(level) {
+      currentLevel = level;
+      document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.level-btn[data-level="${level}"]`).classList.add('active');
+      // Show/hide hints based on level
+      const hintBtn = document.getElementById('hintBtn');
+      if (hintBtn) {
+        hintBtn.style.display = (level === 'guided') ? 'inline-block' : (level === 'standard' ? 'inline-block' : 'none');
+      }
+      // Update quiz total for challenge level
+      if (level === 'challenge') {
+        quizTotal = 15;
+      } else {
+        quizTotal = 10;
+      }
+      if (quizIndex === 0) initQuiz();
+    }
+
+    // ==========================================
+    // TAB SWITCHING
+    // ==========================================
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      // Find the matching nav button
+      const tabs = ['explore', 'compare', 'quiz', 'project'];
+      const idx = tabs.indexOf(tabId);
+      if (idx >= 0) document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+
+      if (tabId === 'quiz' && quizIndex === 0) initQuiz();
+      if (tabId === 'project') updateProjectPreview();
+    }
+
+    // ==========================================
+    // 3D VIEW CONTROL
+    // ==========================================
+    const viewTransforms = {
+      '3d':    'translate(-50%, -50%) rotateX(-20deg) rotateY(-30deg)',
+      'front': 'translate(-50%, -50%) rotateX(0deg) rotateY(0deg)',
+      'side':  'translate(-50%, -50%) rotateX(0deg) rotateY(-90deg)',
+      'top':   'translate(-50%, -50%) rotateX(-90deg) rotateY(0deg)'
+    };
+
+    const teachingContent = {
+      '3d': {
+        title: '&#x1F4D0; 3D View (Isometric-like)',
+        text: 'This view shows <strong>3 faces at once</strong> — just like an isometric drawing. You can see the front, the side, and the top of the container all in one picture.',
+        detail: 'In an isometric drawing, we use <strong>30-degree angles</strong> to create this 3D effect on flat paper. It\'s the best way to show someone your overall design concept.',
+        dims: '<span class="dim-info">Shows: Length + Width + Height</span>',
+        use: '<strong>Best for:</strong> Showing the overall shape and appearance of your container restaurant design.'
+      },
+      'front': {
+        title: '&#x25A0; Front View (Front Elevation)',
+        text: 'You\'re looking <strong>straight at the short end</strong> of the container. You can only see the door — the serving window is on the side, so it\'s <strong>hidden</strong> from this angle.',
+        detail: 'This view shows <strong>height and width only</strong>. There\'s no depth. It\'s like pressing the container flat against a wall and tracing its outline.',
+        dims: '<span class="dim-info">Width: 2.4 m</span><span class="dim-info">Height: 2.4 m</span>',
+        use: '<strong>Best for:</strong> Showing the entry door, end wall details, and accurate height/width measurements.'
+      },
+      'side': {
+        title: '&#x25AE; Side View (Side Elevation)',
+        text: 'You\'re looking <strong>straight at the long side</strong>. Now you can see the serving window, counter, and awning — but the door has <strong>disappeared</strong> because it\'s on the end!',
+        detail: 'This view shows <strong>height and length only</strong>. Features that face you are visible; features on other faces are hidden.',
+        dims: '<span class="dim-info">Length: 6 m</span><span class="dim-info">Height: 2.4 m</span>',
+        use: '<strong>Best for:</strong> Showing the serving window, signage, awning, and how the restaurant looks to customers approaching from the side.'
+      },
+      'top': {
+        title: '&#x25A3; Top View (Plan View)',
+        text: 'You\'re looking <strong>straight down from above</strong>. This is the view that becomes your <strong>FLOOR PLAN</strong>! You can see the full length and width, plus where the window and door openings are.',
+        detail: 'In later lessons, you\'ll fill this rectangle with kitchen equipment, counters, and zones. <strong>The plan view IS your floor plan!</strong>',
+        dims: '<span class="dim-info">Length: 6 m (30 cm at 1:20)</span><span class="dim-info">Width: 2.4 m (12 cm at 1:20)</span>',
+        use: '<strong>Best for:</strong> Planning the interior layout — where equipment goes, how staff move, where customers order.'
+      }
+    };
+
+    function setView(view) {
+      currentView = view;
+      const el = document.getElementById('container3d');
+      el.style.transform = viewTransforms[view];
+
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const tc = teachingContent[view];
+      document.getElementById('teachTitle').innerHTML = tc.title;
+      document.getElementById('teachText').innerHTML = tc.text;
+      document.getElementById('teachDetail').innerHTML = tc.detail;
+      document.getElementById('teachDims').innerHTML = tc.dims;
+      document.getElementById('teachUse').innerHTML = tc.use;
+    }
+
+    // ==========================================
+    // COMPARE TAB — Feature Highlighting
+    // ==========================================
+    function highlightFeature(feature) {
+      currentFeature = feature;
+      document.querySelectorAll('.feature-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Reset all SVG features
+      document.querySelectorAll('.svg-feature').forEach(el => {
+        el.classList.remove('highlighted');
+        el.style.opacity = '1';
+      });
+
+      if (feature === 'none') {
+        document.getElementById('compareExplanation').innerHTML = '<strong>Click a feature above</strong> to see how it appears differently in each view. For example, the serving window is a rectangle on the side view but just a line on the top view!';
+        return;
+      }
+
+      // Dim non-highlighted features
+      document.querySelectorAll('.svg-feature').forEach(el => {
+        if (el.dataset.highlight && el.dataset.highlight !== feature) {
+          el.style.opacity = '0.15';
+        }
+      });
+
+      // Highlight matching features
+      document.querySelectorAll(`.svg-feature[data-highlight="${feature}"]`).forEach(el => {
+        el.classList.add('highlighted');
+        el.style.opacity = '1';
+      });
+
+      const explanations = {
+        window: '<strong>Serving Window:</strong> In the <em>isometric view</em>, the window appears as a parallelogram (distorted rectangle). In the <em>side view</em>, it\'s a proper rectangle showing exact width and height. In the <em>top view</em>, it\'s just a line (an opening in the wall). In the <em>front view</em>, it\'s not visible at all — it\'s on the side!',
+        door: '<strong>Entry Door:</strong> In the <em>isometric view</em>, the door appears as a parallelogram on the front face. In the <em>front view</em>, it\'s a clear rectangle. In the <em>top view</em>, you can see the door opening and its swing arc. In the <em>side view</em>, it\'s hidden — it\'s on the end!',
+        awning: '<strong>Awning:</strong> In the <em>isometric view</em>, the awning appears as a narrow strip above the window. In the <em>side view</em>, it\'s a horizontal line. It doesn\'t appear in the <em>front view</em> or <em>top view</em> — or only as a thin edge.',
+        vent: '<strong>Roof Vent:</strong> In the <em>isometric view</em>, the vent appears as a small parallelogram on the roof. In the <em>top view</em>, it\'s a rectangle — you can see its full footprint. In the <em>front/side views</em>, it might appear as a small bump on top.',
+        counter: '<strong>Counter Shelf:</strong> In the <em>isometric view</em>, the counter appears as a line below the window. In the <em>side view</em>, it\'s a horizontal line. It connects to the serving window — customers rest their food here!'
+      };
+      document.getElementById('compareExplanation').innerHTML = explanations[feature] || '';
+    }
+
+    // ==========================================
+    // QUIZ
+    // ==========================================
+    const quizQuestions = [
+      // Standard questions (1-10)
+      {
+        q: 'Question 1: What type of drawing is this?',
+        svg: '<svg viewBox="0 0 200 180"><g transform="translate(100,150)"><polygon points="0,0 -80,-40 -80,-110 0,-70" fill="#b0bec5" stroke="#475569" stroke-width="2"/><polygon points="0,0 50,-25 50,-95 0,-70" fill="#94a3b8" stroke="#475569" stroke-width="2"/><polygon points="0,-70 -80,-110 -30,-135 50,-95" fill="#cdd5de" stroke="#475569" stroke-width="2"/></g></svg>',
+        options: ['Isometric', 'Front View', 'Side View', 'Top View'],
+        answer: 0,
+        hint: 'Count how many faces you can see. Isometric shows 3 faces, orthographic shows 1.',
+        explain: 'Correct! This is an isometric drawing — you can see 3 faces (front, side, and top) all at once. The lines go at 30-degree angles.'
+      },
+      {
+        q: 'Question 2: What type of drawing is this?',
+        svg: '<svg viewBox="0 0 200 150"><rect x="25" y="10" width="150" height="110" fill="#b0bec5" stroke="#475569" stroke-width="2"/><rect x="90" y="35" width="50" height="35" fill="rgba(249,115,22,0.3)" stroke="#ea580c" stroke-width="2"/><text x="115" y="56" font-size="9" fill="#ea580c" text-anchor="middle">Window</text><text x="100" y="135" font-size="9" fill="#64748b" text-anchor="middle">6 m x 2.4 m</text></svg>',
+        options: ['Isometric', 'Front View', 'Side View', 'Top View'],
+        answer: 2,
+        hint: 'This is a flat view showing one face only. What dimensions does it show? Length and height = side view.',
+        explain: 'This is the Side View (side elevation). It shows the long side of the container (6m x 2.4m) with the serving window visible. Only one face is shown.'
+      },
+      {
+        q: 'Question 3: What type of drawing is this?',
+        svg: '<svg viewBox="0 0 200 150"><rect x="50" y="10" width="100" height="110" fill="#94a3b8" stroke="#475569" stroke-width="2"/><rect x="75" y="45" width="30" height="55" fill="rgba(59,130,246,0.3)" stroke="#2563eb" stroke-width="2"/><text x="90" y="76" font-size="9" fill="#2563eb" text-anchor="middle">Door</text><text x="100" y="135" font-size="9" fill="#64748b" text-anchor="middle">2.4 m x 2.4 m</text></svg>',
+        options: ['Isometric', 'Front View', 'Side View', 'Top View'],
+        answer: 1,
+        hint: 'This shows the short end of the container with the door. Width and height = front view.',
+        explain: 'This is the Front View (front elevation). It shows the short end of the container (2.4m x 2.4m) with the entry door.'
+      },
+      {
+        q: 'Question 4: What type of drawing is this?',
+        svg: '<svg viewBox="0 0 250 120"><rect x="10" y="10" width="230" height="85" fill="#cdd5de" stroke="#475569" stroke-width="2"/><line x1="90" y1="95" x2="160" y2="95" stroke="#ea580c" stroke-width="3"/><text x="125" y="88" font-size="8" fill="#ea580c" text-anchor="middle">Window</text><line x1="230" y1="30" x2="230" y2="65" stroke="#2563eb" stroke-width="3"/><text x="220" y="50" font-size="8" fill="#2563eb" text-anchor="end">Door</text><text x="125" y="108" font-size="9" fill="#64748b" text-anchor="middle">6 m x 2.4 m</text></svg>',
+        options: ['Isometric', 'Front View', 'Side View', 'Top View'],
+        answer: 3,
+        hint: 'Imagine looking straight down from above. You see length and width. Openings appear as gaps in the walls.',
+        explain: 'This is the Top View (plan view). Looking straight down, you see the full length and width. The window and door appear as openings (lines/gaps) in the walls.'
+      },
+      {
+        q: 'Question 5: Which orthographic view would BEST show the serving window\'s size?',
+        svg: '<svg viewBox="0 0 200 100"><rect x="30" y="20" width="140" height="60" fill="rgba(249,115,22,0.2)" stroke="#ea580c" stroke-width="3"/><text x="100" y="55" font-size="12" fill="#ea580c" text-anchor="middle" font-weight="600">Serving Window</text><text x="100" y="14" font-size="9" fill="#64748b" text-anchor="middle">Which view shows this best?</text></svg>',
+        options: ['Front View', 'Side View', 'Top View'],
+        answer: 1,
+        hint: 'The serving window is on the long side of the container. Which view shows the long side?',
+        explain: 'The Side View! The serving window is on the long side, so the side elevation shows its full width and height as a proper rectangle.'
+      },
+      {
+        q: 'Question 6: In an isometric drawing, what angle do the base lines go at?',
+        svg: '<svg viewBox="0 0 200 150"><line x1="100" y1="120" x2="100" y2="40" stroke="#475569" stroke-width="2"/><line x1="100" y1="120" x2="30" y2="85" stroke="#ea580c" stroke-width="2.5"/><line x1="100" y1="120" x2="170" y2="85" stroke="#2563eb" stroke-width="2.5"/><line x1="100" y1="120" x2="195" y2="120" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/><text x="148" y="115" font-size="14" fill="#475569" font-weight="700">?</text><text x="52" y="115" font-size="14" fill="#475569" font-weight="700">?</text></svg>',
+        options: ['15 degrees', '30 degrees', '45 degrees', '60 degrees'],
+        answer: 1,
+        hint: 'Isometric uses a specific angle from the horizontal baseline. It\'s not 45 (that\'s too steep).',
+        explain: 'Correct! Isometric drawings use 30-degree angles from the horizontal. This gives a balanced view of all three dimensions.'
+      },
+      {
+        q: 'Question 7: How many orthographic views do you need to fully describe a 3D object?',
+        svg: '<svg viewBox="0 0 200 140"><text x="100" y="70" font-size="48" fill="var(--primary)" text-anchor="middle" font-weight="800">?</text><text x="100" y="100" font-size="11" fill="#64748b" text-anchor="middle">Orthographic views needed</text></svg>',
+        options: ['1 view', '2 views', '3 views', '4 views'],
+        answer: 2,
+        hint: 'Think about what each view shows: front shows 2 dimensions, side shows 2 dimensions, top shows 2 dimensions. Together they cover all 3 dimensions.',
+        explain: '3 views! Front (height + width), Side (height + length), and Top (length + width). Together, all three dimensions are fully described.'
+      },
+      {
+        q: 'Question 8: Which view is the SAME as a floor plan?',
+        svg: '<svg viewBox="0 0 250 100"><rect x="10" y="10" width="230" height="75" fill="#cdd5de" stroke="#475569" stroke-width="2"/><rect x="40" y="30" width="30" height="20" fill="rgba(100,100,200,0.3)" stroke="#475569" stroke-width="1"/><rect x="100" y="25" width="50" height="30" fill="rgba(100,100,200,0.3)" stroke="#475569" stroke-width="1"/><rect x="180" y="30" width="25" height="35" fill="rgba(100,100,200,0.3)" stroke="#475569" stroke-width="1"/><text x="125" y="95" font-size="9" fill="#64748b" text-anchor="middle">Interior layout visible from above</text></svg>',
+        options: ['Isometric View', 'Front View', 'Side View', 'Top (Plan) View'],
+        answer: 3,
+        hint: 'A floor plan shows the layout from above. Which orthographic view looks straight down?',
+        explain: 'The Top View (Plan View)! When you look straight down at a building, you see the floor plan — the interior layout, walls, equipment placement, and pathways.'
+      },
+      {
+        q: 'Question 9: You\'re drawing the container at 1:20 scale. The real container is 6m long. How long should the SIDE VIEW be?',
+        svg: '<svg viewBox="0 0 250 100"><rect x="10" y="15" width="230" height="65" fill="#b0bec5" stroke="#475569" stroke-width="2"/><line x1="10" y1="88" x2="240" y2="88" stroke="#475569" stroke-width="1.5"/><line x1="10" y1="84" x2="10" y2="92" stroke="#475569" stroke-width="1.5"/><line x1="240" y1="84" x2="240" y2="92" stroke="#475569" stroke-width="1.5"/><text x="125" y="98" font-size="11" fill="#475569" text-anchor="middle" font-weight="600">? cm</text></svg>',
+        options: ['12 cm', '20 cm', '30 cm', '60 cm'],
+        answer: 2,
+        hint: 'Scale formula: Drawing = Real size / Scale factor. Real = 600 cm, Scale factor = 20.',
+        explain: '30 cm! At 1:20 scale: 600 cm / 20 = 30 cm. This applies to ALL your orthographic drawings — they must be to scale!'
+      },
+      {
+        q: 'Question 10: Why do designers use BOTH isometric AND orthographic drawings?',
+        svg: '<svg viewBox="0 0 250 120"><g transform="translate(70,100)"><polygon points="0,0 -50,-25 -50,-65 0,-40" fill="#b0bec5" stroke="#475569" stroke-width="1.5"/><polygon points="0,0 30,-15 30,-55 0,-40" fill="#94a3b8" stroke="#475569" stroke-width="1.5"/><polygon points="0,-40 -50,-65 -20,-80 30,-55" fill="#cdd5de" stroke="#475569" stroke-width="1.5"/></g><text x="125" y="55" font-size="16" fill="#475569" font-weight="700">+</text><rect x="155" y="25" width="70" height="50" fill="#b0bec5" stroke="#475569" stroke-width="1.5"/><text x="125" y="115" font-size="9" fill="#64748b" text-anchor="middle">Why use both types?</text></svg>',
+        options: ['Isometric for looks, orthographic for building', 'They show the same thing', 'Orthographic is more artistic', 'Isometric is more accurate'],
+        answer: 0,
+        hint: 'Think about what each type is best at. One shows the overall shape, the other shows exact measurements.',
+        explain: 'Isometric is great for presenting and visualising the design. Orthographic provides exact measurements needed for building. Together, they fully communicate the design!'
+      },
+      // Challenge questions (11-15)
+      {
+        q: 'Challenge 11: A feature appears as a circle in the side view. What could it be?',
+        svg: '<svg viewBox="0 0 200 130"><rect x="15" y="10" width="170" height="100" fill="#b0bec5" stroke="#475569" stroke-width="2"/><circle cx="60" cy="40" r="18" fill="rgba(100,116,139,0.4)" stroke="#475569" stroke-width="2"/><text x="100" y="125" font-size="9" fill="#64748b" text-anchor="middle">What is this circular feature?</text></svg>',
+        options: ['Serving window', 'Exhaust vent / fan', 'Solar panel', 'Doorknob'],
+        answer: 1,
+        hint: 'Think about what circular features a restaurant container might have on its wall. It needs to let air out.',
+        explain: 'An exhaust vent or extraction fan! These are circular and mounted on the wall to remove cooking fumes and heat from the kitchen.'
+      },
+      {
+        q: 'Challenge 12: If you see a door swing arc on a drawing, which view are you looking at?',
+        svg: '<svg viewBox="0 0 200 130"><rect x="20" y="10" width="160" height="100" fill="#cdd5de" stroke="#475569" stroke-width="2"/><line x1="170" y1="60" x2="170" y2="90" stroke="#2563eb" stroke-width="3"/><path d="M 170 90 Q 145 90 145 65" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3"/><text x="100" y="125" font-size="9" fill="#64748b" text-anchor="middle">Door with swing arc</text></svg>',
+        options: ['Isometric view', 'Front view', 'Top (plan) view', 'Side view'],
+        answer: 2,
+        hint: 'A door swing arc shows the path the door travels when opening. You can only see this from one direction.',
+        explain: 'The Top (Plan) View! Door swing arcs are an architectural symbol used in floor plans. Looking from above, you can see the arc the door makes when it opens.'
+      },
+      {
+        q: 'Challenge 13: In standard orthographic layout, where does the top view go?',
+        svg: '<svg viewBox="0 0 250 170"><rect x="75" y="75" width="80" height="60" fill="var(--primary-light)" stroke="var(--primary)" stroke-width="2"/><text x="115" y="110" font-size="9" fill="var(--primary-dark)" text-anchor="middle">FRONT</text><rect x="10" y="75" width="55" height="60" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/><text x="37" y="108" font-size="8" fill="#94a3b8" text-anchor="middle">?</text><rect x="75" y="5" width="80" height="60" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/><text x="115" y="40" font-size="8" fill="#94a3b8" text-anchor="middle">?</text><rect x="165" y="75" width="55" height="60" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/><text x="192" y="108" font-size="8" fill="#94a3b8" text-anchor="middle">?</text></svg>',
+        options: ['Below the front view', 'Above the front view', 'To the right of front view', 'Anywhere on the page'],
+        answer: 1,
+        hint: 'In third angle projection (what we use in Australia), the top view goes where you\'d expect — think about looking UP or DOWN.',
+        explain: 'Above the front view! In third angle projection (standard in Australia), the top view is placed above, the side view to the right. This makes intuitive sense — you look up to see the top.'
+      },
+      {
+        q: 'Challenge 14: Which combination of views would show ALL features of this container?',
+        svg: '<svg viewBox="0 0 300 120"><g transform="translate(150,100)"><polygon points="0,0 -100,-50 -100,-90 0,-40" fill="#b0bec5" stroke="#475569" stroke-width="1.5"/><polygon points="0,0 40,-20 40,-60 0,-40" fill="#94a3b8" stroke="#475569" stroke-width="1.5"/><polygon points="0,-40 -100,-90 -60,-110 40,-60" fill="#cdd5de" stroke="#475569" stroke-width="1.5"/><rect x="-70" y="-72" width="35" height="20" rx="2" fill="rgba(249,115,22,0.3)" stroke="#ea580c" stroke-width="1" transform="skewY(-26.57)"/><polygon points="-65,-68 -38,-54 -38,-40 -65,-54" fill="rgba(249,115,22,0.3)" stroke="#ea580c" stroke-width="1.5"/><polygon points="12,-18 32,-28 32,-48 12,-38" fill="rgba(59,130,246,0.3)" stroke="#2563eb" stroke-width="1.5"/><polygon points="-20,-80 5,-92 15,-87 -10,-75" fill="rgba(100,116,139,0.4)" stroke="#475569" stroke-width="1"/></g></svg>',
+        options: ['Front + Side only', 'Isometric only', 'Front + Side + Top', 'Side + Top only'],
+        answer: 2,
+        hint: 'Each orthographic view shows 2 of the 3 dimensions. How many views do you need to cover all 3?',
+        explain: 'Front + Side + Top! Each view shows features on that face. The front shows the door, the side shows the window, and the top shows the roof features and layout. Together they describe everything.'
+      },
+      {
+        q: 'Challenge 15: A builder receives your orthographic drawings. They notice the serving window is 5 cm wide on the side view (1:20 scale). What is the REAL window width?',
+        svg: '<svg viewBox="0 0 250 120"><rect x="15" y="10" width="220" height="80" fill="#b0bec5" stroke="#475569" stroke-width="2"/><rect x="90" y="25" width="60" height="35" fill="rgba(249,115,22,0.3)" stroke="#ea580c" stroke-width="2"/><line x1="90" y1="68" x2="150" y2="68" stroke="#ea580c" stroke-width="1.5"/><line x1="90" y1="65" x2="90" y2="71" stroke="#ea580c" stroke-width="1.5"/><line x1="150" y1="65" x2="150" y2="71" stroke="#ea580c" stroke-width="1.5"/><text x="120" y="78" font-size="10" fill="#ea580c" text-anchor="middle" font-weight="600">5 cm on drawing</text><text x="125" y="105" font-size="9" fill="#64748b" text-anchor="middle">Scale 1:20 — Real size = ?</text></svg>',
+        options: ['25 cm', '50 cm', '100 cm (1 m)', '200 cm (2 m)'],
+        answer: 2,
+        hint: 'To find real size: Drawing size x Scale factor. 5 cm x 20 = ?',
+        explain: '100 cm (1 metre)! Real size = Drawing size x Scale factor = 5 cm x 20 = 100 cm. Scale and projections work together — all orthographic drawings must be to scale!'
+      }
+    ];
+
+    function initQuiz() {
+      quizIndex = 0;
+      quizScore = 0;
+      quizAnswers = [];
+      document.getElementById('quizScoreCard').style.display = 'none';
+      document.getElementById('quizArea').style.display = 'block';
+      renderQuizProgress();
+      showQuestion();
+    }
+
+    function renderQuizProgress() {
+      const container = document.getElementById('quizProgress');
+      let html = '';
+      for (let i = 0; i < quizTotal; i++) {
+        let cls = '';
+        if (i === quizIndex) cls = 'current';
+        else if (i < quizAnswers.length) cls = quizAnswers[i] ? 'correct' : 'wrong';
+        html += `<div class="quiz-dot ${cls}">${i + 1}</div>`;
+      }
+      container.innerHTML = html;
+    }
+
+    function showQuestion() {
+      if (quizIndex >= quizTotal) {
+        showScore();
+        return;
+      }
+      const q = quizQuestions[quizIndex];
+      document.getElementById('quizQuestionText').textContent = q.q;
+      document.getElementById('quizImageBox').innerHTML = q.svg;
+
+      const optionsEl = document.getElementById('quizOptions');
+      optionsEl.innerHTML = q.options.map((opt, i) =>
+        `<button class="quiz-option" onclick="checkAnswer(${i})">${opt}</button>`
+      ).join('');
+
+      document.getElementById('quizFeedback').className = 'quiz-feedback';
+      document.getElementById('quizFeedback').style.display = 'none';
+      document.getElementById('nextBtn').classList.remove('show');
+      document.getElementById('hintText').classList.remove('show');
+
+      // Show hint button based on level
+      const hintBtn = document.getElementById('hintBtn');
+      hintBtn.style.display = (currentLevel !== 'challenge') ? 'inline-block' : 'none';
+
+      renderQuizProgress();
+    }
+
+    function checkAnswer(selected) {
+      const q = quizQuestions[quizIndex];
+      const buttons = document.querySelectorAll('.quiz-option');
+      const isCorrect = selected === q.answer;
+
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.answer) btn.classList.add('correct-answer');
+        if (i === selected && !isCorrect) btn.classList.add('wrong-answer');
+      });
+
+      const fb = document.getElementById('quizFeedback');
+      fb.style.display = 'block';
+      if (isCorrect) {
+        quizScore++;
+        fb.className = 'quiz-feedback show correct';
+        fb.innerHTML = '&#x2705; ' + q.explain;
+      } else {
+        fb.className = 'quiz-feedback show incorrect';
+        fb.innerHTML = '&#x274C; Not quite. ' + q.explain;
+      }
+
+      quizAnswers.push(isCorrect);
+      document.getElementById('nextBtn').classList.add('show');
+      document.getElementById('hintBtn').style.display = 'none';
+      renderQuizProgress();
+    }
+
+    function nextQuestion() {
+      quizIndex++;
+      showQuestion();
+    }
+
+    function showHint() {
+      const q = quizQuestions[quizIndex];
+      const hintEl = document.getElementById('hintText');
+      hintEl.textContent = q.hint;
+      hintEl.classList.add('show');
+    }
+
+    function showScore() {
+      document.getElementById('quizArea').style.display = 'none';
+      const card = document.getElementById('quizScoreCard');
+      card.style.display = 'block';
+      document.getElementById('finalScore').textContent = quizScore + ' / ' + quizTotal;
+
+      let msg, detail;
+      const pct = quizScore / quizTotal;
+      if (pct >= 0.9) { msg = 'Outstanding!'; detail = 'You have an excellent understanding of projections. You\'re ready to draw!'; }
+      else if (pct >= 0.7) { msg = 'Great work!'; detail = 'You understand projections well. Review the ones you missed and you\'ll be ready.'; }
+      else if (pct >= 0.5) { msg = 'Good effort!'; detail = 'You\'re getting there! Go back to the EXPLORE and COMPARE tabs to review, then try again.'; }
+      else { msg = 'Keep practising!'; detail = 'Projections take practice. Spend more time on the EXPLORE tab, then try the quiz again.'; }
+
+      document.getElementById('scoreMessage').textContent = msg;
+      document.getElementById('scoreDetail').textContent = detail;
+    }
+
+    function restartQuiz() {
+      initQuiz();
+    }
+
+    // ==========================================
+    // MY PROJECT — Preview Generation
+    // ==========================================
+    function updateProjectPreview() {
+      const windowPos = document.getElementById('windowPos').value;
+      const doorPos = document.getElementById('doorPos').value;
+      const awningStyle = document.getElementById('awningStyle').value;
+      const roofFeature = document.getElementById('roofFeature').value;
+      const windowSize = document.getElementById('windowSize').value;
+      const name = document.getElementById('restName').value || 'My Restaurant';
+
+      // Window width in SVG units
+      const winW = { large: 80, medium: 60, small: 40 }[windowSize];
+      // Window X position on long side (SVG units, side is 250 wide)
+      const winX = { left: 30, centre: 125 - winW/2, right: 220 - winW }[windowPos];
+
+      // === ISOMETRIC PREVIEW ===
+      let isoSvg = `
+        <g transform="translate(200,240)">
+          <polygon points="0,0 -150,-75 -150,-175 0,-100" fill="#b0bec5" stroke="#475569" stroke-width="2"/>
+          <polygon points="0,0 75,-37 75,-137 0,-100" fill="#94a3b8" stroke="#475569" stroke-width="2"/>
+          <polygon points="0,-100 -150,-175 -75,-212 75,-137" fill="#cdd5de" stroke="#475569" stroke-width="2"/>`;
+
+      // Window on left face (isometric approximation)
+      const isoWinW = winW * 0.6;
+      const isoWinX = -(150 - winX * 0.6);
+      isoSvg += `<polygon points="${isoWinX},-128 ${isoWinX + isoWinW * 0.45},-${128 - isoWinW * 0.22} ${isoWinX + isoWinW * 0.45},-${98 - isoWinW * 0.22} ${isoWinX},-98" fill="rgba(249,115,22,0.3)" stroke="#ea580c" stroke-width="1.5"/>`;
+
+      // Door
+      if (doorPos === 'right-end') {
+        isoSvg += `<polygon points="20,-15 55,-32 55,-82 20,-65" fill="rgba(59,130,246,0.3)" stroke="#2563eb" stroke-width="1.5"/>`;
+      } else if (doorPos === 'left-end') {
+        isoSvg += `<polygon points="-140,-80 -150,-75 -150,-155 -140,-160" fill="rgba(59,130,246,0.3)" stroke="#2563eb" stroke-width="1.5"/>`;
+      }
+
+      // Awning
+      if (awningStyle !== 'none') {
+        const awnLen = awningStyle === 'full' ? 140 : 70;
+        isoSvg += `<polygon points="-${awnLen},-${140 + awnLen*0.5*0.14} -10,-${140 - 10*0.5} -5,-${143 - 10*0.5} -${awnLen - 5},-${143 + (awnLen-5)*0.5*0.14}" fill="rgba(239,68,68,0.3)" stroke="#dc2626" stroke-width="1"/>`;
+      }
+
+      // Roof feature
+      if (roofFeature === 'vent') {
+        isoSvg += `<polygon points="-20,-170 10,-185 25,-177 -5,-162" fill="rgba(100,116,139,0.5)" stroke="#475569" stroke-width="1"/>`;
+      } else if (roofFeature === 'solar') {
+        isoSvg += `<polygon points="-60,-185 -10,-210 20,-195 -30,-170" fill="rgba(59,130,246,0.3)" stroke="#2563eb" stroke-width="1"/>`;
+        isoSvg += `<polygon points="-25,-170 25,-195 40,-188 -10,-163" fill="rgba(59,130,246,0.25)" stroke="#2563eb" stroke-width="1"/>`;
+      } else if (roofFeature === 'green') {
+        isoSvg += `<polygon points="-120,-168 -70,-193 50,-153 0,-128" fill="rgba(34,197,94,0.25)" stroke="#22c55e" stroke-width="1"/>`;
+      } else if (roofFeature === 'signage') {
+        isoSvg += `<rect x="-40" y="-210" width="60" height="15" fill="rgba(249,115,22,0.5)" stroke="#ea580c" stroke-width="1" rx="2"/>`;
+        isoSvg += `<text x="-10" y="-200" font-size="7" fill="white" text-anchor="middle" font-weight="600">${name.substring(0,12)}</text>`;
+      }
+
+      // Name label
+      isoSvg += `<text x="-40" y="20" font-size="10" fill="#475569" text-anchor="middle" font-weight="600">${name}</text>`;
+      isoSvg += `</g>`;
+      document.getElementById('previewIso').innerHTML = isoSvg;
+
+      // === FRONT VIEW ===
+      let frontSvg = `<rect x="30" y="15" width="140" height="120" fill="#94a3b8" stroke="#475569" stroke-width="2"/>`;
+      if (doorPos === 'right-end' || doorPos === 'left-end') {
+        const dx = doorPos === 'right-end' ? 110 : 45;
+        frontSvg += `<rect x="${dx}" y="55" width="40" height="70" fill="rgba(59,130,246,0.3)" stroke="#2563eb" stroke-width="2"/>`;
+        frontSvg += `<text x="${dx+20}" y="95" font-size="8" fill="#2563eb" text-anchor="middle">Door</text>`;
+      }
+      frontSvg += `<text x="100" y="148" font-size="8" fill="#64748b" text-anchor="middle">2.4 m x 2.4 m</text>`;
+      frontSvg += `<text x="100" y="160" font-size="9" fill="#475569" text-anchor="middle" font-weight="600">Front View</text>`;
+      document.getElementById('previewFront').innerHTML = frontSvg;
+
+      // === SIDE VIEW ===
+      let sideSvg = `<rect x="15" y="15" width="270" height="110" fill="#b0bec5" stroke="#475569" stroke-width="2"/>`;
+      // Window
+      const sideWinX = 15 + (winX / 250) * 270;
+      const sideWinW = (winW / 250) * 270;
+      sideSvg += `<rect x="${sideWinX}" y="35" width="${sideWinW}" height="45" fill="rgba(249,115,22,0.3)" stroke="#ea580c" stroke-width="2"/>`;
+      sideSvg += `<text x="${sideWinX + sideWinW/2}" y="62" font-size="8" fill="#ea580c" text-anchor="middle">Window</text>`;
+      // Counter
+      sideSvg += `<line x1="${sideWinX}" y1="80" x2="${sideWinX + sideWinW}" y2="80" stroke="#8B5E3C" stroke-width="3"/>`;
+      // Awning
+      if (awningStyle !== 'none') {
+        const awnX = awningStyle === 'full' ? 15 : sideWinX - 10;
+        const awnW = awningStyle === 'full' ? 270 : sideWinW + 20;
+        sideSvg += `<line x1="${awnX}" y1="12" x2="${awnX + awnW}" y2="12" stroke="#dc2626" stroke-width="3"/>`;
+      }
+      // Door on back if applicable
+      if (doorPos === 'back') {
+        sideSvg += `<rect x="220" y="50" width="40" height="65" fill="rgba(59,130,246,0.2)" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3"/>`;
+        sideSvg += `<text x="240" y="86" font-size="7" fill="#2563eb" text-anchor="middle">Door (back)</text>`;
+      }
+      sideSvg += `<text x="150" y="140" font-size="8" fill="#64748b" text-anchor="middle">6 m x 2.4 m</text>`;
+      sideSvg += `<text x="150" y="155" font-size="9" fill="#475569" text-anchor="middle" font-weight="600">Side View</text>`;
+      document.getElementById('previewSide').innerHTML = sideSvg;
+
+      // === TOP VIEW ===
+      let topSvg = `<rect x="20" y="15" width="360" height="100" fill="#cdd5de" stroke="#475569" stroke-width="2"/>`;
+      // Window opening on bottom edge
+      const topWinX = 20 + (winX / 250) * 360;
+      const topWinW = (winW / 250) * 360;
+      topSvg += `<line x1="${topWinX}" y1="115" x2="${topWinX + topWinW}" y2="115" stroke="#ea580c" stroke-width="4"/>`;
+      topSvg += `<text x="${topWinX + topWinW/2}" y="108" font-size="7" fill="#ea580c" text-anchor="middle">Window</text>`;
+      // Door
+      if (doorPos === 'right-end') {
+        topSvg += `<line x1="380" y1="50" x2="380" y2="85" stroke="#2563eb" stroke-width="4"/>`;
+        topSvg += `<path d="M 380 85 Q 355 85 355 60" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+      } else if (doorPos === 'left-end') {
+        topSvg += `<line x1="20" y1="50" x2="20" y2="85" stroke="#2563eb" stroke-width="4"/>`;
+        topSvg += `<path d="M 20 85 Q 45 85 45 60" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+      } else {
+        topSvg += `<line x1="310" y1="15" x2="350" y2="15" stroke="#2563eb" stroke-width="4"/>`;
+        topSvg += `<path d="M 350 15 Q 350 40 325 40" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+      }
+      // Roof feature
+      if (roofFeature === 'vent') {
+        topSvg += `<rect x="280" y="25" width="40" height="25" fill="rgba(100,116,139,0.4)" stroke="#475569" stroke-width="1" rx="3"/>`;
+        topSvg += `<text x="300" y="41" font-size="6" fill="#475569" text-anchor="middle">Vent</text>`;
+      } else if (roofFeature === 'solar') {
+        topSvg += `<rect x="40" y="25" width="120" height="30" fill="rgba(59,130,246,0.2)" stroke="#2563eb" stroke-width="1" rx="2"/>`;
+        topSvg += `<rect x="40" y="60" width="120" height="30" fill="rgba(59,130,246,0.2)" stroke="#2563eb" stroke-width="1" rx="2"/>`;
+        topSvg += `<text x="100" y="52" font-size="7" fill="#2563eb" text-anchor="middle">Solar</text>`;
+      } else if (roofFeature === 'green') {
+        topSvg += `<rect x="40" y="25" width="300" height="70" fill="rgba(34,197,94,0.15)" stroke="#22c55e" stroke-width="1" rx="4"/>`;
+        topSvg += `<text x="190" y="65" font-size="8" fill="#22c55e" text-anchor="middle">Green Roof</text>`;
+      } else if (roofFeature === 'signage') {
+        topSvg += `<rect x="150" y="5" width="100" height="12" fill="rgba(249,115,22,0.5)" stroke="#ea580c" stroke-width="1" rx="2"/>`;
+      }
+      topSvg += `<text x="200" y="130" font-size="8" fill="#64748b" text-anchor="middle">6 m x 2.4 m — This becomes your floor plan!</text>`;
+      topSvg += `<text x="200" y="140" font-size="9" fill="#475569" text-anchor="middle" font-weight="600">Top (Plan) View</text>`;
+      document.getElementById('previewTop').innerHTML = topSvg;
+    }
+
+    // ==========================================
+    // SAVE & GET LINK
+    // ==========================================
+    function saveWork() {
+      const data = {
+        name: document.getElementById('studentName').value,
+        class: document.getElementById('studentClass').value,
+        level: currentLevel,
+        quizScore: quizScore,
+        quizTotal: quizTotal,
+        config: {
+          restName: document.getElementById('restName').value,
+          windowPos: document.getElementById('windowPos').value,
+          doorPos: document.getElementById('doorPos').value,
+          awningStyle: document.getElementById('awningStyle').value,
+          roofFeature: document.getElementById('roofFeature').value,
+          windowSize: document.getElementById('windowSize').value
+        },
+        timestamp: new Date().toISOString()
+      };
+
+      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+      const link = window.location.href.split('?')[0] + '?data=' + encoded;
+
+      const linkEl = document.getElementById('saveLink');
+      linkEl.value = link;
+      linkEl.classList.add('show');
+      linkEl.select();
+
+      try { navigator.clipboard.writeText(link); } catch(e) {}
+    }
+
+    // Load from URL
+    function loadFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const data = params.get('data');
+      if (data) {
+        try {
+          const parsed = JSON.parse(decodeURIComponent(escape(atob(data))));
+          if (parsed.name) document.getElementById('studentName').value = parsed.name;
+          if (parsed.class) document.getElementById('studentClass').value = parsed.class;
+          if (parsed.level) setLevel(parsed.level);
+          if (parsed.config) {
+            if (parsed.config.restName) document.getElementById('restName').value = parsed.config.restName;
+            if (parsed.config.windowPos) document.getElementById('windowPos').value = parsed.config.windowPos;
+            if (parsed.config.doorPos) document.getElementById('doorPos').value = parsed.config.doorPos;
+            if (parsed.config.awningStyle) document.getElementById('awningStyle').value = parsed.config.awningStyle;
+            if (parsed.config.roofFeature) document.getElementById('roofFeature').value = parsed.config.roofFeature;
+            if (parsed.config.windowSize) document.getElementById('windowSize').value = parsed.config.windowSize;
+          }
+        } catch(e) {}
+      }
+    }
+
+    // Init
+    loadFromUrl();
+    updateProjectPreview();
+  </script>
+</body>
+</html>
