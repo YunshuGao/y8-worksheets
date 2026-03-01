@@ -449,6 +449,123 @@
     .angle-text { fill: var(--accent); font-size: 9px; font-weight: 600; }
     .label-text { fill: var(--text-muted); font-size: 9px; }
 
+    /* QUIZ STYLES */
+    .quiz-grid {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .quiz-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: #f8fafc;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      flex-wrap: wrap;
+    }
+    .quiz-feature {
+      font-weight: 600;
+      font-size: 0.9rem;
+      min-width: 140px;
+    }
+    .quiz-options {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .quiz-option {
+      padding: 0.3rem 0.7rem;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .quiz-option:hover { border-color: var(--primary); color: var(--primary); }
+    .quiz-option.selected { background: var(--primary); color: white; border-color: var(--primary); }
+    .quiz-option.correct { background: var(--success); color: white; border-color: var(--success); }
+    .quiz-option.incorrect { background: var(--error); color: white; border-color: var(--error); }
+    .quiz-feedback {
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      font-weight: 500;
+      min-width: 100%;
+    }
+    .quiz-feedback.correct-fb { color: #166534; }
+    .quiz-feedback.incorrect-fb { color: #991b1b; }
+
+    /* Feature checklist boxes */
+    .feature-checklist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .feature-check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .feature-check-item:hover { border-color: var(--primary); }
+    .feature-check-item.checked { background: var(--success-light); border-color: var(--success); }
+    .feature-check-box {
+      width: 18px; height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      flex-shrink: 0;
+      color: white;
+    }
+    .feature-check-item.checked .feature-check-box {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    /* What Can You See explainer */
+    .explainer-card {
+      background: #f0f9ff;
+      border: 2px solid #bae6fd;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .explainer-card h3 { color: #0369a1; margin-bottom: 0.5rem; }
+    .explainer-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: center;
+    }
+    .explainer-lists {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .explainer-list {
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+    .explainer-list.will-see { background: var(--success-light); }
+    .explainer-list.wont-see { background: var(--error-light); }
+    .explainer-list h4 { font-size: 0.85rem; margin-bottom: 0.25rem; }
+    .explainer-list ul { margin-left: 1rem; font-size: 0.85rem; }
+
     @media print {
       .header, .section-nav, .level-bar, .btn, .done-btn, .showme-btn { display: none !important; }
       .section-content { display: block !important; }
@@ -482,23 +599,23 @@
   <nav class="section-nav">
     <button class="section-btn active" onclick="switchSection('iso')">
       Isometric Box
-      <span class="step-count">Steps 1–6</span>
+      <span class="step-count">Steps 1-6</span>
     </button>
     <button class="section-btn" onclick="switchSection('features')">
       Add Features
-      <span class="step-count">Steps 7–10</span>
+      <span class="step-count">Steps 7-12</span>
     </button>
     <button class="section-btn" onclick="switchSection('ortho-front')">
       Front View
-      <span class="step-count">Steps 11–13</span>
+      <span class="step-count">Steps 13-16</span>
     </button>
     <button class="section-btn" onclick="switchSection('ortho-side')">
       Side View
-      <span class="step-count">Steps 14–16</span>
+      <span class="step-count">Steps 17-20</span>
     </button>
     <button class="section-btn" onclick="switchSection('ortho-top')">
       Top (Plan) View
-      <span class="step-count">Steps 17–19</span>
+      <span class="step-count">Steps 21-24</span>
     </button>
     <button class="section-btn" onclick="switchSection('check')">
       Self-Check
@@ -507,7 +624,7 @@
   </nav>
 
   <!-- =============================================
-       SECTION 1: ISOMETRIC BOX
+       SECTION 1: ISOMETRIC BOX (UNCHANGED)
        ============================================= -->
   <div id="section-iso" class="section-content active">
     <div class="card">
@@ -536,11 +653,11 @@
               <!-- All lines start as ghost, become solid when step is completed -->
               <!-- Step 1: Front vertical edge -->
               <line id="iso-1" x1="250" y1="300" x2="250" y2="180" stroke="#475569" stroke-width="2.5" class="ghost-line"/>
-              <!-- Step 2: Length line going up-left at 30° -->
+              <!-- Step 2: Length line going up-left at 30 degrees -->
               <line id="iso-2" x1="250" y1="300" x2="100" y2="387" stroke="#475569" stroke-width="2.5" class="ghost-line" transform="rotate(0)"/>
               <!-- Corrected: going upper-left from bottom of vertical -->
               <line id="iso-2a" x1="250" y1="300" x2="70" y2="196" stroke="#475569" stroke-width="2.5" class="ghost-line"/>
-              <!-- Step 3: Width line going up-right at 30° -->
+              <!-- Step 3: Width line going up-right at 30 degrees -->
               <line id="iso-3" x1="250" y1="300" x2="322" y2="258" stroke="#475569" stroke-width="2.5" class="ghost-line"/>
               <!-- Step 4a: Top-left parallel to width -->
               <line id="iso-4a" x1="250" y1="180" x2="322" y2="138" stroke="#475569" stroke-width="2.5" class="ghost-line"/>
@@ -567,14 +684,14 @@
               <g id="iso-dim-3" style="display:none">
                 <text x="295" y="288" class="dim-text" transform="rotate(30, 295, 288)">12 cm</text>
               </g>
-              <!-- 30° angle indicators -->
+              <!-- 30 degree angle indicators -->
               <g id="iso-angle-1" style="display:none">
                 <path d="M 230 300 Q 228 290 238 286" class="angle-arc"/>
-                <text x="220" y="286" class="angle-text">30°</text>
+                <text x="220" y="286" class="angle-text">30&#176;</text>
               </g>
               <g id="iso-angle-2" style="display:none">
                 <path d="M 270 300 Q 272 290 264 286" class="angle-arc"/>
-                <text x="270" y="286" class="angle-text">30°</text>
+                <text x="270" y="286" class="angle-text">30&#176;</text>
               </g>
             </svg>
           </div>
@@ -587,17 +704,69 @@
     </div>
 
     <div class="callout warning" id="isoMistakes" style="display:none;">
-      <strong>Watch out!</strong> Common mistake at this stage: Make sure your 30-degree angles aren't too steep (45°) or too shallow (15°). On isometric dot paper, follow the diagonal dots — every 2 dots across and 1 dot up gives you 30°.
+      <strong>Watch out!</strong> Common mistake at this stage: Make sure your 30-degree angles aren't too steep (45 degrees) or too shallow (15 degrees). On isometric dot paper, follow the diagonal dots -- every 2 dots across and 1 dot up gives you 30 degrees.
     </div>
   </div>
 
   <!-- =============================================
-       SECTION 2: ADD FEATURES
+       SECTION 2: ADD FEATURES (ENHANCED)
        ============================================= -->
   <div id="section-features" class="section-content">
+    <!-- Real Restaurant Reference Card -->
+    <div class="card">
+      <h2>Real Restaurant Reference</h2>
+      <p>Before you start adding features, look at this labelled diagram of a container restaurant. These are the features you will draw on your isometric box.</p>
+      <div class="drawing-canvas" style="max-width:600px;margin:0 auto;">
+        <svg viewBox="0 0 520 240">
+          <rect width="520" height="240" fill="#f8fafc"/>
+          <!-- Container body side view sketch -->
+          <rect x="40" y="60" width="380" height="130" rx="3" fill="#e2e8f0" stroke="#475569" stroke-width="2.5"/>
+          <!-- Roof line -->
+          <line x1="40" y1="60" x2="420" y2="60" stroke="#475569" stroke-width="3"/>
+          <!-- Serving window -->
+          <rect x="120" y="85" width="120" height="60" rx="2" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+          <text x="180" y="118" font-size="11" fill="#ea580c" text-anchor="middle" font-weight="600">Serving Window</text>
+          <!-- Counter below window -->
+          <line x1="115" y1="148" x2="245" y2="148" stroke="#8B5E3C" stroke-width="3"/>
+          <line x1="115" y1="148" x2="110" y2="160" stroke="#8B5E3C" stroke-width="2"/>
+          <line x1="245" y1="148" x2="240" y2="160" stroke="#8B5E3C" stroke-width="2"/>
+          <text x="180" y="172" font-size="10" fill="#8B5E3C" text-anchor="middle" font-weight="600">Counter</text>
+          <!-- Awning above window -->
+          <polygon points="115,83 245,83 255,68 105,68" fill="rgba(239,68,68,0.2)" stroke="#dc2626" stroke-width="1.5"/>
+          <text x="180" y="58" font-size="10" fill="#dc2626" text-anchor="middle" font-weight="600">Awning / Shade</text>
+          <!-- Door on end -->
+          <rect x="370" y="100" width="45" height="90" rx="2" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+          <text x="392" y="150" font-size="10" fill="#2563eb" text-anchor="middle" font-weight="600">Door</text>
+          <!-- Ventilation grille -->
+          <rect x="310" y="72" width="40" height="18" rx="2" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+          <line x1="317" y1="72" x2="317" y2="90" stroke="#d97706" stroke-width="1"/>
+          <line x1="324" y1="72" x2="324" y2="90" stroke="#d97706" stroke-width="1"/>
+          <line x1="331" y1="72" x2="331" y2="90" stroke="#d97706" stroke-width="1"/>
+          <line x1="338" y1="72" x2="338" y2="90" stroke="#d97706" stroke-width="1"/>
+          <line x1="345" y1="72" x2="345" y2="90" stroke="#d97706" stroke-width="1"/>
+          <text x="330" y="105" font-size="9" fill="#d97706" text-anchor="middle" font-weight="600">Ventilation</text>
+          <!-- Signage area -->
+          <rect x="60" y="70" width="45" height="20" rx="2" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="82" y="84" font-size="8" fill="#7c3aed" text-anchor="middle" font-weight="600">BURGERS</text>
+          <text x="82" y="105" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="600">Signage Area</text>
+          <!-- Ground line -->
+          <line x1="20" y1="192" x2="440" y2="192" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+          <!-- Labels with arrows -->
+          <line x1="460" y1="60" x2="460" y2="190" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="475" y="130" font-size="9" fill="#64748b" text-anchor="middle" transform="rotate(90,475,130)">2.4 m height</text>
+          <line x1="40" y1="210" x2="420" y2="210" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="230" y="228" font-size="9" fill="#64748b" text-anchor="middle">6 m length</text>
+        </svg>
+      </div>
+    </div>
+
     <div class="card">
       <h2>Add Features to Your Isometric Drawing</h2>
       <p>Now add the external features that make your container a restaurant. Each feature has <strong>scaled measurements</strong> to keep it accurate.</p>
+
+      <div class="callout accent">
+        <strong>Pro Tip: Line Weights Matter!</strong> Use different line thicknesses to make your drawing professional. <strong>Thick lines</strong> for the box outline (structural edges), <strong>medium lines</strong> for feature details (window, door), and <strong>light lines</strong> for labels with a neat arrow pointing to each feature.
+      </div>
 
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="featProgress" style="width: 0%"></div>
@@ -623,7 +792,7 @@
               <polygon points="250,300 322,258 322,138 250,180" fill="#94a3b8" opacity="0.15"/>
               <polygon points="250,180 70,76 142,34 322,138" fill="#cdd5de" opacity="0.15"/>
 
-              <!-- Feature: Serving window on left face (ghost → solid) -->
+              <!-- Feature: Serving window on left face -->
               <polygon id="feat-window" points="155,230 115,210 115,183 155,203" fill="rgba(249,115,22,0.15)" stroke="#ea580c" stroke-width="2" class="ghost-line"/>
               <text id="feat-window-label" x="135" y="175" font-size="9" fill="#ea580c" text-anchor="middle" class="ghost-line">Serving Window</text>
 
@@ -638,6 +807,18 @@
               <!-- Feature: Awning -->
               <polygon id="feat-awning" points="170,215 100,180 95,182 165,217" fill="rgba(239,68,68,0.3)" stroke="#dc2626" stroke-width="1.5" class="ghost-line"/>
               <text id="feat-awning-label" x="130" y="170" font-size="8" fill="#dc2626" text-anchor="middle" style="display:none">Awning</text>
+
+              <!-- Feature: Ventilation grille on left face near top -->
+              <polygon id="feat-vent" points="100,110 82,100 82,92 100,102" fill="rgba(217,119,6,0.2)" stroke="#d97706" stroke-width="1.5" class="ghost-line"/>
+              <!-- Vent slat lines -->
+              <line id="feat-vent-s1" x1="95" y1="108" x2="84" y2="102" stroke="#d97706" stroke-width="0.8" class="ghost-line"/>
+              <line id="feat-vent-s2" x1="97" y1="105" x2="85" y2="99" stroke="#d97706" stroke-width="0.8" class="ghost-line"/>
+              <text id="feat-vent-label" x="91" y="88" font-size="7" fill="#d97706" text-anchor="middle" class="ghost-line">Vent</text>
+
+              <!-- Feature: Signage area on left face above window -->
+              <polygon id="feat-sign" points="195,186 140,155 140,145 195,176" fill="rgba(124,58,237,0.1)" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,2" class="ghost-line"/>
+              <text id="feat-sign-text" x="167" y="168" font-size="7" fill="#7c3aed" text-anchor="middle" font-weight="700" class="ghost-line">BURGERS</text>
+              <text id="feat-sign-label" x="167" y="140" font-size="7" fill="#7c3aed" text-anchor="middle" class="ghost-line">Signage Area</text>
             </svg>
           </div>
         </div>
@@ -646,20 +827,100 @@
           <!-- Steps generated by JS -->
         </div>
       </div>
+
+      <!-- Feature Checklist -->
+      <div class="callout success" style="margin-top:1.25rem;">
+        <strong>Feature Checklist</strong> -- Tick off each feature as you add it to your drawing:
+        <div class="feature-checklist" id="featureChecklist">
+          <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+            <div class="feature-check-box"></div>
+            <span>Serving Window</span>
+          </div>
+          <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+            <div class="feature-check-box"></div>
+            <span>Fold-down Counter</span>
+          </div>
+          <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+            <div class="feature-check-box"></div>
+            <span>Entry Door</span>
+          </div>
+          <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+            <div class="feature-check-box"></div>
+            <span>Awning / Shade</span>
+          </div>
+          <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+            <div class="feature-check-box"></div>
+            <span>Ventilation Grille</span>
+          </div>
+          <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+            <div class="feature-check-box"></div>
+            <span>Signage Area</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- =============================================
-       SECTION 3: FRONT VIEW (Orthographic)
+       SECTION 3: FRONT VIEW (ENHANCED)
        ============================================= -->
   <div id="section-ortho-front" class="section-content">
+    <!-- What Can You See? Explainer -->
+    <div class="explainer-card">
+      <h3>What Can You See? -- Front View</h3>
+      <div class="explainer-grid">
+        <div>
+          <svg viewBox="0 0 140 160" width="130">
+            <!-- Person stick figure -->
+            <circle cx="70" cy="20" r="10" fill="none" stroke="#0369a1" stroke-width="2"/>
+            <line x1="70" y1="30" x2="70" y2="70" stroke="#0369a1" stroke-width="2"/>
+            <line x1="70" y1="45" x2="50" y2="60" stroke="#0369a1" stroke-width="2"/>
+            <line x1="70" y1="45" x2="90" y2="60" stroke="#0369a1" stroke-width="2"/>
+            <line x1="70" y1="70" x2="55" y2="95" stroke="#0369a1" stroke-width="2"/>
+            <line x1="70" y1="70" x2="85" y2="95" stroke="#0369a1" stroke-width="2"/>
+            <!-- Eye line arrow -->
+            <line x1="78" y1="20" x2="120" y2="20" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <polygon points="120,17 128,20 120,23" fill="#0369a1"/>
+            <!-- Container short end -->
+            <rect x="90" y="100" width="40" height="40" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+            <text x="110" y="125" font-size="7" fill="#475569" text-anchor="middle" font-weight="600">SHORT END</text>
+            <!-- Arrow from person to container -->
+            <line x1="70" y1="95" x2="108" y2="100" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+          </svg>
+        </div>
+        <div>
+          <p style="color:var(--text);margin-bottom:0.5rem;"><strong>Imagine standing directly in front of the container.</strong> You can ONLY see height and width. No depth! The length disappears.</p>
+          <div class="explainer-lists">
+            <div class="explainer-list will-see">
+              <h4 style="color:#166534;">You WILL see:</h4>
+              <ul>
+                <li>Entry door</li>
+                <li>Wall height (12 cm)</li>
+                <li>Wall width (12 cm)</li>
+                <li>Roof edge</li>
+              </ul>
+            </div>
+            <div class="explainer-list wont-see">
+              <h4 style="color:#991b1b;">You WON'T see:</h4>
+              <ul>
+                <li>Serving window (side!)</li>
+                <li>Counter (side!)</li>
+                <li>Container length</li>
+                <li>Signage (side!)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout accent">
+      <strong>Connect to Isometric:</strong> Look at the <strong>right face</strong> (front end) of your isometric drawing. That parallelogram shape is the same face you are now drawing as a flat rectangle. In orthographic projection, there is no 30-degree angle -- everything is drawn straight.
+    </div>
+
     <div class="card">
       <h2>Orthographic: Front View (Front Elevation)</h2>
-      <p>Now we switch to orthographic projection. The front view shows the <strong>short end</strong> of the container — just height and width. Draw this on a fresh piece of paper with a border.</p>
-
-      <div class="callout">
-        <strong>Key connection:</strong> The front view shows the SAME face you see when you look straight at the front of your 3D container. Compare it with your isometric drawing!
-      </div>
+      <p>The front view shows the <strong>short end</strong> of the container -- just height and width. Draw this on a fresh piece of paper with a border.</p>
 
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="frontProgress" style="width: 0%"></div>
@@ -671,30 +932,41 @@
             <svg id="frontCanvas" viewBox="0 0 400 320">
               <rect width="400" height="320" fill="white"/>
               <!-- Border -->
-              <rect x="20" y="20" width="360" height="260" fill="none" stroke="#d1d5db" stroke-width="1"/>
+              <rect id="front-border" x="20" y="20" width="360" height="260" fill="none" stroke="#d1d5db" stroke-width="1" class="ghost-line"/>
               <!-- Title block area -->
-              <rect x="250" y="250" width="130" height="30" fill="none" stroke="#d1d5db" stroke-width="1"/>
-              <text x="315" y="268" font-size="8" fill="#94a3b8" text-anchor="middle">Title Block</text>
+              <rect id="front-titleblock" x="250" y="250" width="130" height="30" fill="none" stroke="#d1d5db" stroke-width="1" class="ghost-line"/>
+              <text id="front-titleblock-text" x="315" y="268" font-size="8" fill="#94a3b8" text-anchor="middle" class="ghost-line">Title Block</text>
 
-              <!-- Front view rectangle (ghost → solid) -->
+              <!-- Front view rectangle -->
               <rect id="front-box" x="110" y="40" width="180" height="180" fill="none" stroke="#475569" stroke-width="2.5" class="ghost-line"/>
 
               <!-- Door -->
               <rect id="front-door" x="215" y="95" width="50" height="115" fill="rgba(59,130,246,0.1)" stroke="#2563eb" stroke-width="2" class="ghost-line"/>
               <text id="front-door-label" x="240" y="158" font-size="9" fill="#2563eb" text-anchor="middle" class="ghost-line">Door</text>
+              <!-- Door handle -->
+              <circle id="front-door-handle" cx="225" cy="155" r="3" fill="#2563eb" class="ghost-line"/>
 
               <!-- Dimension lines -->
               <g id="front-dims" style="display:none">
                 <!-- Width dimension -->
                 <line x1="110" y1="235" x2="290" y2="235" class="dim-line"/>
-                <line x1="110" y1="230" x2="110" y2="240" stroke="var(--primary)" stroke-width="1"/>
-                <line x1="290" y1="230" x2="290" y2="240" stroke="var(--primary)" stroke-width="1"/>
-                <text x="200" y="248" class="dim-text" text-anchor="middle">12 cm (2.4 m real)</text>
+                <line x1="110" y1="225" x2="110" y2="240" stroke="var(--primary)" stroke-width="1"/>
+                <line x1="290" y1="225" x2="290" y2="240" stroke="var(--primary)" stroke-width="1"/>
+                <!-- Arrowheads -->
+                <polygon points="110,235 116,233 116,237" fill="var(--primary)"/>
+                <polygon points="290,235 284,233 284,237" fill="var(--primary)"/>
+                <text x="200" y="250" class="dim-text" text-anchor="middle">12 cm (2.4 m real)</text>
                 <!-- Height dimension -->
                 <line x1="305" y1="40" x2="305" y2="220" class="dim-line"/>
-                <line x1="300" y1="40" x2="310" y2="40" stroke="var(--primary)" stroke-width="1"/>
-                <line x1="300" y1="220" x2="310" y2="220" stroke="var(--primary)" stroke-width="1"/>
-                <text x="320" y="135" class="dim-text" text-anchor="middle" transform="rotate(90,320,135)">12 cm (2.4 m real)</text>
+                <line x1="295" y1="40" x2="310" y2="40" stroke="var(--primary)" stroke-width="1"/>
+                <line x1="295" y1="220" x2="310" y2="220" stroke="var(--primary)" stroke-width="1"/>
+                <!-- Arrowheads -->
+                <polygon points="305,40 303,46 307,46" fill="var(--primary)"/>
+                <polygon points="305,220 303,214 307,214" fill="var(--primary)"/>
+                <text x="325" y="135" class="dim-text" text-anchor="middle" transform="rotate(90,325,135)">12 cm (2.4 m real)</text>
+                <!-- Door dimension -->
+                <line x1="215" y1="215" x2="265" y2="215" stroke="var(--primary)" stroke-width="0.8" stroke-dasharray="2,2"/>
+                <text x="240" y="227" font-size="8" fill="var(--primary)" text-anchor="middle">~4 cm</text>
               </g>
             </svg>
           </div>
@@ -708,16 +980,65 @@
   </div>
 
   <!-- =============================================
-       SECTION 4: SIDE VIEW (Orthographic)
+       SECTION 4: SIDE VIEW (ENHANCED)
        ============================================= -->
   <div id="section-ortho-side" class="section-content">
+    <!-- What Can You See? Explainer -->
+    <div class="explainer-card">
+      <h3>What Can You See? -- Side View</h3>
+      <div class="explainer-grid">
+        <div>
+          <svg viewBox="0 0 160 140" width="140">
+            <!-- Person stick figure -->
+            <circle cx="20" cy="30" r="10" fill="none" stroke="#0369a1" stroke-width="2"/>
+            <line x1="20" y1="40" x2="20" y2="75" stroke="#0369a1" stroke-width="2"/>
+            <line x1="20" y1="55" x2="5" y2="65" stroke="#0369a1" stroke-width="2"/>
+            <line x1="20" y1="55" x2="35" y2="65" stroke="#0369a1" stroke-width="2"/>
+            <line x1="20" y1="75" x2="10" y2="100" stroke="#0369a1" stroke-width="2"/>
+            <line x1="20" y1="75" x2="30" y2="100" stroke="#0369a1" stroke-width="2"/>
+            <!-- Eye line arrow -->
+            <line x1="28" y1="28" x2="60" y2="28" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <polygon points="60,25 68,28 60,31" fill="#0369a1"/>
+            <!-- Container long side -->
+            <rect x="50" y="55" width="100" height="40" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+            <text x="100" y="80" font-size="7" fill="#475569" text-anchor="middle" font-weight="600">LONG SIDE</text>
+            <!-- Window on container -->
+            <rect x="70" y="60" width="35" height="18" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+            <text x="100" y="110" font-size="7" fill="#64748b" text-anchor="middle">Customer-facing side!</text>
+          </svg>
+        </div>
+        <div>
+          <p style="color:var(--text);margin-bottom:0.5rem;"><strong>Imagine standing at the side, looking at the long wall.</strong> This is the customer-facing side! You see height and length.</p>
+          <div class="explainer-lists">
+            <div class="explainer-list will-see">
+              <h4 style="color:#166534;">You WILL see:</h4>
+              <ul>
+                <li>Serving window</li>
+                <li>Counter</li>
+                <li>Awning outline</li>
+                <li>Ventilation grille</li>
+                <li>Signage area</li>
+              </ul>
+            </div>
+            <div class="explainer-list wont-see">
+              <h4 style="color:#991b1b;">You WON'T see:</h4>
+              <ul>
+                <li>Door (it is on the end!)</li>
+                <li>Container width</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout accent">
+      <strong>Connect to Isometric:</strong> The <strong>left face</strong> of your isometric drawing IS this side view. The window you drew as a parallelogram in isometric now appears as a proper rectangle with exact measurements.
+    </div>
+
     <div class="card">
       <h2>Orthographic: Side View (Side Elevation)</h2>
       <p>The side view shows the <strong>long side</strong> of the container. This is where customers see your serving window, counter, and signage!</p>
-
-      <div class="callout accent">
-        <strong>Connection to isometric:</strong> The left face of your isometric drawing IS this side view. The same window you drew in isometric appears here — but now as a proper rectangle with exact measurements.
-      </div>
 
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="sideProgress" style="width: 0%"></div>
@@ -736,16 +1057,35 @@
               <!-- Serving window -->
               <rect id="side-window" x="160" y="55" width="120" height="70" fill="rgba(249,115,22,0.1)" stroke="#ea580c" stroke-width="2" class="ghost-line"/>
               <text id="side-window-label" x="220" y="95" font-size="9" fill="#ea580c" text-anchor="middle" class="ghost-line">Serving Window</text>
-
               <!-- Counter -->
               <line id="side-counter" x1="160" y1="126" x2="280" y2="126" stroke="#8B5E3C" stroke-width="3" class="ghost-line"/>
+              <text id="side-counter-label" x="220" y="140" font-size="8" fill="#8B5E3C" text-anchor="middle" class="ghost-line">Counter</text>
+
+              <!-- Ventilation grille -->
+              <rect id="side-vent" x="370" y="40" width="50" height="22" rx="2" fill="rgba(217,119,6,0.15)" stroke="#d97706" stroke-width="1.5" class="ghost-line"/>
+              <line id="side-vent-s1" x1="380" y1="40" x2="380" y2="62" stroke="#d97706" stroke-width="0.8" class="ghost-line"/>
+              <line id="side-vent-s2" x1="390" y1="40" x2="390" y2="62" stroke="#d97706" stroke-width="0.8" class="ghost-line"/>
+              <line id="side-vent-s3" x1="400" y1="40" x2="400" y2="62" stroke="#d97706" stroke-width="0.8" class="ghost-line"/>
+              <line id="side-vent-s4" x1="410" y1="40" x2="410" y2="62" stroke="#d97706" stroke-width="0.8" class="ghost-line"/>
+              <text id="side-vent-label" x="395" y="76" font-size="8" fill="#d97706" text-anchor="middle" class="ghost-line">Vent</text>
+
+              <!-- Signage area -->
+              <rect id="side-sign" x="55" y="40" width="80" height="28" rx="2" fill="rgba(124,58,237,0.08)" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,2" class="ghost-line"/>
+              <text id="side-sign-text" x="95" y="58" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="700" class="ghost-line">BURGERS</text>
 
               <!-- Dimension lines -->
               <g id="side-dims" style="display:none">
                 <line x1="30" y1="210" x2="450" y2="210" class="dim-line"/>
+                <polygon points="30,210 36,208 36,212" fill="var(--primary)"/>
+                <polygon points="450,210 444,208 444,212" fill="var(--primary)"/>
                 <text x="240" y="225" class="dim-text" text-anchor="middle">30 cm (6 m real)</text>
                 <line x1="460" y1="30" x2="460" y2="198" class="dim-line"/>
+                <polygon points="460,30 458,36 462,36" fill="var(--primary)"/>
+                <polygon points="460,198 458,192 462,192" fill="var(--primary)"/>
                 <text x="475" y="120" class="dim-text" text-anchor="middle" transform="rotate(90,475,120)">12 cm (2.4 m)</text>
+                <!-- Window dimension -->
+                <line x1="160" y1="135" x2="280" y2="135" stroke="var(--primary)" stroke-width="0.8" stroke-dasharray="2,2"/>
+                <text x="220" y="148" font-size="8" fill="var(--primary)" text-anchor="middle">~12 cm window</text>
               </g>
             </svg>
           </div>
@@ -759,16 +1099,64 @@
   </div>
 
   <!-- =============================================
-       SECTION 5: TOP VIEW (Plan View)
+       SECTION 5: TOP VIEW (ENHANCED)
        ============================================= -->
   <div id="section-ortho-top" class="section-content">
+    <!-- What Can You See? Explainer -->
+    <div class="explainer-card">
+      <h3>What Can You See? -- Top (Plan) View</h3>
+      <div class="explainer-grid">
+        <div>
+          <svg viewBox="0 0 130 160" width="120">
+            <!-- Bird -->
+            <text x="65" y="20" font-size="22" text-anchor="middle">&#x1F426;</text>
+            <!-- Eye line arrow going down -->
+            <line x1="65" y1="30" x2="65" y2="60" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <polygon points="62,60 65,68 68,60" fill="#0369a1"/>
+            <!-- Container top-down view -->
+            <rect x="15" y="75" width="100" height="40" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+            <text x="65" y="100" font-size="7" fill="#475569" text-anchor="middle" font-weight="600">LOOKING DOWN</text>
+            <!-- Gap for window -->
+            <line x1="40" y1="115" x2="75" y2="115" stroke="#ea580c" stroke-width="3"/>
+            <!-- Gap for door -->
+            <line x1="115" y1="85" x2="115" y2="100" stroke="#2563eb" stroke-width="3"/>
+            <text x="65" y="138" font-size="7" fill="#64748b" text-anchor="middle">Length and width only</text>
+            <text x="65" y="150" font-size="7" fill="#64748b" text-anchor="middle">No height!</text>
+          </svg>
+        </div>
+        <div>
+          <p style="color:var(--text);margin-bottom:0.5rem;"><strong>Imagine a bird flying directly over the container looking straight down.</strong> You see length and width. No height at all!</p>
+          <div class="explainer-lists">
+            <div class="explainer-list will-see">
+              <h4 style="color:#166534;">You WILL see:</h4>
+              <ul>
+                <li>Outline of all walls</li>
+                <li>Window opening (gap in wall)</li>
+                <li>Door opening with swing arc</li>
+                <li>Floor area (zones)</li>
+              </ul>
+            </div>
+            <div class="explainer-list wont-see">
+              <h4 style="color:#991b1b;">You WON'T see:</h4>
+              <ul>
+                <li>Wall height</li>
+                <li>Signage (on the wall face)</li>
+                <li>Ventilation (on the wall face)</li>
+              </ul>
+            </div>
+          </div>
+          <p style="color:var(--text);margin-top:0.5rem;font-weight:600;">This view IS your floor plan! Next lesson you will fill it with kitchen equipment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <strong>Sneak Peek -- Floorplanner.com!</strong> In Lesson 09 (next lesson), you will use an online tool called <strong>Floorplanner</strong> to digitally design your container restaurant layout! The top view you are drawing now is exactly what a digital floor plan looks like. Getting these dimensions right today will save you time next lesson.
+    </div>
+
     <div class="card">
       <h2>Orthographic: Top View (Plan View)</h2>
       <p>The top view is what you see looking <strong>straight down from above</strong>. This is the most important view because it <strong>becomes your floor plan!</strong></p>
-
-      <div class="callout success">
-        <strong>This is the big connection!</strong> In lessons L13-14, you'll fill this exact top-view rectangle with kitchen equipment, counters, and zones. The plan view you draw today is the foundation of your floor plan. Same dimensions: <span class="step-measure">30 cm x 12 cm</span> at 1:20 scale.
-      </div>
 
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="topProgress" style="width: 0%"></div>
@@ -781,8 +1169,10 @@
               <rect width="500" height="250" fill="white"/>
               <rect x="15" y="10" width="470" height="220" fill="none" stroke="#d1d5db" stroke-width="1"/>
 
-              <!-- Top view rectangle -->
+              <!-- Top view rectangle (outer wall) -->
               <rect id="top-box" x="40" y="25" width="420" height="160" fill="none" stroke="#475569" stroke-width="2.5" class="ghost-line"/>
+              <!-- Inner wall line for wall thickness -->
+              <rect id="top-box-inner" x="47" y="32" width="406" height="146" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="3,3" class="ghost-line"/>
 
               <!-- Window opening (gap in bottom wall) -->
               <line id="top-window" x1="170" y1="185" x2="290" y2="185" stroke="#ea580c" stroke-width="4" class="ghost-line"/>
@@ -795,7 +1185,6 @@
 
               <!-- Architectural symbols preview -->
               <g id="top-symbols" style="display:none">
-                <!-- Simple zone labels -->
                 <rect x="55" y="40" width="120" height="130" fill="rgba(239,68,68,0.08)" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,4" rx="4"/>
                 <text x="115" y="110" font-size="10" fill="#ef4444" text-anchor="middle" font-weight="600">Kitchen Zone</text>
                 <rect x="185" y="40" width="120" height="130" fill="rgba(59,130,246,0.08)" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,4" rx="4"/>
@@ -807,8 +1196,12 @@
               <!-- Dimensions -->
               <g id="top-dims" style="display:none">
                 <line x1="40" y1="200" x2="460" y2="200" class="dim-line"/>
+                <polygon points="40,200 46,198 46,202" fill="var(--primary)"/>
+                <polygon points="460,200 454,198 454,202" fill="var(--primary)"/>
                 <text x="250" y="215" class="dim-text" text-anchor="middle">30 cm (6 m real)</text>
                 <line x1="470" y1="25" x2="470" y2="185" class="dim-line"/>
+                <polygon points="470,25 468,31 472,31" fill="var(--primary)"/>
+                <polygon points="470,185 468,179 472,179" fill="var(--primary)"/>
                 <text x="485" y="110" class="dim-text" text-anchor="middle" transform="rotate(90,485,110)">12 cm (2.4 m)</text>
               </g>
             </svg>
@@ -823,22 +1216,24 @@
   </div>
 
   <!-- =============================================
-       SECTION 6: SELF-CHECK
+       SECTION 6: SELF-CHECK (ENHANCED)
        ============================================= -->
   <div id="section-check" class="section-content">
     <div class="card">
       <h2>Self-Assessment Checklist</h2>
-      <p>Review your drawings and tick off each item. Be honest — this helps you identify what to improve!</p>
+      <p>Review your drawings and tick off each item. Be honest -- this helps you identify what to improve!</p>
 
       <h3 class="mt-2">Isometric Drawing</h3>
       <ul class="checklist" id="checkIso">
         <li><span class="check-icon" onclick="toggleCheck(this)"></span>Lines are straight and drawn with a ruler</li>
-        <li><span class="check-icon" onclick="toggleCheck(this)"></span>30-degree angles are correct (not 45° or flat)</li>
+        <li><span class="check-icon" onclick="toggleCheck(this)"></span>30-degree angles are correct (not 45 degrees or flat)</li>
         <li><span class="check-icon" onclick="toggleCheck(this)"></span>Parallel lines are truly parallel</li>
         <li><span class="check-icon" onclick="toggleCheck(this)"></span>Proportions look correct (container is longer than it is wide/tall)</li>
         <li><span class="check-icon" onclick="toggleCheck(this)"></span>Serving window is visible on the side face</li>
         <li><span class="check-icon" onclick="toggleCheck(this)"></span>Door is visible on the end face</li>
-        <li><span class="check-icon" onclick="toggleCheck(this)"></span>Features are labelled</li>
+        <li><span class="check-icon" onclick="toggleCheck(this)"></span>Ventilation grille is near the top of the side face</li>
+        <li><span class="check-icon" onclick="toggleCheck(this)"></span>Signage area is marked above the window</li>
+        <li><span class="check-icon" onclick="toggleCheck(this)"></span>All features are labelled</li>
       </ul>
 
       <h3 class="mt-2">Orthographic Drawings</h3>
@@ -847,10 +1242,70 @@
         <li><span class="check-icon" onclick="toggleCheck(this)"></span>Side view shows only height and length (12 cm x 30 cm)</li>
         <li><span class="check-icon" onclick="toggleCheck(this)"></span>Top view shows only length and width (30 cm x 12 cm)</li>
         <li><span class="check-icon" onclick="toggleCheck(this)"></span>All views are drawn to 1:20 scale</li>
-        <li><span class="check-icon" onclick="toggleCheck(this)"></span>Dimension lines are included with measurements</li>
+        <li><span class="check-icon" onclick="toggleCheck(this)"></span>Dimension lines have arrowheads and extension lines</li>
         <li><span class="check-icon" onclick="toggleCheck(this)"></span>Features appear in the correct views (window on side, door on front, etc.)</li>
-        <li><span class="check-icon" onclick="toggleCheck(this)"></span>The top view looks like a floor plan outline</li>
+        <li><span class="check-icon" onclick="toggleCheck(this)"></span>Top view has wall thickness shown (double lines)</li>
+        <li><span class="check-icon" onclick="toggleCheck(this)"></span>Door swing arc is shown on the top view</li>
+        <li><span class="check-icon" onclick="toggleCheck(this)"></span>Each drawing has a border and title block</li>
       </ul>
+    </div>
+
+    <!-- Which View Am I? Quiz -->
+    <div class="card">
+      <h2>Which View Am I? -- Matching Game</h2>
+      <p>For each feature below, click the view(s) where you would see it. Some features appear in more than one view! Click "Check My Answers" when you are done.</p>
+      <div class="quiz-grid" id="quizGrid">
+        <!-- Quiz rows generated by JS -->
+      </div>
+      <div class="text-center mt-2">
+        <button class="btn btn-primary" onclick="checkQuizAnswers()">Check My Answers</button>
+        <button class="btn btn-outline" onclick="resetQuiz()" style="margin-left:0.5rem;">Reset</button>
+      </div>
+      <div id="quizResult" style="margin-top:1rem;"></div>
+    </div>
+
+    <!-- Compare Your Views Reference -->
+    <div class="card">
+      <h2>Compare Your Views -- Standard Orthographic Layout</h2>
+      <p>This is how orthographic views are traditionally arranged on a drawing sheet. Front view goes top-left, side view goes top-right, and top (plan) view goes bottom-left. Notice the <strong>projection lines</strong> connecting matching dimensions.</p>
+      <div class="drawing-canvas" style="max-width:600px;margin:0 auto;">
+        <svg viewBox="0 0 500 360">
+          <rect width="500" height="360" fill="#fafafa"/>
+
+          <!-- Front View (top-left) -->
+          <rect x="30" y="30" width="120" height="120" fill="#dbeafe" fill-opacity="0.3" stroke="#475569" stroke-width="2"/>
+          <rect x="85" y="62" width="32" height="78" fill="rgba(59,130,246,0.1)" stroke="#2563eb" stroke-width="1.5"/>
+          <text x="90" y="20" font-size="11" fill="#2563eb" font-weight="700">FRONT VIEW</text>
+          <text x="90" y="165" font-size="9" fill="#64748b" text-anchor="middle">12 cm x 12 cm</text>
+
+          <!-- Side View (top-right) -->
+          <rect x="200" y="30" width="270" height="120" fill="#fff7ed" fill-opacity="0.3" stroke="#475569" stroke-width="2"/>
+          <rect x="295" y="50" width="80" height="48" fill="rgba(249,115,22,0.1)" stroke="#ea580c" stroke-width="1.5"/>
+          <line x1="295" y1="99" x2="375" y2="99" stroke="#8B5E3C" stroke-width="2"/>
+          <text x="335" y="20" font-size="11" fill="#ea580c" font-weight="700">SIDE VIEW</text>
+          <text x="335" y="165" font-size="9" fill="#64748b" text-anchor="middle">30 cm x 12 cm</text>
+
+          <!-- Top View (bottom-left) -->
+          <rect x="30" y="200" width="120" height="120" fill="#dcfce7" fill-opacity="0.3" stroke="#475569" stroke-width="2"/>
+          <line x1="55" y1="320" x2="85" y2="320" stroke="#ea580c" stroke-width="3"/>
+          <line x1="150" y1="255" x2="150" y2="275" stroke="#2563eb" stroke-width="3"/>
+          <text x="90" y="192" font-size="11" fill="#22c55e" font-weight="700">TOP VIEW</text>
+          <text x="90" y="340" font-size="9" fill="#64748b" text-anchor="middle">30 cm x 12 cm</text>
+
+          <!-- Projection lines (dashed) connecting views -->
+          <!-- Vertical projection from front to top (width alignment) -->
+          <line x1="30" y1="155" x2="30" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="150" y1="155" x2="150" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+
+          <!-- Horizontal projection from front to side (height alignment) -->
+          <line x1="155" y1="30" x2="200" y2="30" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="155" y1="150" x2="200" y2="150" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+
+          <!-- Labels for projection lines -->
+          <text x="165" y="178" font-size="8" fill="#94a3b8">Projection</text>
+          <text x="165" y="188" font-size="8" fill="#94a3b8">lines</text>
+        </svg>
+      </div>
     </div>
 
     <div class="card">
@@ -861,25 +1316,25 @@
             <svg viewBox="0 0 120 100" width="120">
               <line x1="60" y1="80" x2="60" y2="30" stroke="#475569" stroke-width="2"/>
               <line x1="60" y1="80" x2="20" y2="40" stroke="#ef4444" stroke-width="2"/>
-              <text x="30" y="50" font-size="8" fill="#ef4444">45°</text>
+              <text x="30" y="50" font-size="8" fill="#ef4444">45&#176;</text>
             </svg>
-            <p style="color:#991b1b;">Too steep (45°)</p>
+            <p style="color:#991b1b;">Too steep (45&#176;)</p>
           </div>
           <div class="mistake-example good">
             <svg viewBox="0 0 120 100" width="120">
               <line x1="60" y1="80" x2="60" y2="30" stroke="#475569" stroke-width="2"/>
               <line x1="60" y1="80" x2="10" y2="55" stroke="#22c55e" stroke-width="2"/>
-              <text x="25" y="60" font-size="8" fill="#22c55e">30°</text>
+              <text x="25" y="60" font-size="8" fill="#22c55e">30&#176;</text>
             </svg>
-            <p style="color:#166534;">Correct (30°)</p>
+            <p style="color:#166534;">Correct (30&#176;)</p>
           </div>
           <div class="mistake-example bad">
             <svg viewBox="0 0 120 100" width="120">
               <line x1="60" y1="80" x2="60" y2="30" stroke="#475569" stroke-width="2"/>
               <line x1="60" y1="80" x2="10" y2="70" stroke="#ef4444" stroke-width="2"/>
-              <text x="20" y="65" font-size="8" fill="#ef4444">15°</text>
+              <text x="20" y="65" font-size="8" fill="#ef4444">15&#176;</text>
             </svg>
-            <p style="color:#991b1b;">Too shallow (15°)</p>
+            <p style="color:#991b1b;">Too shallow (15&#176;)</p>
           </div>
         </div>
         <div class="mistake-row">
@@ -907,31 +1362,35 @@
 
     <div class="card">
       <h2>Your Project Toolkit</h2>
-      <p>Here's what you've learned and what's coming next:</p>
+      <p>Here is what you have learned and what is coming next:</p>
       <div class="toolkit">
         <div class="toolkit-item done">
           <span class="toolkit-icon">&#x2705;</span>
-          <span><strong>Scale (L06)</strong> — Convert real to model size</span>
+          <span><strong>Scale (L06)</strong> -- Convert real to model size</span>
         </div>
         <div class="toolkit-item done">
           <span class="toolkit-icon">&#x2705;</span>
-          <span><strong>Isometric (today)</strong> — Draw a 3D view</span>
+          <span><strong>Isometric (today)</strong> -- Draw a 3D view</span>
         </div>
         <div class="toolkit-item done">
           <span class="toolkit-icon">&#x2705;</span>
-          <span><strong>Orthographic (today)</strong> — Draw front, side, top views</span>
+          <span><strong>Orthographic (today)</strong> -- Draw front, side, top views</span>
         </div>
         <div class="toolkit-item current">
           <span class="toolkit-icon">&#x25B6;&#xFE0F;</span>
-          <span><strong>Plan View = Floor Plan</strong> — The top view IS your floor plan!</span>
+          <span><strong>Plan View = Floor Plan</strong> -- The top view IS your floor plan!</span>
         </div>
         <div class="toolkit-item upcoming">
           <span class="toolkit-icon">&#x25CB;</span>
-          <span><strong>Floor Plan (L13-14)</strong> — Fill the plan view with equipment</span>
+          <span><strong>Floor Plan (L09)</strong> -- Use Floorplanner.com to design layout</span>
         </div>
         <div class="toolkit-item upcoming">
           <span class="toolkit-icon">&#x25CB;</span>
-          <span><strong>Model (L15-16)</strong> — Build what you've drawn!</span>
+          <span><strong>Hand-drawn Plan (L10)</strong> -- Draw floor plan to scale</span>
+        </div>
+        <div class="toolkit-item upcoming">
+          <span class="toolkit-icon">&#x25CB;</span>
+          <span><strong>Model (L15-16)</strong> -- Build what you have drawn!</span>
         </div>
       </div>
     </div>
@@ -970,36 +1429,36 @@
           showme: 'Draw a straight line going straight UP from your starting point.'
         },
         {
-          title: 'Draw the length line at 30° (going upper-left)',
-          body: '<p>From the <strong>bottom</strong> of your vertical line, draw a line going <strong>upper-left at 30 degrees</strong>.</p><p class="step-measure">Length: 30 cm along this axis (6 m real)</p><p>On isometric dot paper, follow the dots diagonally — 2 dots across for every 1 dot up.</p>',
+          title: 'Draw the length line at 30 degrees (going upper-left)',
+          body: '<p>From the <strong>bottom</strong> of your vertical line, draw a line going <strong>upper-left at 30 degrees</strong>.</p><p class="step-measure">Length: 30 cm along this axis (6 m real)</p><p>On isometric dot paper, follow the dots diagonally -- 2 dots across for every 1 dot up.</p>',
           elements: ['iso-2a'],
           dims: ['iso-dim-2', 'iso-angle-1'],
-          showme: 'From the bottom of your vertical line, go upper-left following the 30° grid dots.'
+          showme: 'From the bottom of your vertical line, go upper-left following the 30 degree grid dots.'
         },
         {
-          title: 'Draw the width line at 30° (going upper-right)',
-          body: '<p>From the <strong>same bottom point</strong>, draw a line going <strong>upper-right at 30 degrees</strong>.</p><p class="step-measure">Width: 12 cm along this axis (2.4 m real)</p><p>Now you should have a "Y" shape — the vertical line and two 30° lines.</p>',
+          title: 'Draw the width line at 30 degrees (going upper-right)',
+          body: '<p>From the <strong>same bottom point</strong>, draw a line going <strong>upper-right at 30 degrees</strong>.</p><p class="step-measure">Width: 12 cm along this axis (2.4 m real)</p><p>Now you should have a "Y" shape -- the vertical line and two 30 degree lines.</p>',
           elements: ['iso-3'],
           dims: ['iso-dim-3', 'iso-angle-2'],
-          showme: 'From the same starting point, go upper-right following the 30° grid dots.'
+          showme: 'From the same starting point, go upper-right following the 30 degree grid dots.'
         },
         {
           title: 'Complete the right face (front end)',
-          body: '<p>From the <strong>top of the vertical line</strong>, draw a line <strong>parallel</strong> to the width line (upper-right at 30°). Then draw a vertical line down from the end of the width line.</p><p>You should now see the <strong>front face</strong> of your container (a parallelogram).</p>',
+          body: '<p>From the <strong>top of the vertical line</strong>, draw a line <strong>parallel</strong> to the width line (upper-right at 30 degrees). Then draw a vertical line down from the end of the width line.</p><p>You should now see the <strong>front face</strong> of your container (a parallelogram).</p>',
           elements: ['iso-4a', 'iso-4b'],
           dims: [],
           showme: 'Draw two more lines to close the front face into a parallelogram.'
         },
         {
           title: 'Draw the back edges (top and left side)',
-          body: '<p>From the <strong>top of the vertical line</strong>, draw a line <strong>parallel</strong> to the length line (upper-left at 30°). Then draw a <strong>vertical line</strong> up from the end of the length line.</p><p>The left face (serving side) is now visible!</p>',
+          body: '<p>From the <strong>top of the vertical line</strong>, draw a line <strong>parallel</strong> to the length line (upper-left at 30 degrees). Then draw a <strong>vertical line</strong> up from the end of the length line.</p><p>The left face (serving side) is now visible!</p>',
           elements: ['iso-5a', 'iso-5b'],
           dims: [],
           showme: 'Draw two more lines to form the left (serving) side of the container.'
         },
         {
           title: 'Complete the top face',
-          body: '<p>Connect the remaining open corners to complete the <strong>top face</strong> of the container.</p><p>&#127881; <strong>Congratulations!</strong> You\'ve drawn the basic isometric container box! It should look like a 3D rectangular box viewed from the corner.</p>',
+          body: '<p>Connect the remaining open corners to complete the <strong>top face</strong> of the container.</p><p><strong>Well done!</strong> You have drawn the basic isometric container box! It should look like a 3D rectangular box viewed from the corner.</p>',
           elements: ['iso-6a', 'iso-6b'],
           dims: [],
           showme: 'Close the top face by connecting the two remaining open corners.'
@@ -1007,104 +1466,151 @@
       ],
       features: [
         {
-          title: 'Draw the serving window',
-          body: '<p>On the <strong>left face</strong> (the long serving side), draw a <strong>rectangle</strong> for the serving window.</p><p class="step-measure">Window: approx 5 cm wide x 3 cm tall on drawing</p><p>Position it about one-third from the left, in the upper half of the face. Remember: on the isometric face, the rectangle is a parallelogram!</p>',
+          title: 'Draw the Serving Window',
+          body: '<p>On the <strong>left face</strong> (the long serving side), draw a <strong>parallelogram</strong> for the serving window.</p><p class="step-measure">Window: approx 5 cm wide x 3 cm tall on drawing</p><p>Position it about one-third from the left, in the upper half of the face.</p><p><strong>Dot-counting guide:</strong> Count <strong>5 dots along the 30-degree line</strong> for the width, then go straight up <strong>3 dots</strong> for the height. Remember: on the isometric face, rectangles become parallelograms!</p>',
           elements: ['feat-window', 'feat-window-label'],
           dims: [],
-          showme: 'Draw a parallelogram on the left face, matching the 30° angle of the face edges.'
+          showme: 'Draw a parallelogram on the left face. Count 5 dots along the 30 degree line for width, 3 dots up for height.'
         },
         {
-          title: 'Add the fold-down counter',
-          body: '<p>Below the serving window, draw a <strong>horizontal line</strong> (following the 30° angle) for the fold-down counter shelf.</p><p class="step-measure">Same width as the window</p><p>This is where customers rest their food while paying.</p>',
+          title: 'Add the Fold-down Counter',
+          body: '<p>Below the serving window, draw a <strong>thick horizontal line</strong> (following the 30-degree angle) for the fold-down counter shelf.</p><p class="step-measure">Same width as the window</p><p>This is where customers rest their food while paying.</p><p><strong>Pro Tip:</strong> Draw the counter with a <strong>thicker line</strong> than normal detail lines. This helps it stand out as a physical feature. Line weight is important in technical drawing!</p>',
           elements: ['feat-counter', 'feat-counter-label'],
           dims: [],
-          showme: 'Draw a thick line below the window, parallel to the face edges.'
+          showme: 'Draw a thick line below the window, parallel to the face edges. Make it thicker than your other lines.'
         },
         {
-          title: 'Draw the entry door',
-          body: '<p>On the <strong>right face</strong> (the short front end), draw a <strong>rectangle</strong> for the staff entry door.</p><p class="step-measure">Door: approx 2.5 cm wide x 5 cm tall on drawing</p><p>Position it near the right side of the front face, touching the bottom edge.</p>',
+          title: 'Draw the Entry Door',
+          body: '<p>On the <strong>right face</strong> (the short front end), draw a <strong>parallelogram</strong> for the staff entry door.</p><p class="step-measure">Door: approx 2.5 cm wide x 5 cm tall on drawing</p><p>Position it near the <strong>right side</strong> of the front face, with the bottom of the door touching the bottom edge of the container. The door must be tall enough for a person to walk through (about 2 m real, which is ~4 cm at 1:20 scale).</p>',
           elements: ['feat-door', 'feat-door-label'],
           dims: [],
           showme: 'Draw a parallelogram on the front face for the door. It should touch the bottom edge.'
         },
         {
-          title: 'Add the awning',
-          body: '<p>Above the serving window, draw a <strong>narrow strip</strong> extending outward slightly. This represents the fold-out awning that provides shade for customers.</p><p>The awning follows the same 30° angle as the left face.</p>',
+          title: 'Add the Awning / Shade Structure',
+          body: '<p>Above the serving window, draw a <strong>narrow strip</strong> extending outward slightly. This represents the fold-out awning that provides shade for customers.</p><p>The awning follows the same 30-degree angle as the left face. It should extend slightly <strong>beyond</strong> the face to show it sticks out.</p><p><strong>Why an awning?</strong> At festivals, customers queue outside in the sun. The awning protects them from sun and rain while they wait for their food.</p>',
           elements: ['feat-awning', 'feat-awning-label'],
           dims: [],
           showme: 'Draw a narrow parallelogram above the window area, slightly protruding from the face.'
+        },
+        {
+          title: 'Add the Ventilation Grille',
+          body: '<p>Near the <strong>top of the left face (back area)</strong>, draw a <strong>small rectangle</strong> for the ventilation grille.</p><p class="step-measure">Grille: approx 2 cm wide x 1 cm tall on drawing</p><p>Add a few vertical lines inside the rectangle to show the grille slats.</p><p><strong>Why ventilation?</strong> Cooking generates heat, smoke, and grease fumes. Food safety regulations require restaurants to have proper ventilation. Without it, the container would be dangerously hot and smoky inside!</p>',
+          elements: ['feat-vent', 'feat-vent-s1', 'feat-vent-s2', 'feat-vent-label'],
+          dims: [],
+          showme: 'Draw a small parallelogram near the top-back area of the left face. Add a few lines inside for grille slats.'
+        },
+        {
+          title: 'Add the Signage Area',
+          body: '<p>On the left face, <strong>above the serving window</strong>, draw a <strong>dashed rectangle</strong> for the signage area. This is where your restaurant name and branding will go.</p><p class="step-measure">Signage: approx 5 cm wide x 2 cm tall on drawing</p><p>Use <strong>dashed lines</strong> to show it is a planned area rather than a physical feature. You could write your restaurant name inside it!</p><p><strong>Branding connection:</strong> In later lessons, you will design signage and branding for your container restaurant. This space is where it will go on the actual build.</p>',
+          elements: ['feat-sign', 'feat-sign-text', 'feat-sign-label'],
+          dims: [],
+          showme: 'Draw a dashed parallelogram above the window for your restaurant name signage.'
         }
       ],
       'ortho-front': [
         {
+          title: 'Draw the border and title block',
+          body: '<p>Good drawing practice starts with a <strong>neat border</strong> around your paper (about 1 cm from the edge) and a <strong>title block</strong> in the bottom-right corner.</p><p>In your title block, write:</p><ul style="margin-left:1.2rem;font-size:0.9rem;"><li>Drawing title: "Front View"</li><li>Scale: 1:20</li><li>Your name and date</li></ul><p>This is professional practice that real architects and engineers use on every technical drawing.</p>',
+          elements: ['front-border', 'front-titleblock', 'front-titleblock-text'],
+          dims: [],
+          showme: 'Draw a border 1cm from the edge of your paper, and a small title block box in the bottom-right corner.'
+        },
+        {
           title: 'Draw the front view rectangle',
-          body: '<p>Draw a <strong>rectangle</strong> for the front face of the container. Since it\'s the short end, it\'s nearly square.</p><p class="step-measure">Width: 12 cm | Height: 12 cm</p><p>Use your ruler carefully — accuracy matters in orthographic drawing!</p>',
+          body: '<p>Draw a <strong>rectangle</strong> for the front face of the container. Since it is the short end, it is nearly square.</p><p class="step-measure">Width: 12 cm | Height: 12 cm</p><p>Use your ruler carefully -- accuracy matters in orthographic drawing! Centre the rectangle on your page, leaving room for dimension lines on the right and below.</p>',
           elements: ['front-box'],
           dims: [],
-          showme: 'Draw a 12cm x 12cm rectangle. Use your ruler for straight lines.'
+          showme: 'Draw a 12 cm x 12 cm rectangle. Use your ruler for straight lines and centre it on the page.'
         },
         {
           title: 'Add the entry door',
-          body: '<p>Draw the entry door on the right side of the front view.</p><p class="step-measure">Door: approx 2.5 cm wide x 5 cm tall</p><p>The door should touch the bottom edge. Label it clearly.</p>',
-          elements: ['front-door', 'front-door-label'],
+          body: '<p>Draw the entry door on the <strong>right side</strong> of the front view.</p><p class="step-measure">Door: approx 4 cm wide x 9 cm tall (at 1:20 scale)</p><p>The bottom of the door sits on the bottom edge of the rectangle. Add a small circle for the door handle on the left side of the door. Label it "Door".</p><p>At 1:20 scale, 4 cm = 0.8 m wide and 9 cm = 1.8 m tall in real life -- a standard door size.</p>',
+          elements: ['front-door', 'front-door-label', 'front-door-handle'],
           dims: [],
-          showme: 'Draw a rectangle on the right side for the door.'
+          showme: 'Draw a rectangle on the right side for the door. It should be about 4 cm wide x 9 cm tall, touching the bottom edge.'
         },
         {
           title: 'Add dimension lines',
-          body: '<p>Add <strong>dimension lines</strong> with arrows showing the width and height measurements. Include both the model measurement AND the real measurement.</p><p>Dimension lines go <strong>outside</strong> the drawing, with extension lines connecting to the edges.</p>',
+          body: '<p>Add <strong>dimension lines</strong> showing the width and height measurements. Here is how to draw them properly:</p><ol style="margin-left:1.2rem;font-size:0.9rem;"><li><strong>Extension lines:</strong> Draw thin lines extending from each corner of your rectangle, going outward about 1 cm</li><li><strong>Dimension line:</strong> Draw a line connecting the extension lines, with small <strong>arrowheads</strong> at each end</li><li><strong>Measurement text:</strong> Write the measurement above or next to the line: "12 cm (2.4 m real)"</li></ol><p>Dimension lines go <strong>outside</strong> the drawing, never through it. Include both the model measurement AND the real measurement.</p>',
           elements: [],
           dims: ['front-dims'],
-          showme: 'Draw thin lines with arrows outside the rectangle showing measurements.'
+          showme: 'Draw thin lines with arrowheads outside the rectangle. Add extension lines from the corners, then connect them.'
         }
       ],
       'ortho-side': [
         {
           title: 'Draw the side view rectangle',
-          body: '<p>Draw a <strong>rectangle</strong> for the long side of the container. This is much wider than the front view!</p><p class="step-measure">Width: 30 cm | Height: 12 cm</p><p><strong>Important:</strong> The HEIGHT must match the front view exactly (12 cm). This is how orthographic views stay consistent.</p>',
+          body: '<p>Draw a <strong>rectangle</strong> for the long side of the container. This is much wider than the front view!</p><p class="step-measure">Width: 30 cm | Height: 12 cm</p><p><strong>Important:</strong> The HEIGHT must match the front view exactly (12 cm). This is how orthographic views stay consistent -- shared dimensions must be identical across views.</p>',
           elements: ['side-box'],
           dims: [],
-          showme: 'Draw a 30cm x 12cm rectangle. The height must match your front view.'
+          showme: 'Draw a 30 cm x 12 cm rectangle. The height must match your front view exactly.'
         },
         {
           title: 'Add the serving window and counter',
-          body: '<p>Draw the serving window as a <strong>proper rectangle</strong> (not a parallelogram like in isometric).</p><p class="step-measure">Window: approx 6 cm wide x 3.5 cm tall</p><p>Add the counter shelf as a line below the window. This is the view customers see!</p>',
-          elements: ['side-window', 'side-window-label', 'side-counter'],
+          body: '<p>Draw the serving window as a <strong>proper rectangle</strong> (not a parallelogram like in isometric!).</p><p class="step-measure">Window: approx 12 cm wide x 6 cm tall</p><p>Position it in the <strong>upper-centre area</strong> of the side view. Below the window, draw a horizontal line for the counter shelf.</p><p>This is the view customers see when they approach your restaurant -- make it clear and well-proportioned!</p>',
+          elements: ['side-window', 'side-window-label', 'side-counter', 'side-counter-label'],
           dims: [],
-          showme: 'Draw a rectangle in the upper-centre of the side view. Add a line below for the counter.'
+          showme: 'Draw a rectangle in the upper-centre of the side view for the window. Add a line below for the counter.'
+        },
+        {
+          title: 'Add ventilation grille and signage area',
+          body: '<p>Add the remaining features visible from the side:</p><p><strong>Ventilation grille:</strong> Draw a small rectangle near the <strong>top-right area</strong> of the side view. Add vertical lines inside to show the grille slats.</p><p class="step-measure">Vent: approx 4 cm wide x 2 cm tall</p><p><strong>Signage area:</strong> Draw a dashed rectangle on the <strong>left side</strong>, above the window height. Write your restaurant name inside.</p><p class="step-measure">Signage: approx 6 cm wide x 2.5 cm tall</p>',
+          elements: ['side-vent', 'side-vent-s1', 'side-vent-s2', 'side-vent-s3', 'side-vent-s4', 'side-vent-label', 'side-sign', 'side-sign-text'],
+          dims: [],
+          showme: 'Draw the vent (small rectangle with lines) near top-right. Draw the signage (dashed rectangle) on the left.'
         },
         {
           title: 'Add dimension lines',
-          body: '<p>Add dimension lines showing the total width (30 cm / 6 m) and height (12 cm / 2.4 m). Also dimension the window if you have space.</p>',
+          body: '<p>Add dimension lines showing the total width (30 cm / 6 m) and height (12 cm / 2.4 m).</p><p>If you have space, also add a dimension line for the serving window width. Remember the rules:</p><ul style="margin-left:1.2rem;font-size:0.9rem;"><li>Extension lines from the edges</li><li>Arrowheads at each end of the dimension line</li><li>Measurement text clearly written</li><li>All dimension lines outside the drawing</li></ul>',
           elements: [],
           dims: ['side-dims'],
-          showme: 'Add measurement lines outside the rectangle.'
+          showme: 'Add measurement lines outside the rectangle with arrowheads and both model and real measurements.'
         }
       ],
       'ortho-top': [
         {
           title: 'Draw the plan view rectangle',
-          body: '<p>Draw the <strong>top-down view</strong> rectangle. Looking straight down, you see the full length and width.</p><p class="step-measure">Width: 30 cm | Height: 12 cm</p><p><strong>Critical:</strong> This rectangle is the EXACT same size and shape as your future floor plan! The dimensions must be accurate.</p>',
+          body: '<p>Draw the <strong>top-down view</strong> rectangle. Looking straight down, you see the full length and width.</p><p class="step-measure">Length: 30 cm | Width: 12 cm</p><p><strong>Critical:</strong> This rectangle is the EXACT same size and shape as your future floor plan! The dimensions must be accurate.</p>',
           elements: ['top-box'],
           dims: ['top-dims'],
-          showme: 'Draw a 30cm x 12cm rectangle. This will become your floor plan outline!'
+          showme: 'Draw a 30 cm x 12 cm rectangle. This will become your floor plan outline!'
+        },
+        {
+          title: 'Add wall thickness',
+          body: '<p>Real walls have <strong>thickness</strong>. Draw a second rectangle <strong>inside</strong> your first one, about 0.5 cm in from each edge. Use a dashed line for this inner rectangle.</p><p>The gap between the outer and inner rectangles represents the container walls (corrugated steel is about 5 cm thick with insulation at real scale).</p><p>This is an important detail that makes your plan view look more like a real architectural drawing.</p>',
+          elements: ['top-box-inner'],
+          dims: [],
+          showme: 'Draw a dashed rectangle inside your main rectangle, about 0.5 cm in from each edge.'
         },
         {
           title: 'Mark the window and door openings',
-          body: '<p>In the top view, the window and door appear as <strong>openings in the walls</strong> (gaps or thicker lines on the edges).</p><p>The serving window opening goes on the <strong>long side (bottom edge)</strong>. The door goes on the <strong>short side (right edge)</strong>.</p><p>Draw a <strong>door swing arc</strong> — a quarter-circle showing which way the door opens inward.</p>',
+          body: '<p>In the top view, the window and door appear as <strong>openings in the walls</strong> (gaps or thicker lines on the edges).</p><p>The serving window opening goes on the <strong>long side (bottom edge)</strong>. The door goes on the <strong>short side (right edge)</strong>.</p><p>Draw a <strong>door swing arc</strong> -- a quarter-circle showing which way the door opens inward. This is a standard architectural symbol.</p>',
           elements: ['top-window', 'top-window-label', 'top-door', 'top-door-arc', 'top-door-label'],
           dims: [],
           showme: 'Mark openings on the wall edges. The door gets a quarter-circle arc showing its swing direction.'
         },
         {
           title: 'Preview: Design zones',
-          body: '<p>In later lessons, you\'ll divide this floor plan into <strong>three zones</strong>:</p><ul style="margin-left:1.2rem;font-size:0.9rem;"><li><strong style="color:#ef4444;">Kitchen Zone</strong> — cooking equipment, prep area</li><li><strong style="color:#3b82f6;">Service Zone</strong> — serving window, counter, register</li><li><strong style="color:#22c55e;">Storage Zone</strong> — fridge, shelves, cleaning</li></ul><p class="mt-1">Click "I\'ve drawn this" to see a preview of the zones on your plan!</p>',
+          body: '<p>In later lessons, you will divide this floor plan into <strong>three zones</strong>:</p><ul style="margin-left:1.2rem;font-size:0.9rem;"><li><strong style="color:#ef4444;">Kitchen Zone</strong> -- cooking equipment, prep area</li><li><strong style="color:#3b82f6;">Service Zone</strong> -- serving window, counter, register</li><li><strong style="color:#22c55e;">Storage Zone</strong> -- fridge, shelves, cleaning</li></ul><p class="mt-1">Click "I\'ve drawn this" to see a preview of the zones on your plan!</p>',
           elements: [],
           dims: ['top-symbols'],
-          showme: 'This is a preview — you\'ll add zones in a future lesson.'
+          showme: 'This is a preview -- you will add zones in a future lesson.'
         }
       ]
     };
+
+    // ==========================================
+    // QUIZ DATA for "Which View Am I?"
+    // ==========================================
+    const quizData = [
+      { feature: 'Entry Door', answers: ['Front', 'Top'], explanation: 'The door is on the short end (visible in Front view) and its opening appears in the Top (plan) view.' },
+      { feature: 'Serving Window', answers: ['Side', 'Top'], explanation: 'The window is on the long side (visible in Side view) and its opening appears in the Top (plan) view.' },
+      { feature: 'Fold-down Counter', answers: ['Side'], explanation: 'The counter is attached below the serving window on the long side, so it only shows in the Side view.' },
+      { feature: 'Roof outline', answers: ['Top'], explanation: 'Looking straight down, you see the full roof. The Top view shows the roof outline (same as the outer rectangle).' },
+      { feature: 'Wall height (2.4 m)', answers: ['Front', 'Side'], explanation: 'Height is visible in both the Front view and the Side view, but NOT the Top view (no height from above).' },
+      { feature: 'Floor area', answers: ['Top'], explanation: 'The floor area (length x width) is only visible looking straight down in the Top (plan) view.' }
+    ];
 
     // ==========================================
     // LEVEL SELECTOR
@@ -1112,11 +1618,11 @@
     function setLevel(level) {
       currentLevel = level;
       document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector(`.level-btn[data-level="${level}"]`).classList.add('active');
+      document.querySelector('.level-btn[data-level="' + level + '"]').classList.add('active');
       document.body.className = level === 'guided' ? 'guided' : '';
       // In challenge mode, reveal all steps at once
       if (level === 'challenge') {
-        document.querySelectorAll('.step-card.locked').forEach(card => {
+        document.querySelectorAll('.step-card.locked').forEach(function(card) {
           card.classList.remove('locked');
         });
       }
@@ -1126,12 +1632,11 @@
     // SECTION SWITCHING
     // ==========================================
     function switchSection(sectionId) {
-      document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.section-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.section-content').forEach(function(s) { s.classList.remove('active'); });
+      document.querySelectorAll('.section-btn').forEach(function(b) { b.classList.remove('active'); });
       document.getElementById('section-' + sectionId).classList.add('active');
-      // Find matching nav button
-      const sections = ['iso', 'features', 'ortho-front', 'ortho-side', 'ortho-top', 'check'];
-      const idx = sections.indexOf(sectionId);
+      var sections = ['iso', 'features', 'ortho-front', 'ortho-side', 'ortho-top', 'check'];
+      var idx = sections.indexOf(sectionId);
       if (idx >= 0) document.querySelectorAll('.section-btn')[idx].classList.add('active');
     }
 
@@ -1139,42 +1644,37 @@
     // STEP RENDERING
     // ==========================================
     function renderSteps(sectionId) {
-      const stepsArr = steps[sectionId];
+      var stepsArr = steps[sectionId];
       if (!stepsArr) return;
-      const container = document.getElementById(sectionId + 'Steps') ||
-                       document.getElementById(sectionId.replace('ortho-', '') + 'Steps');
-      // Try to find the correct container
-      const containerId = {
+      var containerId = {
         'iso': 'isoSteps',
         'features': 'featSteps',
         'ortho-front': 'frontSteps',
         'ortho-side': 'sideSteps',
         'ortho-top': 'topSteps'
       }[sectionId];
-      const el = document.getElementById(containerId);
+      var el = document.getElementById(containerId);
       if (!el) return;
 
-      const progress = sectionProgress[sectionId] || 0;
+      var progress = sectionProgress[sectionId] || 0;
 
-      el.innerHTML = stepsArr.map((step, i) => {
-        let cls = 'step-card';
+      el.innerHTML = stepsArr.map(function(step, i) {
+        var cls = 'step-card';
         if (i < progress) cls += ' completed';
         else if (i === progress) cls += ' current';
         else if (currentLevel !== 'challenge') cls += ' locked';
 
-        return `
-          <div class="${cls}" data-section="${sectionId}" data-step="${i}">
-            <div class="step-header">
-              <div class="step-num">${i < progress ? '&#x2713;' : (i + 1)}</div>
-              <div class="step-title">${step.title}</div>
-            </div>
-            <div class="step-body">
-              ${step.body}
-              ${currentLevel === 'guided' && step.showme ? `<button class="showme-btn" onclick="showMe('${sectionId}', ${i})">Show me how</button>` : ''}
-              <button class="done-btn" onclick="completeStep('${sectionId}', ${i})">&#x2713; I've drawn this</button>
-            </div>
-          </div>
-        `;
+        return '<div class="' + cls + '" data-section="' + sectionId + '" data-step="' + i + '">' +
+          '<div class="step-header">' +
+            '<div class="step-num">' + (i < progress ? '&#x2713;' : (i + 1)) + '</div>' +
+            '<div class="step-title">' + step.title + '</div>' +
+          '</div>' +
+          '<div class="step-body">' +
+            step.body +
+            (currentLevel === 'guided' && step.showme ? '<button class="showme-btn" onclick="showMe(\'' + sectionId + '\', ' + i + ')">Show me how</button>' : '') +
+            '<button class="done-btn" onclick="completeStep(\'' + sectionId + '\', ' + i + ')">&#x2713; I\'ve drawn this</button>' +
+          '</div>' +
+        '</div>';
       }).join('');
 
       updateCanvas(sectionId, progress);
@@ -1182,28 +1682,28 @@
     }
 
     function completeStep(sectionId, stepIndex) {
-      const stepsArr = steps[sectionId];
+      var stepsArr = steps[sectionId];
       if (stepIndex !== sectionProgress[sectionId]) return;
 
       sectionProgress[sectionId] = stepIndex + 1;
 
       // Make elements solid
-      const step = stepsArr[stepIndex];
-      step.elements.forEach(id => {
-        const el = document.getElementById(id);
+      var step = stepsArr[stepIndex];
+      step.elements.forEach(function(id) {
+        var el = document.getElementById(id);
         if (el) {
           el.classList.remove('ghost-line');
           el.classList.add('solid-line');
         }
       });
-      step.dims.forEach(id => {
-        const el = document.getElementById(id);
+      step.dims.forEach(function(id) {
+        var el = document.getElementById(id);
         if (el) el.style.display = 'block';
       });
 
       // Show mistakes warning after step 3 of isometric
       if (sectionId === 'iso' && stepIndex === 2) {
-        const m = document.getElementById('isoMistakes');
+        var m = document.getElementById('isoMistakes');
         if (m) m.style.display = 'block';
       }
 
@@ -1212,9 +1712,9 @@
 
       // If section completed, mark nav button
       if (sectionProgress[sectionId] >= stepsArr.length) {
-        const sections = ['iso', 'features', 'ortho-front', 'ortho-side', 'ortho-top', 'check'];
-        const idx = sections.indexOf(sectionId);
-        const navBtns = document.querySelectorAll('.section-btn');
+        var sections = ['iso', 'features', 'ortho-front', 'ortho-side', 'ortho-top', 'check'];
+        var idx = sections.indexOf(sectionId);
+        var navBtns = document.querySelectorAll('.section-btn');
         if (idx >= 0 && navBtns[idx]) {
           navBtns[idx].classList.add('completed');
         }
@@ -1222,13 +1722,12 @@
     }
 
     function updateCanvas(sectionId, progress) {
-      const stepsArr = steps[sectionId];
+      var stepsArr = steps[sectionId];
       if (!stepsArr) return;
 
-      // Make completed steps solid, current step highlighted ghost, future steps hidden ghost
-      stepsArr.forEach((step, i) => {
-        step.elements.forEach(id => {
-          const el = document.getElementById(id);
+      stepsArr.forEach(function(step, i) {
+        step.elements.forEach(function(id) {
+          var el = document.getElementById(id);
           if (!el) return;
           if (i < progress) {
             el.classList.remove('ghost-line');
@@ -1244,8 +1743,8 @@
             el.style.display = 'none';
           }
         });
-        step.dims.forEach(id => {
-          const el = document.getElementById(id);
+        step.dims.forEach(function(id) {
+          var el = document.getElementById(id);
           if (!el) return;
           el.style.display = i < progress ? 'block' : 'none';
         });
@@ -1253,38 +1752,36 @@
     }
 
     function updateProgressBar(sectionId, progress, total) {
-      const barId = {
+      var barId = {
         'iso': 'isoProgress',
         'features': 'featProgress',
         'ortho-front': 'frontProgress',
         'ortho-side': 'sideProgress',
         'ortho-top': 'topProgress'
       }[sectionId];
-      const bar = document.getElementById(barId);
+      var bar = document.getElementById(barId);
       if (bar) {
         bar.style.width = Math.round((progress / total) * 100) + '%';
       }
     }
 
     function showMe(sectionId, stepIndex) {
-      const step = steps[sectionId][stepIndex];
+      var step = steps[sectionId][stepIndex];
       if (!step) return;
-      // Flash the ghost elements to highlight them
-      step.elements.forEach(id => {
-        const el = document.getElementById(id);
+      step.elements.forEach(function(id) {
+        var el = document.getElementById(id);
         if (el) {
           el.style.transition = 'all 0.5s';
           el.style.opacity = '1';
           el.style.stroke = '#f97316';
           el.style.strokeWidth = '4';
-          setTimeout(() => {
+          setTimeout(function() {
             el.style.opacity = '0.5';
             el.style.stroke = '';
             el.style.strokeWidth = '';
           }, 1500);
         }
       });
-      // Show the showme text
       alert(step.showme);
     }
 
@@ -1297,10 +1794,103 @@
     }
 
     // ==========================================
+    // FEATURE CHECKLIST TOGGLE
+    // ==========================================
+    function toggleFeatureCheck(item) {
+      item.classList.toggle('checked');
+      var box = item.querySelector('.feature-check-box');
+      box.innerHTML = item.classList.contains('checked') ? '&#x2713;' : '';
+    }
+
+    // ==========================================
+    // QUIZ: Which View Am I?
+    // ==========================================
+    function renderQuiz() {
+      var grid = document.getElementById('quizGrid');
+      if (!grid) return;
+      grid.innerHTML = quizData.map(function(q, qi) {
+        var views = ['Front', 'Side', 'Top'];
+        var optionsHtml = views.map(function(v) {
+          return '<button class="quiz-option" data-quiz="' + qi + '" data-view="' + v + '" onclick="toggleQuizOption(this)">' + v + '</button>';
+        }).join('');
+        return '<div class="quiz-row" id="quiz-row-' + qi + '">' +
+          '<div class="quiz-feature">' + q.feature + '</div>' +
+          '<div class="quiz-options">' + optionsHtml + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function toggleQuizOption(btn) {
+      btn.classList.toggle('selected');
+    }
+
+    function checkQuizAnswers() {
+      var score = 0;
+      var total = quizData.length;
+      quizData.forEach(function(q, qi) {
+        var row = document.getElementById('quiz-row-' + qi);
+        var buttons = row.querySelectorAll('.quiz-option');
+        var selectedViews = [];
+        buttons.forEach(function(b) {
+          if (b.classList.contains('selected')) {
+            selectedViews.push(b.getAttribute('data-view'));
+          }
+        });
+
+        // Remove old feedback
+        var oldFb = row.querySelector('.quiz-feedback');
+        if (oldFb) oldFb.remove();
+
+        // Check correctness
+        var correct = q.answers.sort().join(',') === selectedViews.sort().join(',');
+        if (correct) score++;
+
+        // Style buttons
+        buttons.forEach(function(b) {
+          var view = b.getAttribute('data-view');
+          var isAnswer = q.answers.indexOf(view) >= 0;
+          var isSelected = b.classList.contains('selected');
+          b.classList.remove('selected');
+          if (isAnswer) {
+            b.classList.add('correct');
+          } else if (isSelected && !isAnswer) {
+            b.classList.add('incorrect');
+          }
+          b.disabled = true;
+          b.style.cursor = 'default';
+        });
+
+        // Add feedback
+        var fb = document.createElement('div');
+        fb.className = 'quiz-feedback ' + (correct ? 'correct-fb' : 'incorrect-fb');
+        fb.textContent = (correct ? 'Correct! ' : 'Not quite. ') + q.explanation;
+        row.appendChild(fb);
+      });
+
+      var resultEl = document.getElementById('quizResult');
+      var pct = Math.round((score / total) * 100);
+      var colour = pct >= 80 ? 'var(--success)' : (pct >= 50 ? 'var(--warning)' : 'var(--error)');
+      resultEl.innerHTML = '<div style="text-align:center;padding:1rem;background:#f8fafc;border-radius:8px;border:2px solid ' + colour + ';">' +
+        '<strong style="font-size:1.1rem;color:' + colour + ';">Score: ' + score + ' / ' + total + ' (' + pct + '%)</strong>' +
+        '<p style="color:var(--text-muted);margin-top:0.25rem;">' +
+        (pct >= 80 ? 'Great work! You understand which features appear in which views.' :
+         pct >= 50 ? 'Good effort! Review the explanations above to strengthen your understanding.' :
+         'Keep practising! Understanding which view shows what is key to orthographic drawing.') +
+        '</p></div>';
+    }
+
+    function resetQuiz() {
+      var grid = document.getElementById('quizGrid');
+      var resultEl = document.getElementById('quizResult');
+      if (resultEl) resultEl.innerHTML = '';
+      renderQuiz();
+    }
+
+    // ==========================================
     // SAVE
     // ==========================================
     function saveWork() {
-      const data = {
+      var data = {
         name: document.getElementById('studentName').value,
         class: document.getElementById('studentClass').value,
         level: currentLevel,
@@ -1308,9 +1898,9 @@
         checklist: getChecklistState(),
         timestamp: new Date().toISOString()
       };
-      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-      const link = window.location.href.split('?')[0] + '?data=' + encoded;
-      const linkEl = document.getElementById('saveLink');
+      var encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+      var link = window.location.href.split('?')[0] + '?data=' + encoded;
+      var linkEl = document.getElementById('saveLink');
       linkEl.value = link;
       linkEl.classList.add('show');
       linkEl.select();
@@ -1318,8 +1908,8 @@
     }
 
     function getChecklistState() {
-      const checks = {};
-      document.querySelectorAll('.checklist li').forEach((li, i) => {
+      var checks = {};
+      document.querySelectorAll('.checklist li').forEach(function(li, i) {
         checks[i] = li.querySelector('.check-icon').classList.contains('checked');
       });
       return checks;
@@ -1329,23 +1919,24 @@
     // INIT
     // ==========================================
     function init() {
-      // Render all step sections
-      Object.keys(steps).forEach(sectionId => {
+      Object.keys(steps).forEach(function(sectionId) {
         renderSteps(sectionId);
       });
 
+      renderQuiz();
+
       // Load from URL if present
-      const params = new URLSearchParams(window.location.search);
-      const data = params.get('data');
+      var params = new URLSearchParams(window.location.search);
+      var data = params.get('data');
       if (data) {
         try {
-          const parsed = JSON.parse(decodeURIComponent(escape(atob(data))));
+          var parsed = JSON.parse(decodeURIComponent(escape(atob(data))));
           if (parsed.name) document.getElementById('studentName').value = parsed.name;
           if (parsed.class) document.getElementById('studentClass').value = parsed.class;
           if (parsed.level) setLevel(parsed.level);
           if (parsed.progress) {
             sectionProgress = parsed.progress;
-            Object.keys(steps).forEach(sectionId => renderSteps(sectionId));
+            Object.keys(steps).forEach(function(sectionId) { renderSteps(sectionId); });
           }
         } catch(e) {}
       }

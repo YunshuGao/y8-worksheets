@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floor Plan Explorer — From Container to Countertop</title>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-light: #dbeafe;
+      --accent: #f97316;
+      --accent-dark: #ea580c;
+      --accent-light: #fff7ed;
+      --success: #22c55e;
+      --success-light: #dcfce7;
+      --error: #ef4444;
+      --error-light: #fee2e2;
+      --warning: #eab308;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .header-left h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; }
+    .header-left p { font-size: 0.875rem; opacity: 0.9; }
+    .header-right { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    .header-badge {
+      background: rgba(255,255,255,0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .header-input {
+      padding: 0.35rem 0.75rem;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 0.85rem;
+      outline: none;
+      width: 140px;
+    }
+    .header-input::placeholder { color: rgba(255,255,255,0.6); }
+    .header-input:focus { border-color: white; background: rgba(255,255,255,0.25); }
+
+    /* LEVEL BAR */
+    .level-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+    .level-btn {
+      padding: 0.35rem 1rem;
+      border: 2px solid var(--border);
+      background: var(--card);
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .level-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .level-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* SECTION NAV */
+    .section-nav {
+      display: flex;
+      background: var(--card);
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      overflow-x: auto;
+    }
+    .section-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 0.9rem 1rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .section-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      font-weight: 600;
+      background: var(--primary-light);
+    }
+    .section-btn:hover { color: var(--primary); }
+    .section-btn .step-count {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+    .section-btn.completed .step-count { color: var(--success); }
+
+    /* CONTENT */
+    .section-content {
+      display: none;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      animation: fadeIn 0.3s ease;
+    }
+    .section-content.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.25rem;
+    }
+    .card h2 {
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .card p { color: var(--text-muted); margin-bottom: 0.75rem; }
+
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 1rem 1.25rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    .callout strong { color: var(--primary-dark); }
+    .callout.accent { border-left-color: var(--accent); background: var(--accent-light); }
+    .callout.accent strong { color: var(--accent-dark); }
+    .callout.success { border-left-color: var(--success); background: var(--success-light); }
+    .callout.success strong { color: #166534; }
+    .callout.warning { border-left-color: var(--warning); background: #fefce8; }
+    .callout.warning strong { color: #854d0e; }
+
+    /* STEP CARDS */
+    .step-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .step-card.current {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+    .step-card.completed {
+      border-color: var(--success);
+      background: var(--success-light);
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+    }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .step-card.current .step-num { background: var(--primary); color: white; }
+    .step-card.completed .step-num { background: var(--success); color: white; }
+    .step-title { font-weight: 600; font-size: 0.9rem; }
+    .step-body {
+      padding: 0 1rem 1rem 1rem;
+    }
+    .step-body p { font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text); }
+
+    /* PROGRESS BAR */
+    .progress-bar-wrap {
+      background: var(--border);
+      border-radius: 20px;
+      height: 10px;
+      margin: 0.75rem 0;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 20px;
+      transition: width 0.5s ease;
+    }
+
+    /* CHECKLIST */
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check-icon {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .check-icon.checked {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+
+    /* BUTTONS */
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: var(--accent-dark); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-outline { background: white; border: 2px solid var(--border); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .done-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.2rem;
+      background: var(--success);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: all 0.2s;
+    }
+    .done-btn:hover { background: #16a34a; transform: translateY(-1px); }
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+
+    /* QUIZ STYLES */
+    .quiz-grid {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .quiz-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: #f8fafc;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      flex-wrap: wrap;
+    }
+    .quiz-feature {
+      font-weight: 600;
+      font-size: 0.9rem;
+      min-width: 140px;
+    }
+    .quiz-options {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .quiz-option {
+      padding: 0.3rem 0.7rem;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .quiz-option:hover { border-color: var(--primary); color: var(--primary); }
+    .quiz-option.selected { background: var(--primary); color: white; border-color: var(--primary); }
+    .quiz-option.correct { background: var(--success); color: white; border-color: var(--success); }
+    .quiz-option.incorrect { background: var(--error); color: white; border-color: var(--error); }
+    .quiz-feedback {
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      font-weight: 500;
+      min-width: 100%;
+    }
+    .quiz-feedback.correct-fb { color: #166534; }
+    .quiz-feedback.incorrect-fb { color: #991b1b; }
+
+    /* Feature checklist boxes */
+    .feature-checklist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .feature-check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .feature-check-item:hover { border-color: var(--primary); }
+    .feature-check-item.checked { background: var(--success-light); border-color: var(--success); }
+    .feature-check-box {
+      width: 18px; height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      flex-shrink: 0;
+      color: white;
+    }
+    .feature-check-item.checked .feature-check-box {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    /* Toolkit card */
+    .toolkit {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .toolkit-item {
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+    .toolkit-item.done { border-color: var(--success); background: var(--success-light); }
+    .toolkit-item.current { border-color: var(--accent); background: var(--accent-light); }
+    .toolkit-item.upcoming { opacity: 0.6; }
+    .toolkit-icon { font-size: 1.2rem; }
+
+    /* Save */
+    .save-area {
+      background: var(--success-light);
+      border: 2px solid var(--success);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .save-link {
+      display: none;
+      margin-top: 0.75rem;
+      padding: 0.5rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      width: 100%;
+      word-break: break-all;
+    }
+    .save-link.show { display: block; }
+
+    /* SVG drawing styles */
+    .ghost-line { stroke-dasharray: 6,4; opacity: 0.4; }
+    .solid-line { opacity: 1; }
+    .highlight-line { stroke: var(--accent); stroke-width: 3; }
+    .dim-line { stroke: var(--primary); stroke-width: 1; stroke-dasharray: 3,3; }
+    .dim-text { fill: var(--primary); font-size: 10px; font-weight: 600; }
+
+    /* ZONE CARDS */
+    .zone-card {
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .zone-card:hover { box-shadow: var(--shadow-lg); }
+    .zone-card.expanded { box-shadow: var(--shadow-lg); }
+    .zone-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+    .zone-card .zone-details {
+      display: none;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+    .zone-card.expanded .zone-details { display: block; }
+    .zone-card .zone-details ul {
+      margin-left: 1.2rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .zone-card .zone-details ul li { margin-bottom: 0.25rem; }
+    .zone-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .zone-card .expand-arrow {
+      margin-left: auto;
+      transition: transform 0.3s;
+      color: var(--text-muted);
+    }
+    .zone-card.expanded .expand-arrow { transform: rotate(180deg); }
+
+    /* SYMBOL GRID */
+    .symbol-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    .symbol-item {
+      text-align: center;
+      padding: 0.75rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+    .symbol-item svg { display: block; margin: 0 auto 0.4rem auto; }
+    .symbol-item span { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+
+    /* EQUIPMENT TILES */
+    .equip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .equip-tile {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: white;
+      user-select: none;
+    }
+    .equip-tile:hover { border-color: var(--primary); }
+    .equip-tile.active { border-color: var(--success); background: var(--success-light); }
+    .equip-tile .equip-icon {
+      width: 24px; height: 24px;
+      flex-shrink: 0;
+    }
+
+    /* SELF-ASSESSMENT RADIO */
+    .self-assess-row {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .self-assess-row:last-of-type { border-bottom: none; }
+    .self-assess-row p { font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+    .radio-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .radio-option {
+      padding: 0.3rem 0.7rem;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .radio-option:hover { border-color: var(--primary); color: var(--primary); }
+    .radio-option.selected { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* 3D to 2D explainer */
+    .transform-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1rem;
+      align-items: center;
+      margin: 1rem 0;
+    }
+    .transform-arrow {
+      font-size: 2rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .transform-label {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    /* Score counter */
+    .score-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.8rem;
+      background: var(--primary-light);
+      border: 2px solid var(--primary);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1rem; }
+      .header-left h1 { font-size: 1.2rem; }
+      .section-btn { min-width: 110px; font-size: 0.78rem; padding: 0.7rem 0.5rem; }
+      .feature-checklist { grid-template-columns: 1fr; }
+      .symbol-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+      .equip-grid { grid-template-columns: 1fr 1fr; }
+      .transform-grid { grid-template-columns: 1fr; }
+      .transform-arrow { transform: rotate(90deg); text-align: center; }
+    }
+
+    @media print {
+      .header, .section-nav, .level-bar, .btn, .done-btn, .save-area { display: none !important; }
+      .section-content { display: block !important; max-width: 100%; }
+      .card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Floor Plan Explorer</h1>
+      <p>From Container to Countertop | T1-L09 | Year 8 Technology</p>
+    </div>
+    <div class="header-right">
+      <input type="text" class="header-input" id="studentName" placeholder="Your name">
+      <input type="text" class="header-input" id="studentClass" placeholder="Class" style="width:80px">
+      <span class="header-badge">TE4-DES-01</span>
+      <span class="header-badge">TE4-PPM-01</span>
+    </div>
+  </div>
+
+  <!-- LEVEL BAR -->
+  <div class="level-bar">
+    <button class="level-btn" data-level="guided" onclick="setLevel('guided')">Guided</button>
+    <button class="level-btn active" data-level="standard" onclick="setLevel('standard')">Standard</button>
+    <button class="level-btn" data-level="challenge" onclick="setLevel('challenge')">Challenge</button>
+  </div>
+
+  <!-- SECTION NAVIGATION -->
+  <nav class="section-nav">
+    <button class="section-btn active" onclick="switchSection('warmup')">
+      Warm-Up Review
+      <span class="step-count">8 min</span>
+    </button>
+    <button class="section-btn" onclick="switchSection('floorplan')">
+      What is a Floor Plan?
+      <span class="step-count">12 min</span>
+    </button>
+    <button class="section-btn" onclick="switchSection('zones')">
+      Zone Planning
+      <span class="step-count">15 min</span>
+    </button>
+    <button class="section-btn" onclick="switchSection('explore')">
+      Explore Floorplanner
+      <span class="step-count">20 min</span>
+    </button>
+    <button class="section-btn" onclick="switchSection('design')">
+      Design Your Layout
+      <span class="step-count">15 min</span>
+    </button>
+    <button class="section-btn" onclick="switchSection('exit')">
+      Exit Ticket
+      <span class="step-count">5 min</span>
+    </button>
+  </nav>
+
+  <!-- =============================================
+       SECTION 1: WARM-UP REVIEW (8 min)
+       ============================================= -->
+  <div id="section-warmup" class="section-content active">
+    <div class="card">
+      <h2>Match the View -- Quick Quiz</h2>
+      <p>Last lesson you drew isometric and orthographic views. Let us see how well you remember them! For each sketch below, identify whether it is a <strong>Front View</strong>, <strong>Side View</strong>, or <strong>Top View</strong>.</p>
+
+      <div class="text-center mt-1" style="margin-bottom:1rem;">
+        <span class="score-counter" id="warmupScore">Score: 0 / 4</span>
+      </div>
+
+      <div class="quiz-grid" id="warmupQuiz">
+        <!-- Quiz Item 1: Rectangle with door (front) -->
+        <div class="quiz-row" id="wq-0">
+          <div style="flex-shrink:0;">
+            <svg viewBox="0 0 140 120" width="140" height="120">
+              <rect width="140" height="120" fill="#f8fafc"/>
+              <rect x="10" y="10" width="120" height="100" fill="none" stroke="#475569" stroke-width="2.5"/>
+              <!-- Door -->
+              <rect x="75" y="35" width="35" height="75" fill="rgba(59,130,246,0.1)" stroke="#2563eb" stroke-width="2"/>
+              <circle cx="82" cy="72" r="2.5" fill="#2563eb"/>
+              <!-- Dimension labels -->
+              <text x="70" y="8" font-size="8" fill="#64748b" text-anchor="middle">12 cm</text>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div class="quiz-feature">Sketch 1: A square-ish rectangle with a door</div>
+            <div class="quiz-options" style="margin-top:0.4rem;">
+              <button class="quiz-option" onclick="checkWarmup(0, 'Front', this)">Front View</button>
+              <button class="quiz-option" onclick="checkWarmup(0, 'Side', this)">Side View</button>
+              <button class="quiz-option" onclick="checkWarmup(0, 'Top', this)">Top View</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Item 2: Long rectangle with window (side) -->
+        <div class="quiz-row" id="wq-1">
+          <div style="flex-shrink:0;">
+            <svg viewBox="0 0 200 100" width="200" height="100">
+              <rect width="200" height="100" fill="#f8fafc"/>
+              <rect x="10" y="10" width="180" height="80" fill="none" stroke="#475569" stroke-width="2.5"/>
+              <!-- Serving window -->
+              <rect x="60" y="22" width="70" height="35" fill="rgba(249,115,22,0.1)" stroke="#ea580c" stroke-width="2"/>
+              <!-- Counter line below window -->
+              <line x1="58" y1="58" x2="132" y2="58" stroke="#8B5E3C" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div class="quiz-feature">Sketch 2: A long rectangle with a serving window and counter</div>
+            <div class="quiz-options" style="margin-top:0.4rem;">
+              <button class="quiz-option" onclick="checkWarmup(1, 'Front', this)">Front View</button>
+              <button class="quiz-option" onclick="checkWarmup(1, 'Side', this)">Side View</button>
+              <button class="quiz-option" onclick="checkWarmup(1, 'Top', this)">Top View</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Item 3: Long rectangle showing floor area (top) -->
+        <div class="quiz-row" id="wq-2">
+          <div style="flex-shrink:0;">
+            <svg viewBox="0 0 200 90" width="200" height="90">
+              <rect width="200" height="90" fill="#f8fafc"/>
+              <rect x="10" y="10" width="180" height="70" fill="none" stroke="#475569" stroke-width="2.5"/>
+              <!-- Inner wall line -->
+              <rect x="15" y="15" width="170" height="60" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+              <!-- Window opening on bottom edge -->
+              <line x1="70" y1="80" x2="130" y2="80" stroke="#ea580c" stroke-width="3"/>
+              <!-- Door with swing arc on right -->
+              <line x1="190" y1="40" x2="190" y2="65" stroke="#2563eb" stroke-width="3"/>
+              <path d="M 190 40 Q 170 40 170 60" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div class="quiz-feature">Sketch 3: A rectangle showing the floor area with wall openings</div>
+            <div class="quiz-options" style="margin-top:0.4rem;">
+              <button class="quiz-option" onclick="checkWarmup(2, 'Front', this)">Front View</button>
+              <button class="quiz-option" onclick="checkWarmup(2, 'Side', this)">Side View</button>
+              <button class="quiz-option" onclick="checkWarmup(2, 'Top', this)">Top View</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Item 4: Square with vent grille only (front, no door visible) -->
+        <div class="quiz-row" id="wq-3">
+          <div style="flex-shrink:0;">
+            <svg viewBox="0 0 140 120" width="140" height="120">
+              <rect width="140" height="120" fill="#f8fafc"/>
+              <rect x="10" y="10" width="120" height="100" fill="none" stroke="#475569" stroke-width="2.5"/>
+              <!-- Vent grille near top -->
+              <rect x="40" y="20" width="50" height="18" fill="rgba(217,119,6,0.1)" stroke="#d97706" stroke-width="1.5"/>
+              <line x1="50" y1="20" x2="50" y2="38" stroke="#d97706" stroke-width="0.8"/>
+              <line x1="60" y1="20" x2="60" y2="38" stroke="#d97706" stroke-width="0.8"/>
+              <line x1="70" y1="20" x2="70" y2="38" stroke="#d97706" stroke-width="0.8"/>
+              <line x1="80" y1="20" x2="80" y2="38" stroke="#d97706" stroke-width="0.8"/>
+              <!-- Signage area -->
+              <rect x="25" y="52" width="65" height="22" fill="rgba(124,58,237,0.1)" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,2"/>
+              <text x="57" y="66" font-size="7" fill="#7c3aed" text-anchor="middle" font-weight="600">BURGERS</text>
+              <!-- Serving window -->
+              <rect x="25" y="80" width="65" height="28" fill="rgba(249,115,22,0.1)" stroke="#ea580c" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div class="quiz-feature">Sketch 4: A long view with vent, signage, and serving window</div>
+            <div class="quiz-options" style="margin-top:0.4rem;">
+              <button class="quiz-option" onclick="checkWarmup(3, 'Front', this)">Front View</button>
+              <button class="quiz-option" onclick="checkWarmup(3, 'Side', this)">Side View</button>
+              <button class="quiz-option" onclick="checkWarmup(3, 'Top', this)">Top View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout accent">
+      <strong>Remember:</strong> Your TOP VIEW from last lesson is the starting point for today's floor plan! The top view shows the container from directly above -- that bird's-eye view is exactly what a floor plan is.
+    </div>
+  </div>
+
+  <!-- =============================================
+       SECTION 2: WHAT IS A FLOOR PLAN? (12 min)
+       ============================================= -->
+  <div id="section-floorplan" class="section-content">
+    <div class="card">
+      <h2>What is a Floor Plan?</h2>
+      <p>A floor plan is a <strong>bird's-eye view drawing</strong> showing the layout of a space -- walls, doors, windows, furniture, and equipment. It is like slicing a building horizontally at waist height and looking straight down at everything below.</p>
+
+      <!-- 3D to 2D transformation -->
+      <div class="transform-grid">
+        <div>
+          <svg viewBox="0 0 200 180" width="200" height="180">
+            <rect width="200" height="180" fill="#f8fafc" rx="8"/>
+            <!-- Simple 3D room (isometric-style) -->
+            <polygon points="100,140 30,105 30,40 100,75" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+            <polygon points="100,140 170,105 170,40 100,75" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+            <polygon points="100,75 30,40 100,5 170,40" fill="#f1f5f9" stroke="#475569" stroke-width="2"/>
+            <!-- Table inside -->
+            <rect x="80" y="95" width="22" height="14" fill="#fbbf24" stroke="#92400e" stroke-width="1" transform="skewX(-15)"/>
+            <!-- Door opening on right wall -->
+            <line x1="155" y1="110" x2="155" y2="80" stroke="#2563eb" stroke-width="3"/>
+            <text x="100" y="170" font-size="11" fill="#475569" text-anchor="middle" font-weight="600">3D Room</text>
+          </svg>
+          <div class="transform-label">Three-dimensional view</div>
+        </div>
+        <div class="transform-arrow">&#x27A1;</div>
+        <div>
+          <svg viewBox="0 0 200 180" width="200" height="180">
+            <rect width="200" height="180" fill="#f8fafc" rx="8"/>
+            <!-- 2D floor plan -->
+            <rect x="30" y="20" width="140" height="120" fill="white" stroke="#475569" stroke-width="3"/>
+            <!-- Wall thickness -->
+            <rect x="35" y="25" width="130" height="110" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="3,2"/>
+            <!-- Door with swing arc -->
+            <line x1="170" y1="80" x2="170" y2="105" stroke="#2563eb" stroke-width="3"/>
+            <path d="M 170 80 Q 150 80 150 100" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <!-- Table (rectangle) -->
+            <rect x="80" y="60" width="30" height="20" fill="#fef3c7" stroke="#92400e" stroke-width="1.5"/>
+            <!-- Window on bottom wall -->
+            <line x1="65" y1="140" x2="110" y2="140" stroke="#ea580c" stroke-width="3"/>
+            <text x="100" y="165" font-size="11" fill="#475569" text-anchor="middle" font-weight="600">Floor Plan (2D)</text>
+          </svg>
+          <div class="transform-label">Bird's-eye view (top down)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Real-World Connection:</strong> Architects, interior designers, and restaurant planners all use floor plans every day. Before a single wall is built or a piece of equipment is installed, the layout is planned on paper or digitally. This saves time, money, and mistakes!
+    </div>
+
+    <div class="card">
+      <h2>Key Floor Plan Elements</h2>
+      <p>Every good floor plan includes these elements. Tick each one as you learn about it:</p>
+
+      <div class="feature-checklist" id="fpElements">
+        <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+          <div class="feature-check-box"></div>
+          <span><strong>Walls</strong> -- thick lines showing the boundary</span>
+        </div>
+        <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+          <div class="feature-check-box"></div>
+          <span><strong>Doors</strong> -- opening with a swing arc</span>
+        </div>
+        <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+          <div class="feature-check-box"></div>
+          <span><strong>Windows</strong> -- parallel lines in the wall</span>
+        </div>
+        <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+          <div class="feature-check-box"></div>
+          <span><strong>Equipment &amp; furniture</strong> -- shown as symbols</span>
+        </div>
+        <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+          <div class="feature-check-box"></div>
+          <span><strong>Dimension lines</strong> -- measurements with arrows</span>
+        </div>
+        <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+          <div class="feature-check-box"></div>
+          <span><strong>Labels &amp; annotations</strong> -- naming each item</span>
+        </div>
+        <div class="feature-check-item" onclick="toggleFeatureCheck(this)">
+          <div class="feature-check-box"></div>
+          <span><strong>North arrow</strong> -- orientation (optional)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <strong>Your Container Dimensions:</strong> At 1:20 scale, your container model is <strong>30 cm x 12 cm</strong> on paper. In real life, that is <strong>6 m x 2.4 m</strong> -- the size of a standard 20-foot shipping container. Every piece of equipment you place must fit within these walls!
+    </div>
+
+    <div class="card">
+      <h2>Standard Architectural Symbols</h2>
+      <p>Architects use special symbols so that anyone can read a floor plan. Here are the symbols you will use for your container restaurant:</p>
+
+      <div class="symbol-grid">
+        <div class="symbol-item">
+          <svg viewBox="0 0 60 60" width="60" height="60">
+            <!-- Door symbol: line with arc -->
+            <line x1="10" y1="50" x2="10" y2="15" stroke="#475569" stroke-width="2.5"/>
+            <path d="M 10 15 Q 45 15 45 50" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="10" y1="50" x2="45" y2="50" stroke="#475569" stroke-width="1.5"/>
+          </svg>
+          <span>Door</span>
+        </div>
+        <div class="symbol-item">
+          <svg viewBox="0 0 60 60" width="60" height="60">
+            <!-- Window: parallel lines in wall -->
+            <line x1="5" y1="30" x2="55" y2="30" stroke="#475569" stroke-width="3"/>
+            <line x1="15" y1="25" x2="45" y2="25" stroke="#475569" stroke-width="1.5"/>
+            <line x1="15" y1="35" x2="45" y2="35" stroke="#475569" stroke-width="1.5"/>
+            <line x1="15" y1="25" x2="15" y2="35" stroke="#475569" stroke-width="1"/>
+            <line x1="45" y1="25" x2="45" y2="35" stroke="#475569" stroke-width="1"/>
+          </svg>
+          <span>Window</span>
+        </div>
+        <div class="symbol-item">
+          <svg viewBox="0 0 60 60" width="60" height="60">
+            <!-- Sink: rounded rectangle/oval -->
+            <rect x="12" y="12" width="36" height="36" rx="3" fill="none" stroke="#475569" stroke-width="2"/>
+            <ellipse cx="30" cy="30" rx="12" ry="10" fill="none" stroke="#475569" stroke-width="1.5"/>
+            <circle cx="30" cy="27" r="2" fill="#475569"/>
+          </svg>
+          <span>Sink</span>
+        </div>
+        <div class="symbol-item">
+          <svg viewBox="0 0 60 60" width="60" height="60">
+            <!-- Stove/grill: rectangle with burner circles -->
+            <rect x="8" y="8" width="44" height="44" rx="2" fill="none" stroke="#475569" stroke-width="2"/>
+            <circle cx="22" cy="22" r="7" fill="none" stroke="#475569" stroke-width="1.5"/>
+            <circle cx="38" cy="22" r="7" fill="none" stroke="#475569" stroke-width="1.5"/>
+            <circle cx="22" cy="38" r="7" fill="none" stroke="#475569" stroke-width="1.5"/>
+            <circle cx="38" cy="38" r="7" fill="none" stroke="#475569" stroke-width="1.5"/>
+          </svg>
+          <span>Stove / Grill</span>
+        </div>
+        <div class="symbol-item">
+          <svg viewBox="0 0 60 60" width="60" height="60">
+            <!-- Bench/counter: simple rectangle -->
+            <rect x="5" y="18" width="50" height="24" rx="2" fill="none" stroke="#475569" stroke-width="2"/>
+            <text x="30" y="34" font-size="8" fill="#64748b" text-anchor="middle">BENCH</text>
+          </svg>
+          <span>Bench / Counter</span>
+        </div>
+        <div class="symbol-item">
+          <svg viewBox="0 0 60 60" width="60" height="60">
+            <!-- Fridge: rectangle with diagonal -->
+            <rect x="12" y="8" width="36" height="44" rx="2" fill="none" stroke="#475569" stroke-width="2"/>
+            <line x1="12" y1="8" x2="48" y2="52" stroke="#475569" stroke-width="1.5"/>
+          </svg>
+          <span>Fridge</span>
+        </div>
+        <div class="symbol-item">
+          <svg viewBox="0 0 60 60" width="60" height="60">
+            <!-- Exhaust fan: X in square -->
+            <rect x="12" y="12" width="36" height="36" rx="2" fill="none" stroke="#475569" stroke-width="2"/>
+            <line x1="12" y1="12" x2="48" y2="48" stroke="#475569" stroke-width="1.5"/>
+            <line x1="48" y1="12" x2="12" y2="48" stroke="#475569" stroke-width="1.5"/>
+          </svg>
+          <span>Exhaust Fan</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       SECTION 3: ZONE PLANNING (15 min)
+       ============================================= -->
+  <div id="section-zones" class="section-content">
+    <div class="card">
+      <h2>Zone Planning -- Organise Your Container</h2>
+      <p>Professional kitchen designers divide every commercial kitchen into <strong>zones</strong>. Each zone has a specific purpose and the layout follows a logical workflow. Click each zone below to learn more, and watch the diagram update.</p>
+
+      <!-- Zone SVG Diagram -->
+      <div style="max-width:700px;margin:0 auto 1.5rem auto;">
+        <svg id="zoneSvg" viewBox="0 0 600 260" width="100%" style="background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+          <!-- Container outline -->
+          <rect x="30" y="40" width="540" height="180" rx="4" fill="white" stroke="#475569" stroke-width="3"/>
+
+          <!-- Kitchen Zone (left, ~40%) -->
+          <rect id="zone-kitchen-bg" x="32" y="42" width="214" height="176" fill="rgba(239,68,68,0.08)" stroke="none"/>
+          <text x="139" y="65" font-size="13" fill="#dc2626" text-anchor="middle" font-weight="700">KITCHEN ZONE</text>
+          <text x="139" y="80" font-size="10" fill="#dc2626" text-anchor="middle">(~40% of space)</text>
+
+          <!-- Kitchen equipment (hidden by default, shown on click) -->
+          <g id="zone-kitchen-equip" style="display:none;">
+            <!-- Grill -->
+            <rect x="50" y="95" width="55" height="45" rx="2" fill="rgba(239,68,68,0.12)" stroke="#dc2626" stroke-width="1.5"/>
+            <circle cx="66" cy="110" r="6" fill="none" stroke="#dc2626" stroke-width="1"/>
+            <circle cx="86" cy="110" r="6" fill="none" stroke="#dc2626" stroke-width="1"/>
+            <circle cx="66" cy="128" r="6" fill="none" stroke="#dc2626" stroke-width="1"/>
+            <circle cx="86" cy="128" r="6" fill="none" stroke="#dc2626" stroke-width="1"/>
+            <text x="77" y="153" font-size="8" fill="#dc2626" text-anchor="middle" font-weight="600">Grill</text>
+            <!-- Prep bench -->
+            <rect x="120" y="95" width="70" height="30" rx="2" fill="rgba(239,68,68,0.12)" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="155" y="114" font-size="8" fill="#dc2626" text-anchor="middle" font-weight="600">Prep Bench</text>
+            <!-- Sink -->
+            <rect x="120" y="140" width="40" height="35" rx="2" fill="rgba(239,68,68,0.12)" stroke="#dc2626" stroke-width="1.5"/>
+            <ellipse cx="140" cy="157" rx="10" ry="8" fill="none" stroke="#dc2626" stroke-width="1"/>
+            <text x="140" y="183" font-size="8" fill="#dc2626" text-anchor="middle" font-weight="600">Sink</text>
+            <!-- Exhaust fan symbol above grill -->
+            <rect x="55" y="50" width="20" height="20" rx="1" fill="none" stroke="#dc2626" stroke-width="1" stroke-dasharray="2,2"/>
+            <line x1="55" y1="50" x2="75" y2="70" stroke="#dc2626" stroke-width="0.8"/>
+            <line x1="75" y1="50" x2="55" y2="70" stroke="#dc2626" stroke-width="0.8"/>
+            <text x="65" y="48" font-size="6" fill="#dc2626" text-anchor="middle">Fan</text>
+          </g>
+
+          <!-- Service Zone (centre, ~35%) -->
+          <rect id="zone-service-bg" x="246" y="42" width="189" height="176" fill="rgba(59,130,246,0.08)" stroke="none"/>
+          <text x="340" y="65" font-size="13" fill="#2563eb" text-anchor="middle" font-weight="700">SERVICE ZONE</text>
+          <text x="340" y="80" font-size="10" fill="#2563eb" text-anchor="middle">(~35% of space)</text>
+
+          <!-- Service equipment -->
+          <g id="zone-service-equip" style="display:none;">
+            <!-- Serving counter along bottom wall (window side) -->
+            <rect x="260" y="185" width="160" height="25" rx="2" fill="rgba(59,130,246,0.12)" stroke="#2563eb" stroke-width="1.5"/>
+            <text x="340" y="201" font-size="8" fill="#2563eb" text-anchor="middle" font-weight="600">Serving Counter</text>
+            <!-- Window opening -->
+            <line x1="275" y1="218" x2="405" y2="218" stroke="#2563eb" stroke-width="3"/>
+            <text x="340" y="232" font-size="8" fill="#2563eb" text-anchor="middle">Serving Window</text>
+            <!-- POS/Register -->
+            <rect x="370" y="140" width="45" height="30" rx="2" fill="rgba(59,130,246,0.12)" stroke="#2563eb" stroke-width="1.5"/>
+            <text x="392" y="159" font-size="7" fill="#2563eb" text-anchor="middle" font-weight="600">Register</text>
+          </g>
+
+          <!-- Storage Zone (right, ~25%) -->
+          <rect id="zone-storage-bg" x="435" y="42" width="133" height="176" fill="rgba(34,197,94,0.08)" stroke="none"/>
+          <text x="501" y="65" font-size="13" fill="#16a34a" text-anchor="middle" font-weight="700">STORAGE ZONE</text>
+          <text x="501" y="80" font-size="10" fill="#16a34a" text-anchor="middle">(~25% of space)</text>
+
+          <!-- Storage equipment -->
+          <g id="zone-storage-equip" style="display:none;">
+            <!-- Fridge -->
+            <rect x="450" y="95" width="45" height="50" rx="2" fill="rgba(34,197,94,0.12)" stroke="#16a34a" stroke-width="1.5"/>
+            <line x1="450" y1="95" x2="495" y2="145" stroke="#16a34a" stroke-width="1"/>
+            <text x="472" y="158" font-size="8" fill="#16a34a" text-anchor="middle" font-weight="600">Fridge</text>
+            <!-- Shelves -->
+            <rect x="505" y="95" width="45" height="50" rx="2" fill="rgba(34,197,94,0.12)" stroke="#16a34a" stroke-width="1.5"/>
+            <line x1="505" y1="108" x2="550" y2="108" stroke="#16a34a" stroke-width="1"/>
+            <line x1="505" y1="120" x2="550" y2="120" stroke="#16a34a" stroke-width="1"/>
+            <line x1="505" y1="132" x2="550" y2="132" stroke="#16a34a" stroke-width="1"/>
+            <text x="527" y="158" font-size="8" fill="#16a34a" text-anchor="middle" font-weight="600">Shelves</text>
+            <!-- Cleaning supplies -->
+            <rect x="460" y="165" width="70" height="30" rx="2" fill="rgba(34,197,94,0.12)" stroke="#16a34a" stroke-width="1.5"/>
+            <text x="495" y="184" font-size="7" fill="#16a34a" text-anchor="middle" font-weight="600">Cleaning Supplies</text>
+          </g>
+
+          <!-- Zone divider lines (dashed) -->
+          <line x1="246" y1="42" x2="246" y2="218" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <line x1="435" y1="42" x2="435" y2="218" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+          <!-- Door on right end -->
+          <line x1="568" y1="150" x2="568" y2="190" stroke="#475569" stroke-width="3"/>
+          <path d="M 568 150 Q 545 150 545 173" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="550" y="208" font-size="8" fill="#475569" text-anchor="middle">Door</text>
+
+          <!-- Workflow arrow -->
+          <g id="workflowArrow" style="display:none;">
+            <defs>
+              <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="#f97316"/>
+              </marker>
+            </defs>
+            <path d="M 472 120 L 155 112 L 77 118 L 77 140 L 155 157 L 340 196"
+                  fill="none" stroke="#f97316" stroke-width="2.5" stroke-dasharray="8,4"
+                  marker-end="url(#arrowhead)"/>
+            <text x="280" y="100" font-size="10" fill="#f97316" text-anchor="middle" font-weight="700">Workflow: Fridge &#x2192; Prep &#x2192; Grill &#x2192; Serve</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Zone Cards (clickable) -->
+      <div class="zone-card" id="zoneCardKitchen" onclick="toggleZone('kitchen')" style="border-color: #fecaca;">
+        <h3>
+          <span class="zone-dot" style="background:#ef4444;"></span>
+          Kitchen Zone (~40% of space)
+          <span class="expand-arrow">&#x25BC;</span>
+        </h3>
+        <div class="zone-details">
+          <p style="color:var(--text);"><strong>What goes here:</strong></p>
+          <ul>
+            <li>Grill / cooktop (rectangle with burner circles)</li>
+            <li>Prep bench / work surface (plain rectangle)</li>
+            <li>Sink for food preparation (oval in rectangle)</li>
+            <li>Exhaust fan above the grill (X in square)</li>
+          </ul>
+          <p style="color:var(--text);"><strong>Why this placement:</strong> The kitchen zone is placed furthest from the door for security and safety. Hot cooking equipment is kept away from customers. The exhaust fan draws smoke and heat up and out.</p>
+          <p style="color:var(--text);"><strong>Food safety:</strong> Raw food storage must be separate from cooked food. The sink allows hand-washing between tasks. The exhaust removes grease and fumes.</p>
+        </div>
+      </div>
+
+      <div class="zone-card" id="zoneCardService" onclick="toggleZone('service')" style="border-color: #bfdbfe;">
+        <h3>
+          <span class="zone-dot" style="background:#3b82f6;"></span>
+          Service Zone (~35% of space)
+          <span class="expand-arrow">&#x25BC;</span>
+        </h3>
+        <div class="zone-details">
+          <p style="color:var(--text);"><strong>What goes here:</strong></p>
+          <ul>
+            <li>Serving counter along the window wall (long rectangle)</li>
+            <li>Serving window opening (gap in the wall)</li>
+            <li>Cash register / POS system (small rectangle)</li>
+          </ul>
+          <p style="color:var(--text);"><strong>Why this placement:</strong> The service zone sits in the centre so staff can easily receive orders and pass food. The serving counter is along the wall with the window, so customers outside can see and reach their food.</p>
+          <p style="color:var(--text);"><strong>Food safety:</strong> Cooked food travels the shortest possible distance from grill to serving window. A barrier (the counter) separates staff from customers.</p>
+        </div>
+      </div>
+
+      <div class="zone-card" id="zoneCardStorage" onclick="toggleZone('storage')" style="border-color: #bbf7d0;">
+        <h3>
+          <span class="zone-dot" style="background:#22c55e;"></span>
+          Storage Zone (~25% of space)
+          <span class="expand-arrow">&#x25BC;</span>
+        </h3>
+        <div class="zone-details">
+          <p style="color:var(--text);"><strong>What goes here:</strong></p>
+          <ul>
+            <li>Fridge / cold storage (rectangle with diagonal line)</li>
+            <li>Dry storage shelves (rectangle with horizontal lines)</li>
+            <li>Cleaning supplies (small rectangle, labelled)</li>
+          </ul>
+          <p style="color:var(--text);"><strong>Why this placement:</strong> The storage zone is near the door so deliveries can come straight in without walking through the kitchen. The fridge is close to the prep bench for easy ingredient access.</p>
+          <p style="color:var(--text);"><strong>Food safety:</strong> Cold chain -- ingredients go from delivery truck to fridge quickly. Cleaning supplies are stored separately from food to prevent contamination.</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-2">
+        <button class="btn btn-accent" onclick="showAllZones()">Show All Equipment &amp; Workflow</button>
+        <button class="btn btn-outline" onclick="hideAllZones()" style="margin-left:0.5rem;">Reset Diagram</button>
+      </div>
+    </div>
+
+    <div class="callout accent">
+      <strong>Design Challenge -- The Work Triangle:</strong> Think about WORKFLOW -- a chef should be able to move from fridge to prep bench to grill to serving window in a smooth line. This is called the "work triangle" in kitchen design. Minimising unnecessary steps saves time and reduces the risk of spills or accidents.
+    </div>
+  </div>
+
+  <!-- =============================================
+       SECTION 4: EXPLORE FLOORPLANNER.COM (20 min)
+       ============================================= -->
+  <div id="section-explore" class="section-content">
+    <div class="callout warning">
+      <strong>Important:</strong> Your teacher will guide you through this section. Floorplanner.com is a FREE online tool used by real designers! If the website is slow or blocked on your school network, do not worry -- use the Zone Planning activity in Tab 3 and the Design Your Layout activity in Tab 5 instead.
+    </div>
+
+    <div class="card">
+      <h2>Step-by-Step: Exploring Floorplanner.com</h2>
+      <p>Follow these steps to try out a professional floor planning tool. This is about <strong>exploring ideas</strong> -- your real assessment floor plan will be hand-drawn.</p>
+
+      <div class="step-card current">
+        <div class="step-header">
+          <div class="step-num">1</div>
+          <div class="step-title">Open Floorplanner</div>
+        </div>
+        <div class="step-body">
+          <p>Navigate to <strong>floorplanner.com</strong> in your browser. You do NOT need to create an account to explore. Look for a "Create Your First Project" or "Start Drawing" button to begin.</p>
+          <p><em>If the site asks you to sign up, your teacher will advise whether to create a class account or skip this tool.</em></p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num">2</div>
+          <div class="step-title">Set Up Your Space</div>
+        </div>
+        <div class="step-body">
+          <p>Create a rectangle room. Try to make it roughly <strong>6 m x 2.4 m</strong> to match your real container dimensions. Use the room or wall tool to draw the walls.</p>
+          <p><strong>Tip:</strong> Look for a measurement input or grid snap feature to get accurate dimensions. Some tools let you type exact measurements.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num">3</div>
+          <div class="step-title">Explore the Library</div>
+        </div>
+        <div class="step-body">
+          <p>Browse the furniture and equipment library. Look for:</p>
+          <ul style="margin-left:1.2rem;font-size:0.9rem;">
+            <li>Kitchen items (stove, sink, benches)</li>
+            <li>Counters and tables</li>
+            <li>Refrigerators and storage</li>
+            <li>Doors and windows</li>
+          </ul>
+          <p>Drag items into your room to see how they fit. Do not worry about getting it perfect -- this is about exploration!</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num">4</div>
+          <div class="step-title">Try Different Layouts</div>
+        </div>
+        <div class="step-body">
+          <p>Move equipment around and experiment. Can you fit all of these items?</p>
+          <ul style="margin-left:1.2rem;font-size:0.9rem;">
+            <li>A grill or cooktop</li>
+            <li>A prep bench</li>
+            <li>A fridge</li>
+            <li>A serving counter near the window</li>
+          </ul>
+          <p>Think about the <strong>three zones</strong> from the previous activity. Try placing kitchen equipment on one end, service in the middle, and storage on the other end.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num">5</div>
+          <div class="step-title">Compare Digital vs Hand-drawn</div>
+        </div>
+        <div class="step-body">
+          <p>Look at your digital layout and think about how you will draw this by hand in the next lesson. Consider:</p>
+          <ul style="margin-left:1.2rem;font-size:0.9rem;">
+            <li>What is <strong>easier</strong> on a computer? (Moving items, getting exact measurements, trying different options quickly)</li>
+            <li>What is <strong>easier</strong> by hand? (Adding custom symbols, quick rough sketches, personalised annotations)</li>
+            <li>What <strong>details</strong> will you need to add by hand that the computer cannot show? (Material labels, construction notes)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <strong>Remember:</strong> Floorplanner is for EXPLORING IDEAS. Your actual assessment floor plan will be hand-drawn on paper at 1:20 scale. Use digital tools to brainstorm, then bring your best layout idea to paper next lesson.
+    </div>
+
+    <div class="callout">
+      <strong>Network Issues?</strong> If the website is slow or blocked, that is completely fine! Use the Zone Planning activity in Tab 3 and the Design Your Layout activity in Tab 5 to plan your layout instead. These activities cover the same skills.
+    </div>
+  </div>
+
+  <!-- =============================================
+       SECTION 5: DESIGN YOUR LAYOUT (15 min)
+       ============================================= -->
+  <div id="section-design" class="section-content">
+    <div class="card">
+      <h2>Design Your Layout</h2>
+      <p>Click the equipment tiles below to place them in your container floor plan. Each item will appear in a logical position based on the zone planning principles you learned. Try to place all 8 items!</p>
+
+      <div class="text-center mt-1" style="margin-bottom:0.75rem;">
+        <span class="score-counter" id="equipCounter">Items placed: 0 / 8</span>
+      </div>
+
+      <!-- Floor Plan SVG -->
+      <div style="max-width:700px;margin:0 auto;">
+        <svg id="designSvg" viewBox="0 0 630 280" width="100%" style="background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+          <!-- Container outline -->
+          <rect x="30" y="30" width="540" height="210" rx="4" fill="white" stroke="#475569" stroke-width="3"/>
+          <!-- Wall thickness inner -->
+          <rect x="38" y="38" width="524" height="194" rx="2" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2"/>
+
+          <!-- Serving window opening on bottom wall -->
+          <line x1="200" y1="240" x2="390" y2="240" stroke="#ea580c" stroke-width="4"/>
+          <text x="295" y="260" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="600">Serving Window</text>
+
+          <!-- Door with swing on right wall -->
+          <line x1="570" y1="150" x2="570" y2="200" stroke="#2563eb" stroke-width="3"/>
+          <path d="M 570 150 Q 545 150 545 175" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="553" y="215" font-size="8" fill="#2563eb" text-anchor="middle">Door</text>
+
+          <!-- Dimension lines -->
+          <line x1="30" y1="18" x2="570" y2="18" stroke="var(--primary)" stroke-width="1" stroke-dasharray="3,3"/>
+          <polygon points="30,18 36,15 36,21" fill="var(--primary)"/>
+          <polygon points="570,18 564,15 564,21" fill="var(--primary)"/>
+          <text x="300" y="13" font-size="10" fill="var(--primary)" text-anchor="middle" font-weight="600">30 cm (6 m real)</text>
+
+          <line x1="585" y1="30" x2="585" y2="240" stroke="var(--primary)" stroke-width="1" stroke-dasharray="3,3"/>
+          <polygon points="585,30 582,36 588,36" fill="var(--primary)"/>
+          <polygon points="585,240 582,234 588,234" fill="var(--primary)"/>
+          <text x="615" y="140" font-size="10" fill="var(--primary)" text-anchor="middle" font-weight="600" transform="rotate(90,615,140)">12 cm (2.4 m)</text>
+
+          <!-- Zone background labels (subtle) -->
+          <text x="135" y="55" font-size="10" fill="#fca5a5" text-anchor="middle" font-weight="600">KITCHEN</text>
+          <text x="330" y="55" font-size="10" fill="#93c5fd" text-anchor="middle" font-weight="600">SERVICE</text>
+          <text x="505" y="55" font-size="10" fill="#86efac" text-anchor="middle" font-weight="600">STORAGE</text>
+
+          <!-- Equipment items (hidden by default, shown on toggle) -->
+          <!-- 1: Grill/Cooktop - kitchen zone -->
+          <g id="equip-grill" style="display:none;">
+            <rect x="50" y="70" width="70" height="60" rx="3" fill="rgba(239,68,68,0.15)" stroke="#dc2626" stroke-width="2"/>
+            <circle cx="70" cy="88" r="8" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+            <circle cx="100" cy="88" r="8" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+            <circle cx="70" cy="112" r="8" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+            <circle cx="100" cy="112" r="8" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="85" y="143" font-size="9" fill="#dc2626" text-anchor="middle" font-weight="600">Grill</text>
+          </g>
+
+          <!-- 2: Prep Bench - kitchen zone -->
+          <g id="equip-prep" style="display:none;">
+            <rect x="50" y="160" width="100" height="35" rx="3" fill="rgba(239,68,68,0.15)" stroke="#dc2626" stroke-width="2"/>
+            <text x="100" y="182" font-size="9" fill="#dc2626" text-anchor="middle" font-weight="600">Prep Bench</text>
+          </g>
+
+          <!-- 3: Fridge - storage zone -->
+          <g id="equip-fridge" style="display:none;">
+            <rect x="460" y="70" width="50" height="60" rx="3" fill="rgba(34,197,94,0.15)" stroke="#16a34a" stroke-width="2"/>
+            <line x1="460" y1="70" x2="510" y2="130" stroke="#16a34a" stroke-width="1.5"/>
+            <text x="485" y="143" font-size="9" fill="#16a34a" text-anchor="middle" font-weight="600">Fridge</text>
+          </g>
+
+          <!-- 4: Serving Counter - service zone, along window wall -->
+          <g id="equip-counter" style="display:none;">
+            <rect x="220" y="195" width="150" height="30" rx="3" fill="rgba(59,130,246,0.15)" stroke="#2563eb" stroke-width="2"/>
+            <text x="295" y="214" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="600">Serving Counter</text>
+          </g>
+
+          <!-- 5: Cash Register/POS - service zone -->
+          <g id="equip-pos" style="display:none;">
+            <rect x="380" y="155" width="45" height="30" rx="3" fill="rgba(59,130,246,0.15)" stroke="#2563eb" stroke-width="2"/>
+            <text x="402" y="174" font-size="8" fill="#2563eb" text-anchor="middle" font-weight="600">POS</text>
+          </g>
+
+          <!-- 6: Sink - between kitchen and service -->
+          <g id="equip-sink" style="display:none;">
+            <rect x="175" y="70" width="50" height="50" rx="3" fill="rgba(168,85,247,0.15)" stroke="#7c3aed" stroke-width="2"/>
+            <ellipse cx="200" cy="95" rx="14" ry="11" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+            <circle cx="200" cy="90" r="2.5" fill="#7c3aed"/>
+            <text x="200" y="133" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="600">Sink</text>
+          </g>
+
+          <!-- 7: Storage Shelves - storage zone -->
+          <g id="equip-shelves" style="display:none;">
+            <rect x="460" y="150" width="80" height="50" rx="3" fill="rgba(34,197,94,0.15)" stroke="#16a34a" stroke-width="2"/>
+            <line x1="465" y1="163" x2="535" y2="163" stroke="#16a34a" stroke-width="1"/>
+            <line x1="465" y1="175" x2="535" y2="175" stroke="#16a34a" stroke-width="1"/>
+            <line x1="465" y1="187" x2="535" y2="187" stroke="#16a34a" stroke-width="1"/>
+            <text x="500" y="213" font-size="9" fill="#16a34a" text-anchor="middle" font-weight="600">Shelves</text>
+          </g>
+
+          <!-- 8: Waste Bin - near door -->
+          <g id="equip-bin" style="display:none;">
+            <rect x="530" y="100" width="28" height="28" rx="14" fill="rgba(100,116,139,0.15)" stroke="#475569" stroke-width="2"/>
+            <text x="544" y="118" font-size="7" fill="#475569" text-anchor="middle" font-weight="700">BIN</text>
+            <text x="544" y="140" font-size="8" fill="#475569" text-anchor="middle" font-weight="600">Waste</text>
+          </g>
+
+          <!-- Workflow arrow (shown when all items placed) -->
+          <g id="designWorkflow" style="display:none;">
+            <defs>
+              <marker id="arrowhead2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="#f97316"/>
+              </marker>
+            </defs>
+            <path d="M 485 100 L 200 95 L 85 100 L 85 160 L 200 177 L 295 210"
+                  fill="none" stroke="#f97316" stroke-width="2.5" stroke-dasharray="8,4"
+                  marker-end="url(#arrowhead2)"/>
+            <text x="295" y="275" font-size="10" fill="#f97316" text-anchor="middle" font-weight="700">Workflow: Fridge &#x2192; Prep &#x2192; Grill &#x2192; Serve</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Equipment Tiles -->
+      <div class="equip-grid" id="equipGrid">
+        <div class="equip-tile" onclick="toggleEquip('grill', this)">
+          <svg class="equip-icon" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="2" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+            <circle cx="8" cy="8" r="3" fill="none" stroke="#dc2626" stroke-width="1"/>
+            <circle cx="16" cy="8" r="3" fill="none" stroke="#dc2626" stroke-width="1"/>
+            <circle cx="8" cy="16" r="3" fill="none" stroke="#dc2626" stroke-width="1"/>
+            <circle cx="16" cy="16" r="3" fill="none" stroke="#dc2626" stroke-width="1"/>
+          </svg>
+          Grill / Cooktop
+        </div>
+        <div class="equip-tile" onclick="toggleEquip('prep', this)">
+          <svg class="equip-icon" viewBox="0 0 24 24">
+            <rect x="2" y="6" width="20" height="12" rx="2" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="12" y="15" font-size="6" fill="#dc2626" text-anchor="middle">PREP</text>
+          </svg>
+          Prep Bench
+        </div>
+        <div class="equip-tile" onclick="toggleEquip('fridge', this)">
+          <svg class="equip-icon" viewBox="0 0 24 24">
+            <rect x="4" y="2" width="16" height="20" rx="2" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+            <line x1="4" y1="2" x2="20" y2="22" stroke="#16a34a" stroke-width="1"/>
+          </svg>
+          Fridge
+        </div>
+        <div class="equip-tile" onclick="toggleEquip('counter', this)">
+          <svg class="equip-icon" viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="10" rx="2" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+            <line x1="2" y1="20" x2="22" y2="20" stroke="#2563eb" stroke-width="2"/>
+          </svg>
+          Serving Counter
+        </div>
+        <div class="equip-tile" onclick="toggleEquip('pos', this)">
+          <svg class="equip-icon" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="12" rx="2" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+            <rect x="6" y="18" width="12" height="3" rx="1" fill="none" stroke="#2563eb" stroke-width="1"/>
+          </svg>
+          Cash Register / POS
+        </div>
+        <div class="equip-tile" onclick="toggleEquip('sink', this)">
+          <svg class="equip-icon" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+            <ellipse cx="12" cy="12" rx="6" ry="5" fill="none" stroke="#7c3aed" stroke-width="1"/>
+            <circle cx="12" cy="10" r="1.5" fill="#7c3aed"/>
+          </svg>
+          Sink
+        </div>
+        <div class="equip-tile" onclick="toggleEquip('shelves', this)">
+          <svg class="equip-icon" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="2" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+            <line x1="4" y1="8" x2="20" y2="8" stroke="#16a34a" stroke-width="1"/>
+            <line x1="4" y1="13" x2="20" y2="13" stroke="#16a34a" stroke-width="1"/>
+            <line x1="4" y1="18" x2="20" y2="18" stroke="#16a34a" stroke-width="1"/>
+          </svg>
+          Storage Shelves
+        </div>
+        <div class="equip-tile" onclick="toggleEquip('bin', this)">
+          <svg class="equip-icon" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="8" fill="none" stroke="#475569" stroke-width="1.5"/>
+            <text x="12" y="15" font-size="6" fill="#475569" text-anchor="middle" font-weight="700">BIN</text>
+          </svg>
+          Waste Bin
+        </div>
+      </div>
+    </div>
+
+    <div class="callout accent">
+      <strong>Next Step:</strong> Sketch this layout on your dot paper or plain paper! This is your DRAFT floor plan. Next lesson (L10) you will draw the final version neatly to scale using a ruler and the correct architectural symbols.
+    </div>
+  </div>
+
+  <!-- =============================================
+       SECTION 6: EXIT TICKET (5 min)
+       ============================================= -->
+  <div id="section-exit" class="section-content">
+    <div class="card">
+      <h2>Self-Assessment</h2>
+      <p>Reflect on what you have learned today. Be honest -- this helps you know what to review before next lesson.</p>
+
+      <div class="self-assess-row">
+        <p>1. I can explain what a floor plan is and why it matters for my container restaurant.</p>
+        <div class="radio-group" data-group="sa1">
+          <button class="radio-option" onclick="selectRadio(this, 'sa1')">Not yet</button>
+          <button class="radio-option" onclick="selectRadio(this, 'sa1')">Getting there</button>
+          <button class="radio-option" onclick="selectRadio(this, 'sa1')">Yes, confidently</button>
+        </div>
+      </div>
+
+      <div class="self-assess-row">
+        <p>2. I understand the three zones (Kitchen, Service, Storage) and why they are arranged that way.</p>
+        <div class="radio-group" data-group="sa2">
+          <button class="radio-option" onclick="selectRadio(this, 'sa2')">Not yet</button>
+          <button class="radio-option" onclick="selectRadio(this, 'sa2')">Getting there</button>
+          <button class="radio-option" onclick="selectRadio(this, 'sa2')">Yes, confidently</button>
+        </div>
+      </div>
+
+      <div class="self-assess-row">
+        <p>3. I have a draft layout idea for my container restaurant.</p>
+        <div class="radio-group" data-group="sa3">
+          <button class="radio-option" onclick="selectRadio(this, 'sa3')">Not yet</button>
+          <button class="radio-option" onclick="selectRadio(this, 'sa3')">Getting there</button>
+          <button class="radio-option" onclick="selectRadio(this, 'sa3')">Yes, confidently</button>
+        </div>
+      </div>
+
+      <div style="margin-top:1rem;">
+        <label style="font-weight:600;font-size:0.9rem;display:block;margin-bottom:0.4rem;">What is ONE thing you would change about your layout if you could start over?</label>
+        <textarea id="exitReflection" rows="3" style="width:100%;padding:0.6rem;border:2px solid var(--border);border-radius:8px;font-size:0.9rem;font-family:inherit;resize:vertical;" placeholder="Type your reflection here..."></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your Project Roadmap</h2>
+      <p>Here is what you have completed and what is coming next:</p>
+      <div class="toolkit">
+        <div class="toolkit-item done">
+          <span class="toolkit-icon">&#x2705;</span>
+          <span><strong>Scale (L06)</strong> -- Convert real to model size</span>
+        </div>
+        <div class="toolkit-item done">
+          <span class="toolkit-icon">&#x2705;</span>
+          <span><strong>Isometric Drawing (L08)</strong> -- Draw a 3D view</span>
+        </div>
+        <div class="toolkit-item done">
+          <span class="toolkit-icon">&#x2705;</span>
+          <span><strong>Orthographic Views (L08)</strong> -- Front, side, top views</span>
+        </div>
+        <div class="toolkit-item done">
+          <span class="toolkit-icon">&#x2705;</span>
+          <span><strong>Floor Plan Concepts (L09)</strong> -- Today!</span>
+        </div>
+        <div class="toolkit-item current">
+          <span class="toolkit-icon">&#x25B6;&#xFE0F;</span>
+          <span><strong>Hand-drawn Floor Plan (L10)</strong> -- Next lesson</span>
+        </div>
+        <div class="toolkit-item upcoming">
+          <span class="toolkit-icon">&#x25CB;</span>
+          <span><strong>Model Construction (L11-L14)</strong> -- Coming soon</span>
+        </div>
+        <div class="toolkit-item upcoming">
+          <span class="toolkit-icon">&#x25CB;</span>
+          <span><strong>Test &amp; Evaluate (L17-L18)</strong> -- Final stages</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save -->
+    <div class="save-area">
+      <h3>Save Your Progress</h3>
+      <p>Click below to generate a link you can paste into Google Classroom or bookmark for later.</p>
+      <button class="btn btn-success" onclick="saveWork()">Save &amp; Get Link</button>
+      <textarea class="save-link" id="saveLink" readonly></textarea>
+    </div>
+  </div>
+
+  <!-- =============================================
+       JAVASCRIPT
+       ============================================= -->
+  <script>
+    // ==========================================
+    // STATE
+    // ==========================================
+    var currentLevel = 'standard';
+    var warmupAnswers = { 0: 'Front', 1: 'Side', 2: 'Top', 3: 'Side' };
+    var warmupExplanations = {
+      0: 'Correct! The front view (short end) shows the door. It is roughly square (12 cm x 12 cm).',
+      1: 'Correct! The side view (long wall) shows the serving window and counter. It is a wide rectangle (30 cm x 12 cm).',
+      2: 'Correct! The top view (bird\'s-eye) shows the floor area with wall openings for the window and door with its swing arc.',
+      3: 'Correct! This long view shows the ventilation grille, signage, and serving window -- all features visible from the side (long wall).'
+    };
+    var warmupWrongExplanations = {
+      0: 'Not quite. This is the Front View -- the short end of the container (12 cm x 12 cm) showing the entry door.',
+      1: 'Not quite. This is the Side View -- the long wall (30 cm x 12 cm) showing the serving window and counter.',
+      2: 'Not quite. This is the Top View -- the bird\'s-eye perspective showing the floor area and wall openings.',
+      3: 'Not quite. This is the Side View -- the long wall showing the vent, signage area, and serving window.'
+    };
+    var warmupScore = 0;
+    var warmupAnswered = [false, false, false, false];
+
+    var equipState = {
+      grill: false,
+      prep: false,
+      fridge: false,
+      counter: false,
+      pos: false,
+      sink: false,
+      shelves: false,
+      bin: false
+    };
+
+    var zoneState = {
+      kitchen: false,
+      service: false,
+      storage: false
+    };
+
+    var selfAssessState = { sa1: '', sa2: '', sa3: '' };
+
+    // ==========================================
+    // LEVEL SELECTOR
+    // ==========================================
+    function setLevel(level) {
+      currentLevel = level;
+      document.querySelectorAll('.level-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelector('.level-btn[data-level="' + level + '"]').classList.add('active');
+    }
+
+    // ==========================================
+    // SECTION SWITCHING
+    // ==========================================
+    function switchSection(sectionId) {
+      document.querySelectorAll('.section-content').forEach(function(s) { s.classList.remove('active'); });
+      document.querySelectorAll('.section-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.getElementById('section-' + sectionId).classList.add('active');
+      var sections = ['warmup', 'floorplan', 'zones', 'explore', 'design', 'exit'];
+      var idx = sections.indexOf(sectionId);
+      if (idx >= 0) document.querySelectorAll('.section-btn')[idx].classList.add('active');
+    }
+
+    // ==========================================
+    // WARM-UP QUIZ
+    // ==========================================
+    function checkWarmup(qIndex, answer, btn) {
+      if (warmupAnswered[qIndex]) return;
+      warmupAnswered[qIndex] = true;
+
+      var row = document.getElementById('wq-' + qIndex);
+      var buttons = row.querySelectorAll('.quiz-option');
+      var correctAnswer = warmupAnswers[qIndex];
+      var isCorrect = (answer === correctAnswer);
+
+      if (isCorrect) warmupScore++;
+
+      // Style all buttons
+      buttons.forEach(function(b) {
+        var bAnswer = b.textContent.replace(' View', '');
+        if (bAnswer === correctAnswer) {
+          b.classList.add('correct');
+        } else if (b === btn && !isCorrect) {
+          b.classList.add('incorrect');
+        }
+        b.style.cursor = 'default';
+        b.disabled = true;
+      });
+
+      // Add feedback
+      var fb = document.createElement('div');
+      fb.className = 'quiz-feedback ' + (isCorrect ? 'correct-fb' : 'incorrect-fb');
+      fb.textContent = isCorrect ? warmupExplanations[qIndex] : warmupWrongExplanations[qIndex];
+      row.appendChild(fb);
+
+      // Update score
+      document.getElementById('warmupScore').textContent = 'Score: ' + warmupScore + ' / 4';
+    }
+
+    // ==========================================
+    // FEATURE CHECKLIST TOGGLE
+    // ==========================================
+    function toggleFeatureCheck(item) {
+      item.classList.toggle('checked');
+      var box = item.querySelector('.feature-check-box');
+      box.innerHTML = item.classList.contains('checked') ? '&#x2713;' : '';
+    }
+
+    // ==========================================
+    // ZONE PLANNING
+    // ==========================================
+    function toggleZone(zone) {
+      var card = document.getElementById('zoneCard' + zone.charAt(0).toUpperCase() + zone.slice(1));
+      var equipEl = document.getElementById('zone-' + zone + '-equip');
+      var isExpanded = card.classList.contains('expanded');
+
+      if (isExpanded) {
+        card.classList.remove('expanded');
+        if (equipEl) equipEl.style.display = 'none';
+        zoneState[zone] = false;
+      } else {
+        card.classList.add('expanded');
+        if (equipEl) equipEl.style.display = 'block';
+        zoneState[zone] = true;
+      }
+
+      // Show workflow arrow if all zones expanded
+      var allExpanded = zoneState.kitchen && zoneState.service && zoneState.storage;
+      var arrow = document.getElementById('workflowArrow');
+      if (arrow) arrow.style.display = allExpanded ? 'block' : 'none';
+    }
+
+    function showAllZones() {
+      ['kitchen', 'service', 'storage'].forEach(function(zone) {
+        var card = document.getElementById('zoneCard' + zone.charAt(0).toUpperCase() + zone.slice(1));
+        var equipEl = document.getElementById('zone-' + zone + '-equip');
+        card.classList.add('expanded');
+        if (equipEl) equipEl.style.display = 'block';
+        zoneState[zone] = true;
+      });
+      var arrow = document.getElementById('workflowArrow');
+      if (arrow) arrow.style.display = 'block';
+    }
+
+    function hideAllZones() {
+      ['kitchen', 'service', 'storage'].forEach(function(zone) {
+        var card = document.getElementById('zoneCard' + zone.charAt(0).toUpperCase() + zone.slice(1));
+        var equipEl = document.getElementById('zone-' + zone + '-equip');
+        card.classList.remove('expanded');
+        if (equipEl) equipEl.style.display = 'none';
+        zoneState[zone] = false;
+      });
+      var arrow = document.getElementById('workflowArrow');
+      if (arrow) arrow.style.display = 'none';
+    }
+
+    // ==========================================
+    // EQUIPMENT TOGGLE (Design Your Layout)
+    // ==========================================
+    function toggleEquip(id, tile) {
+      equipState[id] = !equipState[id];
+      var el = document.getElementById('equip-' + id);
+      if (el) {
+        el.style.display = equipState[id] ? 'block' : 'none';
+      }
+      tile.classList.toggle('active');
+
+      // Count placed items
+      var count = 0;
+      Object.keys(equipState).forEach(function(k) {
+        if (equipState[k]) count++;
+      });
+      document.getElementById('equipCounter').textContent = 'Items placed: ' + count + ' / 8';
+
+      // Show workflow arrow when all placed
+      var wf = document.getElementById('designWorkflow');
+      if (wf) {
+        wf.style.display = (count === 8) ? 'block' : 'none';
+      }
+    }
+
+    // ==========================================
+    // SELF-ASSESSMENT RADIO
+    // ==========================================
+    function selectRadio(btn, group) {
+      var groupEl = btn.closest('.radio-group');
+      groupEl.querySelectorAll('.radio-option').forEach(function(b) {
+        b.classList.remove('selected');
+      });
+      btn.classList.add('selected');
+      selfAssessState[group] = btn.textContent;
+    }
+
+    // ==========================================
+    // CHECKLIST TOGGLE
+    // ==========================================
+    function toggleCheck(el) {
+      el.classList.toggle('checked');
+      el.innerHTML = el.classList.contains('checked') ? '&#x2713;' : '';
+    }
+
+    // ==========================================
+    // SAVE / LOAD
+    // ==========================================
+    function saveWork() {
+      var data = {
+        name: document.getElementById('studentName').value,
+        class: document.getElementById('studentClass').value,
+        level: currentLevel,
+        warmupScore: warmupScore,
+        warmupAnswered: warmupAnswered,
+        equipState: equipState,
+        selfAssess: selfAssessState,
+        reflection: document.getElementById('exitReflection').value,
+        timestamp: new Date().toISOString()
+      };
+      var encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+      var link = window.location.href.split('?')[0] + '?data=' + encoded;
+      var linkEl = document.getElementById('saveLink');
+      linkEl.value = link;
+      linkEl.classList.add('show');
+      linkEl.select();
+      try { navigator.clipboard.writeText(link); } catch(e) {}
+    }
+
+    function loadFromUrl() {
+      var params = new URLSearchParams(window.location.search);
+      var data = params.get('data');
+      if (!data) return;
+
+      try {
+        var parsed = JSON.parse(decodeURIComponent(escape(atob(data))));
+        if (parsed.name) document.getElementById('studentName').value = parsed.name;
+        if (parsed.class) document.getElementById('studentClass').value = parsed.class;
+        if (parsed.level) setLevel(parsed.level);
+
+        // Restore warmup
+        if (parsed.warmupScore !== undefined) warmupScore = parsed.warmupScore;
+        if (parsed.warmupAnswered) {
+          warmupAnswered = parsed.warmupAnswered;
+          // Visually update answered questions
+          warmupAnswered.forEach(function(answered, i) {
+            if (!answered) return;
+            var row = document.getElementById('wq-' + i);
+            if (!row) return;
+            var correct = warmupAnswers[i];
+            var buttons = row.querySelectorAll('.quiz-option');
+            buttons.forEach(function(b) {
+              var bAnswer = b.textContent.replace(' View', '');
+              if (bAnswer === correct) b.classList.add('correct');
+              b.style.cursor = 'default';
+              b.disabled = true;
+            });
+          });
+          document.getElementById('warmupScore').textContent = 'Score: ' + warmupScore + ' / 4';
+        }
+
+        // Restore equipment
+        if (parsed.equipState) {
+          var tiles = document.querySelectorAll('.equip-tile');
+          var keys = ['grill', 'prep', 'fridge', 'counter', 'pos', 'sink', 'shelves', 'bin'];
+          keys.forEach(function(k, idx) {
+            if (parsed.equipState[k]) {
+              equipState[k] = true;
+              var el = document.getElementById('equip-' + k);
+              if (el) el.style.display = 'block';
+              if (tiles[idx]) tiles[idx].classList.add('active');
+            }
+          });
+          var count = 0;
+          Object.keys(equipState).forEach(function(k) { if (equipState[k]) count++; });
+          document.getElementById('equipCounter').textContent = 'Items placed: ' + count + ' / 8';
+          if (count === 8) {
+            var wf = document.getElementById('designWorkflow');
+            if (wf) wf.style.display = 'block';
+          }
+        }
+
+        // Restore self-assessment
+        if (parsed.selfAssess) {
+          selfAssessState = parsed.selfAssess;
+          Object.keys(selfAssessState).forEach(function(group) {
+            if (!selfAssessState[group]) return;
+            var groupEl = document.querySelector('.radio-group[data-group="' + group + '"]');
+            if (!groupEl) return;
+            groupEl.querySelectorAll('.radio-option').forEach(function(b) {
+              if (b.textContent === selfAssessState[group]) b.classList.add('selected');
+            });
+          });
+        }
+
+        // Restore reflection
+        if (parsed.reflection) {
+          document.getElementById('exitReflection').value = parsed.reflection;
+        }
+      } catch(e) {
+        // Silently fail on bad data
+      }
+    }
+
+    // ==========================================
+    // INIT
+    // ==========================================
+    loadFromUrl();
+  </script>
+</body>
+</html>
