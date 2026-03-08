@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessment Writing Coach — Container to Countertop</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--red:#E05555;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.6;padding-top:110px}
+
+/* ===== TOP BAR ===== */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--charcoal);color:var(--white);padding:10px 24px;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.topbar-title{font-family:var(--font-heading);font-size:1.1rem;letter-spacing:.5px}
+.topbar-badge{background:var(--orange);padding:3px 12px;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:1px}
+.topbar-right{display:flex;gap:8px;align-items:center}
+.topbar-right button{font-family:var(--font-body);font-size:.8rem;font-weight:600;border:none;border-radius:6px;padding:6px 14px;cursor:pointer;transition:all .15s}
+.btn-save{background:var(--green);color:var(--white)}
+.btn-pdf{background:var(--orange);color:var(--white)}
+.btn-reset{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)!important}
+.save-flash{font-size:.75rem;opacity:.7;transition:all .3s}
+.save-flash.active{opacity:1;color:var(--yellow)}
+
+/* Progress bar */
+.progress-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.progress-bar-bg{flex:1;height:8px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--yellow));border-radius:4px;transition:width .5s ease;width:0%}
+.progress-label{font-size:.75rem;opacity:.8;white-space:nowrap}
+
+/* ===== MODULE TABS ===== */
+.module-tabs{max-width:960px;margin:0 auto 16px;display:flex;gap:4px;padding:0 16px;flex-wrap:wrap}
+.mod-tab{font-family:var(--font-heading);font-size:.82rem;padding:10px 14px;border:none;border-radius:10px 10px 0 0;cursor:pointer;background:var(--white);color:var(--grey);transition:all .2s;letter-spacing:.5px;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.mod-tab:hover{background:var(--bg);color:var(--charcoal)}
+.mod-tab.active{background:var(--blue);color:var(--white)}
+.mod-tab .tab-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:.7rem;font-weight:700;background:rgba(0,0,0,.1)}
+.mod-tab.active .tab-num{background:rgba(255,255,255,.2)}
+.mod-tab.completed .tab-num{background:var(--green);color:var(--white)}
+.mod-tab.completed::after{content:" ✓";color:var(--green);font-weight:700}
+.mod-tab.active.completed::after{color:var(--yellow)}
+
+/* ===== MAIN CONTENT ===== */
+.main-wrap{max-width:960px;margin:0 auto;padding:0 16px 40px}
+.module{display:none;background:var(--white);border-radius:0 12px 12px 12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.module.active{display:block}
+
+/* Module header */
+.mod-header{background:linear-gradient(135deg,var(--blue) 0%,#234E6F 100%);color:var(--white);padding:28px 32px 24px;position:relative}
+.mod-header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:200px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 20px)}
+.mod-num{font-family:var(--font-heading);font-size:.85rem;background:var(--orange);padding:3px 12px;border-radius:20px;letter-spacing:1px;font-weight:700;display:inline-block;margin-bottom:6px}
+.mod-title{font-family:var(--font-heading);font-size:1.6rem;letter-spacing:.5px;margin-bottom:4px}
+.mod-sub{font-size:.9rem;opacity:.85}
+.mod-time{font-size:.8rem;opacity:.65;margin-top:8px;font-style:italic}
+
+/* Content sections */
+.mod-section{padding:24px 32px;border-top:1px solid var(--light-grey)}
+.mod-section:first-of-type{border-top:none}
+
+.section-tag{font-family:var(--font-heading);font-size:.95rem;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:8px;margin-bottom:14px;color:var(--charcoal)}
+.section-icon{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;font-size:1rem;flex-shrink:0}
+.icon-learn{background:var(--blue);color:var(--white)}
+.icon-activity{background:var(--orange);color:var(--white)}
+.icon-write{background:var(--green);color:var(--white)}
+.icon-check{background:var(--purple);color:var(--white)}
+.icon-vocab{background:var(--yellow);color:var(--charcoal)}
+
+/* Info boxes */
+.info-box{background:var(--bg);border-radius:10px;padding:14px 18px;margin:12px 0;font-size:.9rem;border-left:5px solid var(--blue)}
+.info-box strong{color:var(--blue)}
+.warn-box{background:#FFF8E1;border-left-color:var(--yellow)}
+.warn-box strong{color:#B8860B}
+.tip-box{background:#F0F7ED;border-left-color:var(--green)}
+.tip-box strong{color:var(--green)}
+
+/* ===== INTERACTIVE ELEMENTS ===== */
+
+/* Reveal/collapse */
+.reveal-btn{display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:var(--white);border:none;padding:8px 16px;border-radius:8px;font-family:var(--font-body);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .15s;margin:6px 0}
+.reveal-btn:hover{background:#234E6F;transform:translateY(-1px)}
+.reveal-content{display:none;margin-top:8px;padding:14px 18px;background:var(--bg);border-radius:10px;animation:fadeIn .3s}
+.reveal-content.show{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Word bank */
+.word-bank{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;padding:14px;background:var(--bg);border-radius:10px;border:2px dashed var(--blue)}
+.word-bank-title{width:100%;font-family:var(--font-heading);font-size:.85rem;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.wb-word{background:var(--white);border:1.5px solid var(--blue);color:var(--blue);padding:5px 12px;border-radius:20px;font-size:.82rem;cursor:pointer;transition:all .15s;position:relative}
+.wb-word:hover{background:var(--blue);color:var(--white);transform:translateY(-2px);box-shadow:0 2px 6px rgba(27,73,101,.3)}
+.wb-word[data-def]::after{content:attr(data-def);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--charcoal);color:var(--white);padding:6px 10px;border-radius:6px;font-size:.75rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+.wb-word:hover::after{opacity:1}
+
+/* Sentence frames */
+.frame-card{background:var(--white);border:2px solid var(--light-grey);border-radius:10px;padding:14px 18px;margin:8px 0;transition:all .2s;cursor:pointer}
+.frame-card:hover{border-color:var(--blue);box-shadow:0 2px 8px rgba(27,73,101,.1)}
+.frame-card.selected{border-color:var(--green);background:#F8FDF5}
+.frame-level{font-family:var(--font-heading);font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
+.frame-text{font-size:.9rem;line-height:1.7}
+.frame-text .blank{display:inline-block;min-width:100px;border-bottom:2px dashed var(--orange);color:var(--orange);font-style:italic;padding:0 4px}
+
+/* Level colors */
+.level-a{color:#4CAF50}.level-bg-a{background:#E8F5E9;border-color:#4CAF50}
+.level-b{color:#2196F3}.level-bg-b{background:#E3F2FD;border-color:#2196F3}
+.level-c{color:#FF9800}.level-bg-c{background:#FFF8E1;border-color:#FF9800}
+.level-d{color:#F57C00}.level-bg-d{background:#FFF3E0;border-color:#F57C00}
+.level-e{color:#F44336}.level-bg-e{background:#FFEBEE;border-color:#F44336}
+
+/* ALARM matrix */
+.alarm-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}
+.alarm-cell{border-radius:10px;padding:12px;text-align:center;font-size:.82rem;border:2px solid transparent;transition:all .2s}
+.alarm-cell:hover{transform:translateY(-3px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.alarm-name{font-family:var(--font-heading);font-size:1rem;margin-bottom:4px}
+.alarm-verbs{font-size:.78rem;color:var(--grey);line-height:1.5}
+
+/* VSCC breakdown */
+.vscc-box{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.vscc-cell{border-radius:10px;padding:14px;text-align:center;border-top:4px solid}
+.vscc-cell h4{font-family:var(--font-heading);font-size:.9rem;margin-bottom:4px}
+.vscc-cell p{font-size:.82rem;color:var(--grey)}
+
+/* Writing area */
+.write-area{position:relative;margin:12px 0}
+.write-area textarea{width:100%;border:2px solid var(--light-grey);border-radius:10px;padding:14px;font-family:var(--font-body);font-size:.92rem;line-height:1.7;color:var(--charcoal);background:#FAFAF8;resize:vertical;min-height:120px;transition:border-color .2s}
+.write-area textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.1)}
+.write-meta{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:.78rem;color:var(--grey)}
+.word-count{font-weight:600}
+.word-count.good{color:var(--green)}
+.word-count.low{color:var(--orange)}
+.key-terms-used{color:var(--blue)}
+
+/* Connectives panel */
+.connectives{background:var(--bg);border-radius:10px;padding:14px;margin:12px 0;font-size:.82rem}
+.connectives h4{font-family:var(--font-heading);font-size:.85rem;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+.conn-group{margin-bottom:8px}
+.conn-label{font-weight:600;color:var(--grey);font-size:.78rem;display:block;margin-bottom:3px}
+.conn-words{display:flex;flex-wrap:wrap;gap:4px}
+.conn-word{background:var(--white);border:1px solid var(--light-grey);padding:3px 10px;border-radius:14px;font-size:.78rem;cursor:pointer;transition:all .12s}
+.conn-word:hover{background:var(--blue);color:var(--white);border-color:var(--blue)}
+
+/* Rubric explorer */
+.rubric-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.82rem}
+.rubric-table th{background:var(--blue);color:var(--white);font-family:var(--font-heading);padding:10px 8px;text-align:center;font-size:.78rem;letter-spacing:.5px}
+.rubric-table td{padding:8px;border:1px solid var(--light-grey);vertical-align:top;line-height:1.5}
+.rubric-table tr:nth-child(even) td{background:#FAFAF8}
+.rubric-table .verb-highlight{background:var(--yellow);padding:1px 4px;border-radius:3px;font-weight:700}
+.rubric-table td.active-cell{background:#E3F2FD;border-color:var(--blue);border-width:2px}
+
+/* Paragraph builder */
+.para-builder{border:2px solid var(--blue);border-radius:12px;overflow:hidden;margin:14px 0}
+.para-step{padding:16px 20px;border-bottom:1px solid var(--light-grey);display:flex;align-items:flex-start;gap:12px;transition:background .2s}
+.para-step:last-child{border-bottom:none}
+.para-step.completed-step{background:#F8FDF5}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.85rem;font-weight:700;flex-shrink:0}
+.step-num.done{background:var(--green)}
+.step-content{flex:1}
+.step-label{font-family:var(--font-heading);font-size:.9rem;color:var(--blue);margin-bottom:4px}
+.step-hint{font-size:.82rem;color:var(--grey);font-style:italic;margin-bottom:8px}
+.step-content textarea{width:100%;border:1.5px solid var(--light-grey);border-radius:8px;padding:10px;font-family:var(--font-body);font-size:.88rem;line-height:1.6;min-height:60px;resize:vertical}
+.step-content textarea:focus{outline:none;border-color:var(--blue)}
+
+/* Self-assessment */
+.self-assess{background:var(--bg);border-radius:12px;padding:18px 22px;margin:14px 0}
+.self-assess h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:12px}
+.sa-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:8px 12px;background:var(--white);border-radius:8px}
+.sa-row label{font-size:.88rem;flex:1}
+.sa-row select{padding:6px 10px;border:1.5px solid var(--light-grey);border-radius:6px;font-family:var(--font-body);font-size:.85rem;cursor:pointer}
+
+/* Example level cards */
+.example-cards{margin:14px 0}
+.example-card{border-radius:10px;padding:14px 18px;margin:8px 0;border-left:5px solid;font-size:.88rem}
+.example-card .ex-level{font-family:var(--font-heading);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.example-card .ex-text{line-height:1.7;font-style:italic}
+.example-card .ex-why{margin-top:6px;font-size:.82rem;font-style:normal;color:var(--grey)}
+
+/* Checklist */
+.checklist{margin:14px 0}
+.check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;padding:10px 14px;background:var(--bg);border-radius:8px;transition:all .2s}
+.check-item.checked{background:#F0F7ED}
+.check-item input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}
+.check-item label{font-size:.88rem;cursor:pointer}
+
+/* Navigation footer */
+.mod-footer{padding:20px 32px;background:var(--bg);display:flex;justify-content:space-between;align-items:center;border-top:2px solid var(--light-grey)}
+.nav-btn{font-family:var(--font-heading);font-size:.9rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .15s;letter-spacing:.5px}
+.nav-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.nav-prev{background:var(--white);color:var(--charcoal);border:2px solid var(--light-grey)!important}
+.nav-next{background:var(--orange);color:var(--white)}
+.nav-finish{background:var(--green);color:var(--white)}
+
+/* Quiz elements */
+.quiz-options{display:grid;gap:6px;margin:10px 0}
+.quiz-opt{padding:10px 14px;border:2px solid var(--light-grey);border-radius:8px;cursor:pointer;font-size:.88rem;transition:all .15s;background:var(--white)}
+.quiz-opt:hover{border-color:var(--blue);background:#F0F7FF}
+.quiz-opt.correct{border-color:var(--green);background:#F0F7ED}
+.quiz-opt.incorrect{border-color:var(--red);background:#FFEBEE}
+.quiz-opt.selected{border-color:var(--blue);background:#E3F2FD}
+.quiz-feedback{margin-top:8px;padding:10px 14px;border-radius:8px;font-size:.85rem;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct{background:#F0F7ED;color:var(--green)}
+.quiz-feedback.incorrect{background:#FFEBEE;color:var(--red)}
+
+/* Responsive */
+@media(max-width:700px){
+  body{padding-top:130px}
+  .mod-section{padding:18px 16px}
+  .mod-header{padding:20px 16px}
+  .alarm-grid{grid-template-columns:repeat(3,1fr)}
+  .vscc-box{grid-template-columns:repeat(2,1fr)}
+  .module-tabs{gap:3px;padding:0 8px}
+  .mod-tab{padding:8px 10px;font-size:.75rem}
+  .rubric-table{font-size:.72rem}
+}
+@media print{
+  body{padding-top:0;background:white}
+  .topbar,.module-tabs,.nav-btn,.reveal-btn,.btn-save,.btn-pdf,.btn-reset{display:none!important}
+  .module{display:block!important;box-shadow:none;margin-bottom:20px;break-inside:avoid}
+  .mod-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .alarm-cell,.vscc-cell,.word-bank,.info-box,.self-assess{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+p{margin-bottom:10px}
+h3{font-family:var(--font-heading);font-size:1.1rem;color:var(--charcoal);margin-bottom:10px}
+ul,ol{margin:8px 0 8px 20px}
+li{margin-bottom:4px;font-size:.9rem}
+.mb-0{margin-bottom:0}.mb-8{margin-bottom:8px}.mb-16{margin-bottom:16px}
+.mt-8{margin-top:8px}.mt-16{margin-top:16px}
+.text-sm{font-size:.85rem}.text-xs{font-size:.78rem}
+.text-grey{color:var(--grey)}.text-blue{color:var(--blue)}.text-orange{color:var(--orange)}
+.bold{font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- ==================== TOP BAR ==================== -->
+<div class="topbar">
+  <div class="topbar-row">
+    <div style="display:flex;align-items:center;gap:12px">
+      <span class="topbar-badge">YEAR 8</span>
+      <span class="topbar-title">Assessment Writing Coach</span>
+      <span class="save-flash" id="saveFlash">All progress saved</span>
+    </div>
+    <div class="topbar-right">
+      <input type="text" id="studentName" placeholder="Your name" style="padding:5px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:white;font-size:.82rem;width:140px" oninput="saveAll()">
+      <button class="btn-pdf" onclick="window.print()">Print / PDF</button>
+      <button class="btn-reset" onclick="if(confirm('Clear ALL your work? This cannot be undone.')){localStorage.removeItem('awc-data');location.reload()}">Reset</button>
+    </div>
+  </div>
+  <div class="progress-row">
+    <span class="progress-label" id="progressLabel">0 / 6 modules complete</span>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<!-- ==================== MODULE TABS ==================== -->
+<div class="module-tabs" id="moduleTabs">
+  <button class="mod-tab active" onclick="switchModule(1)"><span class="tab-num">1</span> Rubrics</button>
+  <button class="mod-tab" onclick="switchModule(2)"><span class="tab-num">2</span> ALARM</button>
+  <button class="mod-tab" onclick="switchModule(3)"><span class="tab-num">3</span> Section 1</button>
+  <button class="mod-tab" onclick="switchModule(4)"><span class="tab-num">4</span> Section 2</button>
+  <button class="mod-tab" onclick="switchModule(5)"><span class="tab-num">5</span> Section 4</button>
+  <button class="mod-tab" onclick="switchModule(6)"><span class="tab-num">6</span> Final Check</button>
+</div>
+
+<div class="main-wrap">
+
+<!-- ================================================================ -->
+<!-- MODULE 1: UNDERSTANDING ASSESSMENT & RUBRICS                      -->
+<!-- ================================================================ -->
+<div class="module active" id="mod1">
+  <div class="mod-header">
+    <span class="mod-num">SESSION 1</span>
+    <h1 class="mod-title">Understanding Assessment &amp; Rubrics</h1>
+    <p class="mod-sub">Learn what your teacher is looking for and how marks are given</p>
+    <p class="mod-time">About 25 minutes &bull; Work through at your own pace</p>
+  </div>
+
+  <!-- LEARN: Assessment vs Evaluation -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-learn">📖</span> LEARN</div>
+    <h3>Assessment vs Evaluation — What's the Difference?</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0">
+      <div style="background:#E3F2FD;border-radius:10px;padding:16px;border-top:4px solid var(--blue)">
+        <h4 style="color:var(--blue);font-family:var(--font-heading)">Assessment</h4>
+        <p class="text-sm">Helps you <strong>learn and improve</strong>.</p>
+        <p class="text-sm">Your teacher looks at your work to give you <strong>feedback</strong> so you can do better.</p>
+      </div>
+      <div style="background:#FFF8E1;border-radius:10px;padding:16px;border-top:4px solid var(--orange)">
+        <h4 style="color:var(--orange);font-family:var(--font-heading)">Evaluation</h4>
+        <p class="text-sm">Decides <strong>how good</strong> your final work is.</p>
+        <p class="text-sm">Your teacher gives a <strong>grade or mark</strong> based on set criteria.</p>
+      </div>
+    </div>
+    <div class="info-box">
+      <strong>Key idea:</strong> Assessment helps you improve BEFORE the final grade. This writing coach is an assessment tool — it helps you improve your portfolio writing before your teacher evaluates it.
+    </div>
+  </div>
+
+  <!-- LEARN: Your Marking Rubric -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-learn">📖</span> LEARN</div>
+    <h3>Your Marking Rubric — What Does Each Level Mean?</h3>
+    <p>A <strong>rubric</strong> is a guide that shows exactly what you need to do to get each mark. Your Container to Countertop assessment has 4 sections worth 25 marks total.</p>
+
+    <div class="info-box warn-box">
+      <strong>Your assessment breakdown:</strong><br>
+      1. Identifying and Defining — <strong>5 marks</strong><br>
+      2. Research and Planning — <strong>5 marks</strong><br>
+      3. Model Construction — <strong>10 marks</strong><br>
+      4. Testing and Evaluation — <strong>5 marks</strong>
+    </div>
+
+    <p class="bold">The 5 grade levels:</p>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0">
+      <div style="background:#E8F5E9;border-radius:8px;padding:10px;text-align:center;border:2px solid #4CAF50">
+        <div style="font-family:var(--font-heading);font-size:1.4rem;color:#4CAF50">A</div>
+        <div class="text-xs bold">Outstanding</div>
+        <div class="text-xs text-grey">"I can take it to the next level"</div>
+      </div>
+      <div style="background:#E3F2FD;border-radius:8px;padding:10px;text-align:center;border:2px solid #2196F3">
+        <div style="font-family:var(--font-heading);font-size:1.4rem;color:#2196F3">B</div>
+        <div class="text-xs bold">High</div>
+        <div class="text-xs text-grey">"I can do it well"</div>
+      </div>
+      <div style="background:#FFF8E1;border-radius:8px;padding:10px;text-align:center;border:2px solid #FF9800">
+        <div style="font-family:var(--font-heading);font-size:1.4rem;color:#FF9800">C</div>
+        <div class="text-xs bold">Sound</div>
+        <div class="text-xs text-grey">"I can do it"</div>
+      </div>
+      <div style="background:#FFF3E0;border-radius:8px;padding:10px;text-align:center;border:2px solid #F57C00">
+        <div style="font-family:var(--font-heading);font-size:1.4rem;color:#F57C00">D</div>
+        <div class="text-xs bold">Basic</div>
+        <div class="text-xs text-grey">"I can do part of it"</div>
+      </div>
+      <div style="background:#FFEBEE;border-radius:8px;padding:10px;text-align:center;border:2px solid #F44336">
+        <div style="font-family:var(--font-heading);font-size:1.4rem;color:#F44336">E</div>
+        <div class="text-xs bold">Limited</div>
+        <div class="text-xs text-grey">"I can remember something"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEARN: Key Verbs -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-vocab">📝</span> KEY VERBS</div>
+    <h3>Key Verbs — The Most Important Word in Any Question</h3>
+    <p>The <strong>verb</strong> (action word) in a question tells you WHAT to do and HOW MUCH detail to include.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0">
+      <div style="background:#FFEBEE;border-radius:10px;padding:12px;text-align:center;border-top:4px solid #F44336">
+        <div style="font-family:var(--font-heading);color:#F44336;font-size:1rem">Identify / List</div>
+        <div class="text-xs text-grey">Name things. Short answers.</div>
+        <div class="text-xs" style="color:#F44336;margin-top:4px">Least detail</div>
+      </div>
+      <div style="background:#FFF8E1;border-radius:10px;padding:12px;text-align:center;border-top:4px solid #FF9800">
+        <div style="font-family:var(--font-heading);color:#FF9800;font-size:1rem">State / Describe</div>
+        <div class="text-xs text-grey">Say what something is. Give details.</div>
+        <div class="text-xs" style="color:#FF9800;margin-top:4px">Some detail</div>
+      </div>
+      <div style="background:#E3F2FD;border-radius:10px;padding:12px;text-align:center;border-top:4px solid #2196F3">
+        <div style="font-family:var(--font-heading);color:#2196F3;font-size:1rem">Define / Explain</div>
+        <div class="text-xs text-grey">Give the meaning. Say WHY or HOW.</div>
+        <div class="text-xs" style="color:#2196F3;margin-top:4px">More detail</div>
+      </div>
+      <div style="background:#E8F5E9;border-radius:10px;padding:12px;text-align:center;border-top:4px solid #4CAF50">
+        <div style="font-family:var(--font-heading);color:#4CAF50;font-size:1rem">Evaluate / Justify</div>
+        <div class="text-xs text-grey">Judge quality. Give reasons for your opinion.</div>
+        <div class="text-xs" style="color:#4CAF50;margin-top:4px">Most detail</div>
+      </div>
+    </div>
+
+    <div class="info-box tip-box">
+      <strong>Remember:</strong> Higher-level verbs (like <em>explain</em> and <em>evaluate</em>) need longer, more detailed answers. Lower-level verbs (like <em>list</em>) need shorter answers. The verb tells you how much to write!
+    </div>
+  </div>
+
+  <!-- ACTIVITY: Match the verb -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-activity">✏️</span> ACTIVITY</div>
+    <h3>Activity: What Level of Detail Does Each Verb Need?</h3>
+    <p>Click the correct detail level for each verb.</p>
+
+    <div id="verbQuiz">
+      <div class="quiz-item mb-16" data-answer="least">
+        <p class="bold">1. "List three features of a shipping container."</p>
+        <div class="quiz-options" style="grid-template-columns:repeat(4,1fr)">
+          <div class="quiz-opt" onclick="checkVerb(this,'least')">Least detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'some')">Some detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'more')">More detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'most')">Most detail</div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-item mb-16" data-answer="more">
+        <p class="bold">2. "Explain why upcycling containers is sustainable."</p>
+        <div class="quiz-options" style="grid-template-columns:repeat(4,1fr)">
+          <div class="quiz-opt" onclick="checkVerb(this,'least')">Least detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'some')">Some detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'more')">More detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'most')">Most detail</div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-item mb-16" data-answer="most">
+        <p class="bold">3. "Evaluate your container restaurant model against the design brief."</p>
+        <div class="quiz-options" style="grid-template-columns:repeat(4,1fr)">
+          <div class="quiz-opt" onclick="checkVerb(this,'least')">Least detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'some')">Some detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'more')">More detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'most')">Most detail</div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-item mb-16" data-answer="some">
+        <p class="bold">4. "Describe the features of a container restaurant you researched."</p>
+        <div class="quiz-options" style="grid-template-columns:repeat(4,1fr)">
+          <div class="quiz-opt" onclick="checkVerb(this,'least')">Least detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'some')">Some detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'more')">More detail</div>
+          <div class="quiz-opt" onclick="checkVerb(this,'most')">Most detail</div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module complete check -->
+  <div class="mod-section">
+    <div class="self-assess">
+      <h3>Session 1 Checklist</h3>
+      <div class="check-item"><input type="checkbox" id="m1c1" onchange="updateModuleProgress(1);saveAll()"><label for="m1c1">I understand the difference between assessment and evaluation</label></div>
+      <div class="check-item"><input type="checkbox" id="m1c2" onchange="updateModuleProgress(1);saveAll()"><label for="m1c2">I know my assessment has 4 sections worth 25 marks</label></div>
+      <div class="check-item"><input type="checkbox" id="m1c3" onchange="updateModuleProgress(1);saveAll()"><label for="m1c3">I understand the 5 grade levels (A to E)</label></div>
+      <div class="check-item"><input type="checkbox" id="m1c4" onchange="updateModuleProgress(1);saveAll()"><label for="m1c4">I know that the verb tells me how much detail to include</label></div>
+    </div>
+  </div>
+
+  <div class="mod-footer">
+    <div></div>
+    <button class="nav-btn nav-next" onclick="switchModule(2)">Next: ALARM &amp; VSCC →</button>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- MODULE 2: ALARM & VSCC                                            -->
+<!-- ================================================================ -->
+<div class="module" id="mod2">
+  <div class="mod-header">
+    <span class="mod-num">SESSION 2</span>
+    <h1 class="mod-title">ALARM &amp; Breaking Down Questions</h1>
+    <p class="mod-sub">Learn to read questions carefully and know exactly what is being asked</p>
+    <p class="mod-time">About 25 minutes &bull; Work through at your own pace</p>
+  </div>
+
+  <!-- LEARN: ALARM -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-learn">📖</span> LEARN</div>
+    <h3>A.L.A.R.M. — A Learning and Responding Matrix</h3>
+    <p>ALARM helps you understand HOW MUCH detail a question needs. Each level builds on the one before:</p>
+
+    <div class="alarm-grid">
+      <div class="alarm-cell" style="background:#FFEBEE;border-color:#F44336">
+        <div class="alarm-name" style="color:#F44336">A — Acquire</div>
+        <div class="alarm-verbs">identify, list, name, recall, label</div>
+        <p class="text-xs mt-8">Just remember and name things</p>
+      </div>
+      <div class="alarm-cell" style="background:#FFF3E0;border-color:#F57C00">
+        <div class="alarm-name" style="color:#F57C00">L — Link</div>
+        <div class="alarm-verbs">describe, state, define, outline</div>
+        <p class="text-xs mt-8">Connect ideas together, give details</p>
+      </div>
+      <div class="alarm-cell" style="background:#FFF8E1;border-color:#FF9800">
+        <div class="alarm-name" style="color:#FF9800">A — Analyse</div>
+        <div class="alarm-verbs">explain, compare, contrast, discuss</div>
+        <p class="text-xs mt-8">Break apart, find reasons and patterns</p>
+      </div>
+      <div class="alarm-cell" style="background:#E3F2FD;border-color:#2196F3">
+        <div class="alarm-name" style="color:#2196F3">R — Respond</div>
+        <div class="alarm-verbs">evaluate, justify, assess, recommend</div>
+        <p class="text-xs mt-8">Make judgements with evidence</p>
+      </div>
+      <div class="alarm-cell" style="background:#E8F5E9;border-color:#4CAF50">
+        <div class="alarm-name" style="color:#4CAF50">M — Make</div>
+        <div class="alarm-verbs">create, design, develop, construct</div>
+        <p class="text-xs mt-8">Build or produce something new</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEARN: VSCC -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-learn">📖</span> LEARN</div>
+    <h3>VSCC — Breaking Down a Question</h3>
+    <p>Every assessment question has 4 parts. Finding them helps you know exactly what to write.</p>
+
+    <div class="vscc-box">
+      <div class="vscc-cell" style="background:#E3F2FD;border-color:var(--blue)">
+        <h4 style="color:var(--blue)">V — Verb</h4>
+        <p>The action word. What do I need to DO?</p>
+      </div>
+      <div class="vscc-cell" style="background:#FFF8E1;border-color:var(--orange)">
+        <h4 style="color:var(--orange)">S — Subject</h4>
+        <p>The main topic. What is this about?</p>
+      </div>
+      <div class="vscc-cell" style="background:#F0F7ED;border-color:var(--green)">
+        <h4 style="color:var(--green)">C — Content</h4>
+        <p>The specific details. What information should I include?</p>
+      </div>
+      <div class="vscc-cell" style="background:#F3EDF8;border-color:var(--purple)">
+        <h4 style="color:var(--purple)">C — Concept</h4>
+        <p>The big idea. What is the deeper meaning?</p>
+      </div>
+    </div>
+
+    <!-- Worked example -->
+    <h3>Worked Example</h3>
+    <div class="info-box">
+      <strong>Question:</strong> "<em>Describe</em> the need and benefits of upcycling shipping containers to create a portable container burger restaurant."
+    </div>
+    <div class="vscc-box">
+      <div class="vscc-cell" style="background:#E3F2FD;border-color:var(--blue)">
+        <h4 style="color:var(--blue)">V — Describe</h4>
+        <p>Give details about it — more than just a list</p>
+      </div>
+      <div class="vscc-cell" style="background:#FFF8E1;border-color:var(--orange)">
+        <h4 style="color:var(--orange)">S — Need and benefits</h4>
+        <p>Why we need this and what the advantages are</p>
+      </div>
+      <div class="vscc-cell" style="background:#F0F7ED;border-color:var(--green)">
+        <h4 style="color:var(--green)">C — Upcycling shipping containers</h4>
+        <p>Turning old containers into something new</p>
+      </div>
+      <div class="vscc-cell" style="background:#F3EDF8;border-color:var(--purple)">
+        <h4 style="color:var(--purple)">C — Portable restaurant</h4>
+        <p>A burger restaurant that can move to festivals</p>
+      </div>
+    </div>
+    <p class="text-sm text-grey">ALARM Level: <strong>Link</strong> (because the verb is "describe")</p>
+  </div>
+
+  <!-- ACTIVITY: Break down questions -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-activity">✏️</span> ACTIVITY</div>
+    <h3>Your Turn: Break Down These Questions</h3>
+
+    <div class="info-box">
+      <strong>Question 1:</strong> "List four success criteria for your container burger restaurant."
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">
+      <div><label class="text-xs bold text-blue">V — Verb:</label><input type="text" data-save="vscc1v" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:100%" placeholder="What action word?" oninput="saveAll()"></div>
+      <div><label class="text-xs bold text-orange">S — Subject:</label><input type="text" data-save="vscc1s" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:100%" placeholder="What is the main topic?" oninput="saveAll()"></div>
+      <div><label class="text-xs bold" style="color:var(--green)">C — Content:</label><input type="text" data-save="vscc1c" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:100%" placeholder="What details?" oninput="saveAll()"></div>
+      <div><label class="text-xs bold" style="color:var(--purple)">C — Concept:</label><input type="text" data-save="vscc1cc" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:100%" placeholder="The big idea?" oninput="saveAll()"></div>
+    </div>
+    <div><label class="text-xs bold text-grey">ALARM Level:</label><input type="text" data-save="vscc1alarm" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:200px" placeholder="Which ALARM level?" oninput="saveAll()"></div>
+
+    <button class="reveal-btn mt-16" onclick="toggleReveal('vscc1ans')">Show Answer</button>
+    <div class="reveal-content" id="vscc1ans">
+      <strong>V:</strong> List &bull; <strong>S:</strong> Success criteria &bull; <strong>C:</strong> Four criteria for your container restaurant &bull; <strong>C:</strong> Design requirements that must be met &bull; <strong>ALARM:</strong> Acquire (List = lowest level — just name things)
+    </div>
+
+    <div class="info-box mt-16">
+      <strong>Question 2:</strong> "Explain why your chosen design works best for meeting the design brief."
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">
+      <div><label class="text-xs bold text-blue">V — Verb:</label><input type="text" data-save="vscc2v" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:100%" placeholder="What action word?" oninput="saveAll()"></div>
+      <div><label class="text-xs bold text-orange">S — Subject:</label><input type="text" data-save="vscc2s" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:100%" placeholder="What is the main topic?" oninput="saveAll()"></div>
+      <div><label class="text-xs bold" style="color:var(--green)">C — Content:</label><input type="text" data-save="vscc2c" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:100%" placeholder="What details?" oninput="saveAll()"></div>
+      <div><label class="text-xs bold" style="color:var(--purple)">C — Concept:</label><input type="text" data-save="vscc2cc" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:100%" placeholder="The big idea?" oninput="saveAll()"></div>
+    </div>
+    <div><label class="text-xs bold text-grey">ALARM Level:</label><input type="text" data-save="vscc2alarm" style="padding:8px;border:1.5px solid var(--light-grey);border-radius:6px;font-size:.85rem;width:200px" placeholder="Which ALARM level?" oninput="saveAll()"></div>
+
+    <button class="reveal-btn mt-16" onclick="toggleReveal('vscc2ans')">Show Answer</button>
+    <div class="reveal-content" id="vscc2ans">
+      <strong>V:</strong> Explain &bull; <strong>S:</strong> Your chosen design &bull; <strong>C:</strong> Why it works best, connection to design brief &bull; <strong>C:</strong> Design decision-making &bull; <strong>ALARM:</strong> Analyse (Explain = give reasons WHY)
+    </div>
+  </div>
+
+  <!-- ACTIVITY: Identify ALARM levels of responses -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-activity">✏️</span> ACTIVITY</div>
+    <h3>What ALARM Level Is This Response?</h3>
+    <p>Read each student response and decide what level it is.</p>
+
+    <div class="example-card level-bg-e mb-8" style="border-left-color:#F44336">
+      <div class="ex-level" style="color:#F44336">Response A:</div>
+      <div class="ex-text">"Shipping containers can be used for restaurants."</div>
+    </div>
+    <div class="quiz-options mb-16" style="grid-template-columns:repeat(4,1fr)">
+      <div class="quiz-opt" onclick="checkAlarm(this,'acquire')">Acquire</div>
+      <div class="quiz-opt" onclick="checkAlarm(this,'link')">Link</div>
+      <div class="quiz-opt" onclick="checkAlarm(this,'analyse')">Analyse</div>
+      <div class="quiz-opt" onclick="checkAlarm(this,'respond')">Respond</div>
+    </div>
+
+    <div class="example-card level-bg-b mb-8" style="border-left-color:#2196F3">
+      <div class="ex-level" style="color:#2196F3">Response B:</div>
+      <div class="ex-text">"Upcycling shipping containers into restaurants is beneficial because it reduces waste by giving old containers a new purpose. This approach is also cost-effective because the container already provides the structural frame, so builders spend less on materials. However, the limited space means careful planning is needed to fit all the equipment."</div>
+    </div>
+    <div class="quiz-options mb-16" style="grid-template-columns:repeat(4,1fr)">
+      <div class="quiz-opt" onclick="checkAlarm(this,'analyse')">Acquire</div>
+      <div class="quiz-opt" onclick="checkAlarm(this,'analyse')">Link</div>
+      <div class="quiz-opt" onclick="checkAlarm(this,'analyse','correct')">Analyse</div>
+      <div class="quiz-opt" onclick="checkAlarm(this,'analyse')">Respond</div>
+    </div>
+  </div>
+
+  <div class="mod-section">
+    <div class="self-assess">
+      <h3>Session 2 Checklist</h3>
+      <div class="check-item"><input type="checkbox" id="m2c1" onchange="updateModuleProgress(2);saveAll()"><label for="m2c1">I understand the 5 ALARM levels</label></div>
+      <div class="check-item"><input type="checkbox" id="m2c2" onchange="updateModuleProgress(2);saveAll()"><label for="m2c2">I can break a question into VSCC (Verb, Subject, Content, Concept)</label></div>
+      <div class="check-item"><input type="checkbox" id="m2c3" onchange="updateModuleProgress(2);saveAll()"><label for="m2c3">I can identify what ALARM level a response is</label></div>
+      <div class="check-item"><input type="checkbox" id="m2c4" onchange="updateModuleProgress(2);saveAll()"><label for="m2c4">I know that higher verbs need more detail in my answer</label></div>
+    </div>
+  </div>
+
+  <div class="mod-footer">
+    <button class="nav-btn nav-prev" onclick="switchModule(1)">← Back</button>
+    <button class="nav-btn nav-next" onclick="switchModule(3)">Next: Writing Section 1 →</button>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- MODULE 3: WRITING SECTION 1 — IDENTIFYING & DEFINING              -->
+<!-- ================================================================ -->
+<div class="module" id="mod3">
+  <div class="mod-header">
+    <span class="mod-num">SESSION 3</span>
+    <h1 class="mod-title">Writing Section 1 — Identifying &amp; Defining</h1>
+    <p class="mod-sub">Write about why upcycling containers into restaurants is a good idea</p>
+    <p class="mod-time">About 25 minutes &bull; Worth 5 marks</p>
+  </div>
+
+  <!-- Rubric reminder -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-learn">📖</span> WHAT YOU NEED TO WRITE</div>
+    <div class="info-box">
+      <strong>To get an A (Outstanding) you need to:</strong><br>
+      1. <strong>Describe</strong> the need and benefits of upcycling shipping containers into a portable burger restaurant<br>
+      2. <strong>List and explain</strong> at least 4 success criteria
+    </div>
+    <p class="text-sm">The key verbs are <strong>describe</strong> (ALARM: Link — give details) and <strong>explain</strong> (ALARM: Analyse — give reasons WHY).</p>
+  </div>
+
+  <!-- Word Bank -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-vocab">📝</span> WORD BANK</div>
+    <p>Click any word to copy it. Hover to see the meaning.</p>
+    <div class="word-bank" id="wb3">
+      <div class="word-bank-title">Key Words for Section 1</div>
+      <span class="wb-word" data-def="making something old into something new and useful" onclick="copyWord(this)">upcycling</span>
+      <span class="wb-word" data-def="a large metal box used to transport goods on ships" onclick="copyWord(this)">shipping container</span>
+      <span class="wb-word" data-def="easy to move from place to place" onclick="copyWord(this)">portable</span>
+      <span class="wb-word" data-def="good for the environment, lasts a long time" onclick="copyWord(this)">sustainable</span>
+      <span class="wb-word" data-def="made of separate parts that fit together" onclick="copyWord(this)">modular</span>
+      <span class="wb-word" data-def="to use again for a different purpose" onclick="copyWord(this)">repurpose</span>
+      <span class="wb-word" data-def="works well for its intended purpose" onclick="copyWord(this)">functional</span>
+      <span class="wb-word" data-def="how something looks, its visual appearance" onclick="copyWord(this)">aesthetics</span>
+      <span class="wb-word" data-def="saves money compared to other options" onclick="copyWord(this)">cost-effective</span>
+      <span class="wb-word" data-def="the strong frame that holds something up" onclick="copyWord(this)">structural</span>
+      <span class="wb-word" data-def="a public event with food, music, and activities" onclick="copyWord(this)">festival</span>
+      <span class="wb-word" data-def="fresh air flowing through a space" onclick="copyWord(this)">ventilation</span>
+      <span class="wb-word" data-def="rules about keeping food clean and safe" onclick="copyWord(this)">food safety</span>
+      <span class="wb-word" data-def="keeping clean to prevent illness" onclick="copyWord(this)">hygiene</span>
+      <span class="wb-word" data-def="lessens the amount of rubbish going to landfill" onclick="copyWord(this)">reduce waste</span>
+      <span class="wb-word" data-def="the area around us, nature" onclick="copyWord(this)">environment</span>
+    </div>
+  </div>
+
+  <!-- Connectives -->
+  <div class="mod-section">
+    <div class="connectives">
+      <h4>Linking Words (click to copy)</h4>
+      <div class="conn-group">
+        <span class="conn-label">Adding information:</span>
+        <div class="conn-words">
+          <span class="conn-word" onclick="copyWord(this)">also</span>
+          <span class="conn-word" onclick="copyWord(this)">furthermore</span>
+          <span class="conn-word" onclick="copyWord(this)">in addition</span>
+          <span class="conn-word" onclick="copyWord(this)">as well as</span>
+          <span class="conn-word" onclick="copyWord(this)">moreover</span>
+        </div>
+      </div>
+      <div class="conn-group">
+        <span class="conn-label">Giving examples:</span>
+        <div class="conn-words">
+          <span class="conn-word" onclick="copyWord(this)">for example</span>
+          <span class="conn-word" onclick="copyWord(this)">such as</span>
+          <span class="conn-word" onclick="copyWord(this)">for instance</span>
+        </div>
+      </div>
+      <div class="conn-group">
+        <span class="conn-label">Explaining reasons:</span>
+        <div class="conn-words">
+          <span class="conn-word" onclick="copyWord(this)">because</span>
+          <span class="conn-word" onclick="copyWord(this)">this means that</span>
+          <span class="conn-word" onclick="copyWord(this)">as a result</span>
+          <span class="conn-word" onclick="copyWord(this)">therefore</span>
+          <span class="conn-word" onclick="copyWord(this)">since</span>
+        </div>
+      </div>
+      <div class="conn-group">
+        <span class="conn-label">Contrasting:</span>
+        <div class="conn-words">
+          <span class="conn-word" onclick="copyWord(this)">however</span>
+          <span class="conn-word" onclick="copyWord(this)">although</span>
+          <span class="conn-word" onclick="copyWord(this)">on the other hand</span>
+          <span class="conn-word" onclick="copyWord(this)">despite</span>
+        </div>
+      </div>
+      <div class="conn-group">
+        <span class="conn-label">Concluding:</span>
+        <div class="conn-words">
+          <span class="conn-word" onclick="copyWord(this)">therefore</span>
+          <span class="conn-word" onclick="copyWord(this)">in conclusion</span>
+          <span class="conn-word" onclick="copyWord(this)">overall</span>
+          <span class="conn-word" onclick="copyWord(this)">to summarise</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example responses at each level -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-learn">📖</span> EXAMPLES AT EACH LEVEL</div>
+    <h3>See How Different Levels Look</h3>
+    <button class="reveal-btn" onclick="toggleReveal('ex3levels')">Show Examples</button>
+    <div class="reveal-content" id="ex3levels">
+      <div class="example-card level-bg-e" style="border-left-color:#F44336">
+        <div class="ex-level" style="color:#F44336">E — Limited (1 mark)</div>
+        <div class="ex-text">"A shipping container can be a restaurant."</div>
+        <div class="ex-why">Only identifies what it is. No details or reasons.</div>
+      </div>
+      <div class="example-card level-bg-d" style="border-left-color:#F57C00">
+        <div class="ex-level" style="color:#F57C00">D — Basic (2 marks)</div>
+        <div class="ex-text">"Shipping containers can be turned into restaurants. This is good because it reuses old containers."</div>
+        <div class="ex-why">States a benefit but does not give much detail.</div>
+      </div>
+      <div class="example-card level-bg-c" style="border-left-color:#FF9800">
+        <div class="ex-level" style="color:#FF9800">C — Sound (3 marks)</div>
+        <div class="ex-text">"Upcycling shipping containers into burger restaurants is beneficial because it gives old containers a new purpose instead of sending them to landfill. The container provides a strong structural frame, which means less building materials are needed."</div>
+        <div class="ex-why">States benefits with some reasons. Uses linking words.</div>
+      </div>
+      <div class="example-card level-bg-b" style="border-left-color:#2196F3">
+        <div class="ex-level" style="color:#2196F3">B — High (4 marks)</div>
+        <div class="ex-text">"There is a growing need for sustainable food outlets that can serve communities at festivals and events. Upcycling shipping containers addresses this need because it repurposes unused containers, reducing waste while creating a portable restaurant space. The modular design of containers makes them ideal because they can be transported by truck and set up quickly at different locations."</div>
+        <div class="ex-why">Defines the need and describes multiple benefits with detail.</div>
+      </div>
+      <div class="example-card level-bg-a" style="border-left-color:#4CAF50">
+        <div class="ex-level" style="color:#4CAF50">A — Outstanding (5 marks)</div>
+        <div class="ex-text">"The growing demand for sustainable and portable food outlets has created a need for innovative restaurant solutions. Upcycling shipping containers addresses this need by repurposing the estimated 11 million unused containers worldwide, which would otherwise contribute to environmental waste. Furthermore, the structural strength of shipping containers means they require minimal additional building materials, making the process cost-effective. The standardised dimensions of containers also make them ideal for modular design, allowing restaurant owners to transport them easily to festivals and community events while maintaining food safety standards through proper ventilation and hygiene facilities."</div>
+        <div class="ex-why">Describes the need AND multiple benefits in detail, with evidence, linking words, and connection to the design brief.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WRITE: Paragraph Builder for Benefits -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-write">✍️</span> BUILD YOUR PARAGRAPH</div>
+    <h3>Task 1: Describe the Need and Benefits of Upcycling Containers</h3>
+    <p>Build your paragraph step by step. Complete each step before moving to the next.</p>
+
+    <div class="para-builder">
+      <div class="para-step">
+        <span class="step-num">1</span>
+        <div class="step-content">
+          <div class="step-label">Topic Sentence — State the main idea</div>
+          <div class="step-hint">Start with: "Upcycling shipping containers into restaurants is..." or "There is a need for..."</div>
+          <textarea data-save="s1p1step1" placeholder="Write your topic sentence here..." oninput="saveAll();updateWordCount(this)"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">2</span>
+        <div class="step-content">
+          <div class="step-label">Detail — Give your first benefit with a reason</div>
+          <div class="step-hint">Use: "This is beneficial because..." or "One advantage is... because..."</div>
+          <textarea data-save="s1p1step2" placeholder="Write your first benefit and reason..." oninput="saveAll();updateWordCount(this)"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">3</span>
+        <div class="step-content">
+          <div class="step-label">Detail — Give another benefit with a reason</div>
+          <div class="step-hint">Use: "Furthermore,..." or "In addition,..." or "Another benefit is..."</div>
+          <textarea data-save="s1p1step3" placeholder="Write your second benefit and reason..." oninput="saveAll();updateWordCount(this)"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">4</span>
+        <div class="step-content">
+          <div class="step-label">Conclusion — Sum up why this matters</div>
+          <div class="step-hint">Use: "Therefore,..." or "Overall,..." or "In conclusion,..."</div>
+          <textarea data-save="s1p1step4" placeholder="Write your concluding sentence..." oninput="saveAll();updateWordCount(this)"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn mt-8" onclick="assembleS1Para()">See My Complete Paragraph</button>
+    <div class="reveal-content" id="s1ParaPreview" style="background:#E8F5E9;border:2px solid var(--green)">
+      <p class="text-xs bold" style="color:var(--green)">YOUR ASSEMBLED PARAGRAPH:</p>
+      <p id="s1ParaText" style="line-height:1.8;font-size:.92rem"></p>
+    </div>
+  </div>
+
+  <!-- WRITE: Success Criteria -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-write">✍️</span> BUILD YOUR RESPONSE</div>
+    <h3>Task 2: List and Explain 4 Success Criteria</h3>
+    <p>A <strong>success criterion</strong> is something your design MUST achieve. Write 4 criteria with explanations.</p>
+    <div class="info-box tip-box">
+      <strong>Sentence frame:</strong> "[Criterion]: The container restaurant should [what it must do] because [reason why this matters]."
+    </div>
+
+    <div class="para-builder">
+      <div class="para-step">
+        <span class="step-num">1</span>
+        <div class="step-content">
+          <div class="step-label">Criterion 1 — Portability</div>
+          <div class="step-hint">The restaurant should be portable because... (think: festivals, moving, trucks)</div>
+          <textarea data-save="s1crit1" placeholder="Portability: The container restaurant should..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">2</span>
+        <div class="step-content">
+          <div class="step-label">Criterion 2 — Food Safety</div>
+          <div class="step-hint">The restaurant should meet food safety standards because... (think: hygiene, ventilation, hand washing)</div>
+          <textarea data-save="s1crit2" placeholder="Food Safety: The container restaurant should..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">3</span>
+        <div class="step-content">
+          <div class="step-label">Criterion 3 — Sustainability</div>
+          <div class="step-hint">The design should be sustainable because... (think: recycled materials, energy, waste)</div>
+          <textarea data-save="s1crit3" placeholder="Sustainability: The container restaurant should..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">4</span>
+        <div class="step-content">
+          <div class="step-label">Criterion 4 — Functionality</div>
+          <div class="step-hint">The restaurant should work well because... (think: workflow, serving customers, cooking space)</div>
+          <textarea data-save="s1crit4" placeholder="Functionality: The container restaurant should..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Self-assess -->
+  <div class="mod-section">
+    <div class="self-assess">
+      <h3>Session 3 Checklist</h3>
+      <div class="check-item"><input type="checkbox" id="m3c1" onchange="updateModuleProgress(3);saveAll()"><label for="m3c1">I wrote a paragraph about the need and benefits of upcycling containers</label></div>
+      <div class="check-item"><input type="checkbox" id="m3c2" onchange="updateModuleProgress(3);saveAll()"><label for="m3c2">I used at least 3 words from the word bank</label></div>
+      <div class="check-item"><input type="checkbox" id="m3c3" onchange="updateModuleProgress(3);saveAll()"><label for="m3c3">I used linking words (because, furthermore, therefore, etc.)</label></div>
+      <div class="check-item"><input type="checkbox" id="m3c4" onchange="updateModuleProgress(3);saveAll()"><label for="m3c4">I listed and explained 4 success criteria</label></div>
+    </div>
+  </div>
+
+  <div class="mod-footer">
+    <button class="nav-btn nav-prev" onclick="switchModule(2)">← Back</button>
+    <button class="nav-btn nav-next" onclick="switchModule(4)">Next: Writing Section 2 →</button>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- MODULE 4: WRITING SECTION 2 — RESEARCH & PLANNING                 -->
+<!-- ================================================================ -->
+<div class="module" id="mod4">
+  <div class="mod-header">
+    <span class="mod-num">SESSION 4</span>
+    <h1 class="mod-title">Writing Section 2 — Research &amp; Planning</h1>
+    <p class="mod-sub">Write about the container restaurants you researched and your design choices</p>
+    <p class="mod-time">About 25 minutes &bull; Worth 5 marks</p>
+  </div>
+
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-learn">📖</span> WHAT YOU NEED TO WRITE</div>
+    <div class="info-box">
+      <strong>To get an A (Outstanding) you need:</strong><br>
+      &bull; <strong>Extensive research</strong> into shipping containers and container restaurants<br>
+      &bull; <strong>Detailed sketching, ideation and floor plans</strong> presented as design solutions<br>
+      &bull; <strong>Innovative design solutions</strong> complete and detailed to an outstanding level<br>
+      &bull; All <strong>dimensions accurate</strong>, plans very neatly presented
+    </div>
+    <p class="text-sm">The key verbs here are <strong>research</strong> (show what you found), <strong>present</strong> (show your ideas clearly), and <strong>develop</strong> (create design solutions).</p>
+  </div>
+
+  <!-- Word Bank -->
+  <div class="mod-section">
+    <div class="word-bank" id="wb4">
+      <div class="word-bank-title">Key Words for Section 2</div>
+      <span class="wb-word" data-def="look into something carefully to learn facts" onclick="copyWord(this)">research</span>
+      <span class="wb-word" data-def="to look into and study" onclick="copyWord(this)">investigate</span>
+      <span class="wb-word" data-def="a statement of what the design must achieve" onclick="copyWord(this)">design brief</span>
+      <span class="wb-word" data-def="a drawing showing the layout from above" onclick="copyWord(this)">floor plan</span>
+      <span class="wb-word" data-def="measurements (length, width, height)" onclick="copyWord(this)">dimensions</span>
+      <span class="wb-word" data-def="new and creative" onclick="copyWord(this)">innovative</span>
+      <span class="wb-word" data-def="conditions the design must meet" onclick="copyWord(this)">criteria</span>
+      <span class="wb-word" data-def="look at similarities and differences" onclick="copyWord(this)">compare</span>
+      <span class="wb-word" data-def="the movement of work through a space" onclick="copyWord(this)">workflow</span>
+      <span class="wb-word" data-def="a window where food is given to customers" onclick="copyWord(this)">serving hatch</span>
+      <span class="wb-word" data-def="a roof extension for shade" onclick="copyWord(this)">awning</span>
+      <span class="wb-word" data-def="the relationship between model and real size" onclick="copyWord(this)">scale</span>
+    </div>
+  </div>
+
+  <!-- WRITE: Describe a container restaurant you researched -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-write">✍️</span> BUILD YOUR RESPONSE</div>
+    <h3>Task 1: Describe a Container Restaurant You Researched</h3>
+    <p>Write about one of the container restaurants from your research collage.</p>
+
+    <div class="para-builder">
+      <div class="para-step">
+        <span class="step-num">1</span>
+        <div class="step-content">
+          <div class="step-label">Name and Location</div>
+          <div class="step-hint">"I researched [name] which is located in [place]."</div>
+          <textarea data-save="s2t1step1" placeholder="I researched..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">2</span>
+        <div class="step-content">
+          <div class="step-label">Key Features</div>
+          <div class="step-hint">"This container restaurant features [describe 2-3 features such as serving hatch, seating, signage, awning]."</div>
+          <textarea data-save="s2t1step2" placeholder="This container restaurant features..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">3</span>
+        <div class="step-content">
+          <div class="step-label">What You Learned</div>
+          <div class="step-hint">"I found this useful for my own design because [what idea did you get from it]."</div>
+          <textarea data-save="s2t1step3" placeholder="I found this useful for my design because..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WRITE: PMI Analysis -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-write">✍️</span> BUILD YOUR RESPONSE</div>
+    <h3>Task 2: PMI Analysis of a Container Restaurant</h3>
+    <p>Analyse one container restaurant using Plus (good), Minus (bad), and Interesting.</p>
+
+    <div class="para-builder">
+      <div class="para-step">
+        <span class="step-num" style="background:var(--green)">+</span>
+        <div class="step-content">
+          <div class="step-label" style="color:var(--green)">Plus — A positive feature</div>
+          <div class="step-hint">"A positive feature of [name] is [feature] because [why it is good]."</div>
+          <textarea data-save="s2pmi_p" placeholder="A positive feature is..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num" style="background:var(--red)">−</span>
+        <div class="step-content">
+          <div class="step-label" style="color:var(--red)">Minus — A limitation</div>
+          <div class="step-hint">"A limitation of [name] is [issue] because [why it is a problem]."</div>
+          <textarea data-save="s2pmi_m" placeholder="A limitation is..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num" style="background:var(--blue)">!</span>
+        <div class="step-content">
+          <div class="step-label" style="color:var(--blue)">Interesting — Something noteworthy</div>
+          <div class="step-hint">"An interesting aspect is [feature] because [why it caught your attention]."</div>
+          <textarea data-save="s2pmi_i" placeholder="An interesting aspect is..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WRITE: Explain your design choices -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-write">✍️</span> BUILD YOUR RESPONSE</div>
+    <h3>Task 3: Explain Your Design Choices</h3>
+    <p>Explain why you made specific choices for your container restaurant design.</p>
+
+    <div class="para-builder">
+      <div class="para-step">
+        <span class="step-num">1</span>
+        <div class="step-content">
+          <div class="step-label">Feature Choice</div>
+          <div class="step-hint">"For my container restaurant, I chose to include [feature] because [reason]. This meets the design brief criteria of [which criterion]."</div>
+          <textarea data-save="s2choice1" placeholder="For my container restaurant, I chose to include..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">2</span>
+        <div class="step-content">
+          <div class="step-label">Layout Choice</div>
+          <div class="step-hint">"I designed the floor plan with [layout detail] because [reason]. This helps with [workflow / safety / customer service]."</div>
+          <textarea data-save="s2choice2" placeholder="I designed the floor plan with..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">3</span>
+        <div class="step-content">
+          <div class="step-label">Material Choice</div>
+          <div class="step-hint">"I selected [material] for [part of model] because [reason]. This material is suitable because [property]."</div>
+          <textarea data-save="s2choice3" placeholder="I selected..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mod-section">
+    <div class="self-assess">
+      <h3>Session 4 Checklist</h3>
+      <div class="check-item"><input type="checkbox" id="m4c1" onchange="updateModuleProgress(4);saveAll()"><label for="m4c1">I described a container restaurant I researched with specific details</label></div>
+      <div class="check-item"><input type="checkbox" id="m4c2" onchange="updateModuleProgress(4);saveAll()"><label for="m4c2">I wrote a PMI analysis with reasons (Plus, Minus, Interesting)</label></div>
+      <div class="check-item"><input type="checkbox" id="m4c3" onchange="updateModuleProgress(4);saveAll()"><label for="m4c3">I explained my design choices and connected them to the design brief</label></div>
+      <div class="check-item"><input type="checkbox" id="m4c4" onchange="updateModuleProgress(4);saveAll()"><label for="m4c4">I used linking words and key vocabulary from the word bank</label></div>
+    </div>
+  </div>
+
+  <div class="mod-footer">
+    <button class="nav-btn nav-prev" onclick="switchModule(3)">← Back</button>
+    <button class="nav-btn nav-next" onclick="switchModule(5)">Next: Writing Section 4 →</button>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- MODULE 5: WRITING SECTION 4 — TESTING & EVALUATING                -->
+<!-- ================================================================ -->
+<div class="module" id="mod5">
+  <div class="mod-header">
+    <span class="mod-num">SESSION 5</span>
+    <h1 class="mod-title">Writing Section 4 — Testing &amp; Evaluating</h1>
+    <p class="mod-sub">Evaluate your container restaurant model and suggest improvements</p>
+    <p class="mod-time">About 25 minutes &bull; Worth 5 marks</p>
+  </div>
+
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-learn">📖</span> WHAT YOU NEED TO WRITE</div>
+    <div class="info-box">
+      <strong>To get an A (Outstanding) you need:</strong><br>
+      &bull; <strong>Insightful evaluation with justification</strong> — explain HOW WELL your model meets each criterion and WHY<br>
+      &bull; <strong>Clear and realistic improvements</strong> — explain what you would change and WHY
+    </div>
+    <p class="text-sm">The key verbs are <strong>evaluate</strong> (ALARM: Respond — judge quality with reasons) and <strong>identify</strong> improvements.</p>
+  </div>
+
+  <!-- Word Bank -->
+  <div class="mod-section">
+    <div class="word-bank" id="wb5">
+      <div class="word-bank-title">Key Words for Section 4</div>
+      <span class="wb-word" data-def="judge the quality against set standards" onclick="copyWord(this)">evaluate</span>
+      <span class="wb-word" data-def="give reasons to support your opinion" onclick="copyWord(this)">justify</span>
+      <span class="wb-word" data-def="standards used to judge quality" onclick="copyWord(this)">criteria</span>
+      <span class="wb-word" data-def="changes to make something better" onclick="copyWord(this)">improvement</span>
+      <span class="wb-word" data-def="works well for its purpose" onclick="copyWord(this)">functional</span>
+      <span class="wb-word" data-def="visually attractive, looks good" onclick="copyWord(this)">aesthetically pleasing</span>
+      <span class="wb-word" data-def="good for the environment" onclick="copyWord(this)">sustainable</span>
+      <span class="wb-word" data-def="keeps people safe from harm" onclick="copyWord(this)">safety</span>
+      <span class="wb-word" data-def="how well something works" onclick="copyWord(this)">effectiveness</span>
+      <span class="wb-word" data-def="correct measurements and details" onclick="copyWord(this)">accurate</span>
+      <span class="wb-word" data-def="true to life, looks real" onclick="copyWord(this)">realistic</span>
+      <span class="wb-word" data-def="think back on what happened" onclick="copyWord(this)">reflect</span>
+    </div>
+  </div>
+
+  <!-- WRITE: Evaluation -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-write">✍️</span> BUILD YOUR EVALUATION</div>
+    <h3>Task 1: Evaluate Your Model Against Each Criterion</h3>
+    <p>For each criterion, rate how well your model meets it and explain why.</p>
+
+    <div class="para-builder">
+      <div class="para-step">
+        <span class="step-num">1</span>
+        <div class="step-content">
+          <div class="step-label">Appearance / Aesthetics</div>
+          <div class="step-hint">"The appearance of my model is [good/satisfactory/needs improvement] because [reason]. It looks [description] due to [what you did]."</div>
+          <textarea data-save="s4eval1" placeholder="The appearance of my model is..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">2</span>
+        <div class="step-content">
+          <div class="step-label">Functionality / How Well It Works</div>
+          <div class="step-hint">"My model is functional because [reason]. The [feature] allows [what it does], which meets the design brief requirement of [criterion]."</div>
+          <textarea data-save="s4eval2" placeholder="My model is functional because..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">3</span>
+        <div class="step-content">
+          <div class="step-label">Sustainability</div>
+          <div class="step-hint">"My design considers sustainability by [how]. For example, [specific feature]. This is important because [reason]."</div>
+          <textarea data-save="s4eval3" placeholder="My design considers sustainability by..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num">4</span>
+        <div class="step-content">
+          <div class="step-label">Safety</div>
+          <div class="step-hint">"My design addresses safety by including [feature]. This is important because [reason]. In a real restaurant, this would [what it would do]."</div>
+          <textarea data-save="s4eval4" placeholder="My design addresses safety by..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WRITE: Rank criteria -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-write">✍️</span> RANK AND JUSTIFY</div>
+    <h3>Task 2: Rank Which Criterion Is Most Important and Explain Why</h3>
+    <div class="info-box tip-box">
+      <strong>Sentence frame:</strong> "I ranked [criterion] as the most important because [reason]. Without [criterion], the restaurant would [consequence]."
+    </div>
+    <div class="write-area">
+      <textarea data-save="s4rank" placeholder="I ranked... as the most important because..." style="min-height:100px" oninput="saveAll();updateWordCount(this)"></textarea>
+      <div class="write-meta"><span class="word-count" id="wc_s4rank">0 words</span></div>
+    </div>
+  </div>
+
+  <!-- WRITE: Improvements -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-write">✍️</span> SUGGEST IMPROVEMENTS</div>
+    <h3>Task 3: What Would You Improve?</h3>
+    <p>Suggest 2-3 realistic improvements to your design.</p>
+    <div class="info-box tip-box">
+      <strong>Sentence frame:</strong> "If I could improve my design, I would [change] because [reason]. This would make my design better by [how it improves]."
+    </div>
+    <div class="write-area">
+      <textarea data-save="s4improve" placeholder="If I could improve my design, I would..." style="min-height:140px" oninput="saveAll();updateWordCount(this)"></textarea>
+      <div class="write-meta"><span class="word-count" id="wc_s4improve">0 words</span></div>
+    </div>
+  </div>
+
+  <!-- WWW / EBI / YNS -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-check">🔍</span> FEEDBACK SANDWICH</div>
+    <h3>Annotate Your Own Work: WWW / EBI / YNS</h3>
+    <p>Look back at everything you wrote in Sessions 3, 4 and 5. Give yourself honest feedback.</p>
+
+    <div style="border:2px solid var(--green);border-radius:10px;padding:16px;margin:10px 0;background:#F0F7ED">
+      <h4 style="color:var(--green);font-family:var(--font-heading)">WWW — What Went Well</h4>
+      <p class="text-sm text-grey">What parts of your writing are you proud of? What did you do well?</p>
+      <textarea data-save="s4www" placeholder="What Went Well: I am proud of..." style="min-height:80px" oninput="saveAll()"></textarea>
+    </div>
+    <div style="border:2px solid var(--orange);border-radius:10px;padding:16px;margin:10px 0;background:#FFF8E1">
+      <h4 style="color:var(--orange);font-family:var(--font-heading)">EBI — Even Better If</h4>
+      <p class="text-sm text-grey">What could you improve? What is missing or needs more detail?</p>
+      <textarea data-save="s4ebi" placeholder="Even Better If: I could improve by..." style="min-height:80px" oninput="saveAll()"></textarea>
+    </div>
+    <div style="border:2px solid var(--blue);border-radius:10px;padding:16px;margin:10px 0;background:#E3F2FD">
+      <h4 style="color:var(--blue);font-family:var(--font-heading)">YNS — Your Next Steps</h4>
+      <p class="text-sm text-grey">What will you do to fix the things in EBI? Be specific.</p>
+      <textarea data-save="s4yns" placeholder="Your Next Steps: I will..." style="min-height:80px" oninput="saveAll()"></textarea>
+    </div>
+  </div>
+
+  <div class="mod-section">
+    <div class="self-assess">
+      <h3>Session 5 Checklist</h3>
+      <div class="check-item"><input type="checkbox" id="m5c1" onchange="updateModuleProgress(5);saveAll()"><label for="m5c1">I evaluated my model against 4 criteria with reasons</label></div>
+      <div class="check-item"><input type="checkbox" id="m5c2" onchange="updateModuleProgress(5);saveAll()"><label for="m5c2">I ranked criteria and justified my choice</label></div>
+      <div class="check-item"><input type="checkbox" id="m5c3" onchange="updateModuleProgress(5);saveAll()"><label for="m5c3">I suggested 2-3 realistic improvements with reasons</label></div>
+      <div class="check-item"><input type="checkbox" id="m5c4" onchange="updateModuleProgress(5);saveAll()"><label for="m5c4">I completed the WWW / EBI / YNS feedback sandwich</label></div>
+    </div>
+  </div>
+
+  <div class="mod-footer">
+    <button class="nav-btn nav-prev" onclick="switchModule(4)">← Back</button>
+    <button class="nav-btn nav-next" onclick="switchModule(6)">Next: Final Check →</button>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- MODULE 6: FINAL PORTFOLIO CHECK                                   -->
+<!-- ================================================================ -->
+<div class="module" id="mod6">
+  <div class="mod-header">
+    <span class="mod-num">SESSION 6</span>
+    <h1 class="mod-title">Final Portfolio Check</h1>
+    <p class="mod-sub">Make sure everything is complete and ready for submission</p>
+    <p class="mod-time">About 25 minutes &bull; Your last chance to improve!</p>
+  </div>
+
+  <!-- Complete portfolio checklist -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-check">🔍</span> PORTFOLIO CHECKLIST</div>
+    <h3>Is Everything Complete? Check Every Item.</h3>
+
+    <h4 style="color:var(--blue);font-family:var(--font-heading);margin-top:16px">Section 1 — Identifying and Defining (5 marks)</h4>
+    <div class="checklist">
+      <div class="check-item"><input type="checkbox" id="f1" onchange="updateFinalScore();saveAll()"><label for="f1">I completed the Think-Pair-Share about shipping containers</label></div>
+      <div class="check-item"><input type="checkbox" id="f2" onchange="updateFinalScore();saveAll()"><label for="f2">I completed the video comprehension worksheet</label></div>
+      <div class="check-item"><input type="checkbox" id="f3" onchange="updateFinalScore();saveAll()"><label for="f3">I drew an isometric drawing of a shipping container</label></div>
+      <div class="check-item"><input type="checkbox" id="f4" onchange="updateFinalScore();saveAll()"><label for="f4">I described benefits of upcycling containers (paragraph)</label></div>
+      <div class="check-item"><input type="checkbox" id="f5" onchange="updateFinalScore();saveAll()"><label for="f5">I listed and explained 4+ success criteria</label></div>
+    </div>
+
+    <h4 style="color:var(--blue);font-family:var(--font-heading);margin-top:16px">Section 2 — Research and Planning (5 marks)</h4>
+    <div class="checklist">
+      <div class="check-item"><input type="checkbox" id="f6" onchange="updateFinalScore();saveAll()"><label for="f6">I created a collage of 12+ container food outlets</label></div>
+      <div class="check-item"><input type="checkbox" id="f7" onchange="updateFinalScore();saveAll()"><label for="f7">I completed PMI tables for 3 chosen restaurants</label></div>
+      <div class="check-item"><input type="checkbox" id="f8" onchange="updateFinalScore();saveAll()"><label for="f8">I researched a Sydney container restaurant (paragraph)</label></div>
+      <div class="check-item"><input type="checkbox" id="f9" onchange="updateFinalScore();saveAll()"><label for="f9">I completed the essential spaces mind map</label></div>
+      <div class="check-item"><input type="checkbox" id="f10" onchange="updateFinalScore();saveAll()"><label for="f10">I drew initial sketches (external + internal floor plan)</label></div>
+      <div class="check-item"><input type="checkbox" id="f11" onchange="updateFinalScore();saveAll()"><label for="f11">I completed isometric and orthographic drawings</label></div>
+      <div class="check-item"><input type="checkbox" id="f12" onchange="updateFinalScore();saveAll()"><label for="f12">All dimensions are included and accurate</label></div>
+    </div>
+
+    <h4 style="color:var(--blue);font-family:var(--font-heading);margin-top:16px">Section 3 — Model Construction (10 marks)</h4>
+    <div class="checklist">
+      <div class="check-item"><input type="checkbox" id="f13" onchange="updateFinalScore();saveAll()"><label for="f13">My model is 30cm x 12cm x 12cm (1:20 scale)</label></div>
+      <div class="check-item"><input type="checkbox" id="f14" onchange="updateFinalScore();saveAll()"><label for="f14">The model has a serving window/hatch</label></div>
+      <div class="check-item"><input type="checkbox" id="f15" onchange="updateFinalScore();saveAll()"><label for="f15">The model has a door</label></div>
+      <div class="check-item"><input type="checkbox" id="f16" onchange="updateFinalScore();saveAll()"><label for="f16">The model has interior features (grill, benches, sink, etc.)</label></div>
+      <div class="check-item"><input type="checkbox" id="f17" onchange="updateFinalScore();saveAll()"><label for="f17">The model is neatly constructed with care</label></div>
+      <div class="check-item"><input type="checkbox" id="f18" onchange="updateFinalScore();saveAll()"><label for="f18">I used more than one material</label></div>
+      <div class="check-item"><input type="checkbox" id="f19" onchange="updateFinalScore();saveAll()"><label for="f19">The model matches my floor plan drawings</label></div>
+    </div>
+
+    <h4 style="color:var(--blue);font-family:var(--font-heading);margin-top:16px">Section 4 — Testing and Evaluation (5 marks)</h4>
+    <div class="checklist">
+      <div class="check-item"><input type="checkbox" id="f20" onchange="updateFinalScore();saveAll()"><label for="f20">I took a photo of my completed model</label></div>
+      <div class="check-item"><input type="checkbox" id="f21" onchange="updateFinalScore();saveAll()"><label for="f21">I evaluated my model against criteria with reasons</label></div>
+      <div class="check-item"><input type="checkbox" id="f22" onchange="updateFinalScore();saveAll()"><label for="f22">I ranked criteria and explained why</label></div>
+      <div class="check-item"><input type="checkbox" id="f23" onchange="updateFinalScore();saveAll()"><label for="f23">I suggested improvements with reasons</label></div>
+      <div class="check-item"><input type="checkbox" id="f24" onchange="updateFinalScore();saveAll()"><label for="f24">I wrote a reflection about what I enjoyed and what I would change</label></div>
+    </div>
+
+    <div style="background:var(--bg);border-radius:10px;padding:16px;margin-top:16px;text-align:center">
+      <p class="text-sm text-grey">Items completed:</p>
+      <p style="font-family:var(--font-heading);font-size:2rem;color:var(--blue)" id="finalScoreDisplay">0 / 24</p>
+    </div>
+  </div>
+
+  <!-- Self-grade -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-check">🔍</span> SELF-ASSESSMENT</div>
+    <h3>What Grade Level Do You Think Your Work Is?</h3>
+    <p>Be honest — this helps you know where to focus your improvement time.</p>
+
+    <div class="self-assess">
+      <div class="sa-row">
+        <label><strong>Section 1</strong> — Identifying and Defining (5 marks)</label>
+        <select data-save="selfgrade1" onchange="saveAll()">
+          <option value="">Select...</option>
+          <option value="A">A — Outstanding</option>
+          <option value="B">B — High</option>
+          <option value="C">C — Sound</option>
+          <option value="D">D — Basic</option>
+          <option value="E">E — Limited</option>
+        </select>
+      </div>
+      <div class="sa-row">
+        <label><strong>Section 2</strong> — Research and Planning (5 marks)</label>
+        <select data-save="selfgrade2" onchange="saveAll()">
+          <option value="">Select...</option>
+          <option value="A">A — Outstanding</option>
+          <option value="B">B — High</option>
+          <option value="C">C — Sound</option>
+          <option value="D">D — Basic</option>
+          <option value="E">E — Limited</option>
+        </select>
+      </div>
+      <div class="sa-row">
+        <label><strong>Section 3</strong> — Model Construction (10 marks)</label>
+        <select data-save="selfgrade3" onchange="saveAll()">
+          <option value="">Select...</option>
+          <option value="A">A — Outstanding</option>
+          <option value="B">B — High</option>
+          <option value="C">C — Sound</option>
+          <option value="D">D — Basic</option>
+          <option value="E">E — Limited</option>
+        </select>
+      </div>
+      <div class="sa-row">
+        <label><strong>Section 4</strong> — Testing and Evaluation (5 marks)</label>
+        <select data-save="selfgrade4" onchange="saveAll()">
+          <option value="">Select...</option>
+          <option value="A">A — Outstanding</option>
+          <option value="B">B — High</option>
+          <option value="C">C — Sound</option>
+          <option value="D">D — Basic</option>
+          <option value="E">E — Limited</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final action plan -->
+  <div class="mod-section">
+    <div class="section-tag"><span class="section-icon icon-write">✍️</span> ACTION PLAN</div>
+    <h3>My Top 3 Actions Before Submission</h3>
+    <p>What are the 3 most important things you still need to do?</p>
+    <div class="para-builder">
+      <div class="para-step">
+        <span class="step-num" style="background:var(--red)">!</span>
+        <div class="step-content">
+          <div class="step-label" style="color:var(--red)">Most Important</div>
+          <textarea data-save="action1" placeholder="The most important thing I need to do is..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num" style="background:var(--orange)">2</span>
+        <div class="step-content">
+          <div class="step-label" style="color:var(--orange)">Second Priority</div>
+          <textarea data-save="action2" placeholder="I also need to..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+      <div class="para-step">
+        <span class="step-num" style="background:var(--yellow);color:var(--charcoal)">3</span>
+        <div class="step-content">
+          <div class="step-label" style="color:#B8860B">Third Priority</div>
+          <textarea data-save="action3" placeholder="If I have time, I will also..." oninput="saveAll()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mod-section">
+    <div class="self-assess">
+      <h3>Session 6 Checklist</h3>
+      <div class="check-item"><input type="checkbox" id="m6c1" onchange="updateModuleProgress(6);saveAll()"><label for="m6c1">I checked every item in the portfolio checklist</label></div>
+      <div class="check-item"><input type="checkbox" id="m6c2" onchange="updateModuleProgress(6);saveAll()"><label for="m6c2">I self-assessed my grade level for each section</label></div>
+      <div class="check-item"><input type="checkbox" id="m6c3" onchange="updateModuleProgress(6);saveAll()"><label for="m6c3">I wrote my top 3 action items for improvement</label></div>
+      <div class="check-item"><input type="checkbox" id="m6c4" onchange="updateModuleProgress(6);saveAll()"><label for="m6c4">I feel confident about submitting my portfolio</label></div>
+    </div>
+  </div>
+
+  <div class="mod-footer">
+    <button class="nav-btn nav-prev" onclick="switchModule(5)">← Back</button>
+    <button class="nav-btn nav-finish" onclick="alert('Well done! You have completed all 6 sessions of the Writing Coach. Now go back to your workbook and make sure all your writing is transferred and polished. Good luck!')">Complete! ✓</button>
+  </div>
+</div>
+
+</div><!-- /main-wrap -->
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+const STORAGE_KEY = 'awc-data';
+let saveTimeout;
+
+// ===== MODULE NAVIGATION =====
+function switchModule(n) {
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('.mod-tab').forEach(t => t.classList.remove('active'));
+  const mod = document.getElementById('mod' + n);
+  const tabs = document.querySelectorAll('.mod-tab');
+  if (mod) mod.classList.add('active');
+  if (tabs[n-1]) tabs[n-1].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== REVEAL / COLLAPSE =====
+function toggleReveal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('show');
+}
+
+// ===== QUIZ: Verb level =====
+function checkVerb(el, correctAnswer) {
+  const parent = el.closest('.quiz-item') || el.closest('.mb-16');
+  const opts = parent ? parent.querySelectorAll('.quiz-opt') : el.parentElement.querySelectorAll('.quiz-opt');
+  const fb = parent ? parent.querySelector('.quiz-feedback') : el.parentElement.nextElementSibling;
+  const answers = ['least','some','more','most'];
+  const clickedIdx = Array.from(el.parentElement.children).indexOf(el);
+  const clickedAnswer = answers[clickedIdx];
+
+  opts.forEach(o => { o.classList.remove('correct','incorrect','selected'); o.style.pointerEvents='none'; });
+
+  if (clickedAnswer === correctAnswer) {
+    el.classList.add('correct');
+    if (fb) { fb.textContent = 'Correct! Well done.'; fb.className = 'quiz-feedback show correct'; }
+  } else {
+    el.classList.add('incorrect');
+    opts.forEach((o, i) => { if (answers[i] === correctAnswer) o.classList.add('correct'); });
+    if (fb) { fb.textContent = 'Not quite. The correct answer is highlighted in green.'; fb.className = 'quiz-feedback show incorrect'; }
+  }
+}
+
+// ===== QUIZ: ALARM level =====
+function checkAlarm(el, correctAnswer, isCorrect) {
+  const opts = el.parentElement.querySelectorAll('.quiz-opt');
+  opts.forEach(o => { o.classList.remove('correct','incorrect'); o.style.pointerEvents='none'; });
+
+  if (isCorrect === 'correct' || el.textContent.toLowerCase().trim() === correctAnswer) {
+    el.classList.add('correct');
+  } else {
+    el.classList.add('incorrect');
+    opts.forEach(o => { if (o.textContent.toLowerCase().trim() === correctAnswer) o.classList.add('correct'); });
+  }
+}
+
+// ===== WORD BANK: Copy word =====
+function copyWord(el) {
+  const word = el.textContent.trim();
+  navigator.clipboard.writeText(word).then(() => {
+    const orig = el.style.background;
+    el.style.background = 'var(--green)';
+    el.style.color = 'white';
+    setTimeout(() => { el.style.background = ''; el.style.color = ''; }, 400);
+  }).catch(() => {
+    // Fallback: select the text
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+}
+
+// ===== WORD COUNT =====
+function updateWordCount(textarea) {
+  const text = textarea.value.trim();
+  const words = text ? text.split(/\s+/).length : 0;
+  const id = textarea.getAttribute('data-save');
+  const wcEl = document.getElementById('wc_' + id);
+  if (wcEl) {
+    wcEl.textContent = words + ' word' + (words !== 1 ? 's' : '');
+    wcEl.className = 'word-count ' + (words >= 30 ? 'good' : words >= 10 ? '' : 'low');
+  }
+}
+
+// ===== ASSEMBLE SECTION 1 PARAGRAPH =====
+function assembleS1Para() {
+  const steps = ['s1p1step1','s1p1step2','s1p1step3','s1p1step4'];
+  const texts = steps.map(s => {
+    const el = document.querySelector('[data-save="'+s+'"]');
+    return el ? el.value.trim() : '';
+  }).filter(t => t);
+
+  const preview = document.getElementById('s1ParaPreview');
+  const textEl = document.getElementById('s1ParaText');
+  if (preview && textEl) {
+    textEl.textContent = texts.join(' ') || '(Write in each step above to see your paragraph here)';
+    preview.classList.add('show');
+  }
+}
+
+// ===== FINAL CHECKLIST SCORE =====
+function updateFinalScore() {
+  let count = 0;
+  for (let i = 1; i <= 24; i++) {
+    const cb = document.getElementById('f' + i);
+    if (cb && cb.checked) count++;
+  }
+  const display = document.getElementById('finalScoreDisplay');
+  if (display) display.textContent = count + ' / 24';
+}
+
+// ===== MODULE PROGRESS =====
+function updateModuleProgress(modNum) {
+  const checkboxIds = {
+    1: ['m1c1','m1c2','m1c3','m1c4'],
+    2: ['m2c1','m2c2','m2c3','m2c4'],
+    3: ['m3c1','m3c2','m3c3','m3c4'],
+    4: ['m4c1','m4c2','m4c3','m4c4'],
+    5: ['m5c1','m5c2','m5c3','m5c4'],
+    6: ['m6c1','m6c2','m6c3','m6c4']
+  };
+
+  const ids = checkboxIds[modNum];
+  if (!ids) return;
+
+  const allChecked = ids.every(id => {
+    const cb = document.getElementById(id);
+    return cb && cb.checked;
+  });
+
+  const tabs = document.querySelectorAll('.mod-tab');
+  if (tabs[modNum-1]) {
+    if (allChecked) tabs[modNum-1].classList.add('completed');
+    else tabs[modNum-1].classList.remove('completed');
+  }
+
+  updateOverallProgress();
+}
+
+function updateOverallProgress() {
+  let completed = 0;
+  for (let i = 1; i <= 6; i++) {
+    const tab = document.querySelectorAll('.mod-tab')[i-1];
+    if (tab && tab.classList.contains('completed')) completed++;
+  }
+
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+  if (fill) fill.style.width = Math.round((completed/6)*100) + '%';
+  if (label) label.textContent = completed + ' / 6 modules complete';
+}
+
+// ===== SAVE / LOAD =====
+function saveAll() {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    const data = {};
+    // Save all inputs with data-save
+    document.querySelectorAll('[data-save]').forEach(el => {
+      const key = el.getAttribute('data-save');
+      if (el.type === 'checkbox') data[key] = el.checked;
+      else if (el.tagName === 'SELECT') data[key] = el.value;
+      else data[key] = el.value;
+    });
+    // Save student name
+    const nameEl = document.getElementById('studentName');
+    if (nameEl) data['_studentName'] = nameEl.value;
+    // Save checklist items
+    for (let i = 1; i <= 24; i++) {
+      const cb = document.getElementById('f' + i);
+      if (cb) data['f' + i] = cb.checked;
+    }
+    // Save module checkboxes
+    for (let m = 1; m <= 6; m++) {
+      for (let c = 1; c <= 4; c++) {
+        const cb = document.getElementById('m'+m+'c'+c);
+        if (cb) data['m'+m+'c'+c] = cb.checked;
+      }
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+    const flash = document.getElementById('saveFlash');
+    if (flash) { flash.textContent = 'Saved!'; flash.classList.add('active'); setTimeout(() => { flash.textContent = 'All progress saved'; flash.classList.remove('active'); }, 1500); }
+  }, 500);
+}
+
+function loadAll() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    // Restore inputs
+    document.querySelectorAll('[data-save]').forEach(el => {
+      const key = el.getAttribute('data-save');
+      if (data[key] !== undefined) {
+        if (el.type === 'checkbox') el.checked = data[key];
+        else if (el.tagName === 'SELECT') el.value = data[key];
+        else el.value = data[key];
+      }
+    });
+    // Restore student name
+    const nameEl = document.getElementById('studentName');
+    if (nameEl && data['_studentName']) nameEl.value = data['_studentName'];
+    // Restore checklist
+    for (let i = 1; i <= 24; i++) {
+      const cb = document.getElementById('f' + i);
+      if (cb && data['f' + i] !== undefined) cb.checked = data['f' + i];
+    }
+    // Restore module checkboxes
+    for (let m = 1; m <= 6; m++) {
+      for (let c = 1; c <= 4; c++) {
+        const cb = document.getElementById('m'+m+'c'+c);
+        if (cb && data['m'+m+'c'+c] !== undefined) cb.checked = data['m'+m+'c'+c];
+      }
+      updateModuleProgress(m);
+    }
+    updateFinalScore();
+  } catch(e) { console.error('Load error:', e); }
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  loadAll();
+  // Update word counts for any pre-filled textareas
+  document.querySelectorAll('textarea[data-save]').forEach(ta => {
+    if (ta.value) updateWordCount(ta);
+  });
+});
+</script>
+
+</body>
+</html>
