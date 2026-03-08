@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Guide — Assessment Writing Coach &amp; Design Portfolio</title>
+<style>
+:root{--blue:#1B4965;--orange:#E07A3A;--grey:#5C6B73;--yellow:#F2C744;--bg:#F5F0EB;--charcoal:#2D3142;--green:#7FB069;--purple:#8E5DB2;--white:#FFFFFF;--light-grey:#E8E4E0;--red:#E05555;--font-heading:"Franklin Gothic Medium","DIN Condensed","Arial Narrow",sans-serif;--font-body:"Segoe UI","Helvetica Neue",Arial,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--light-grey);color:var(--charcoal);line-height:1.6;padding:24px 16px}
+
+.guide{max-width:880px;margin:0 auto}
+
+/* Header */
+.header{background:linear-gradient(135deg,var(--charcoal) 0%,#3D4258 100%);color:var(--white);padding:32px 36px 28px;border-radius:12px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::after{content:"";position:absolute;top:0;right:0;bottom:0;width:220px;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(255,255,255,.03) 18px,rgba(255,255,255,.03) 20px)}
+.header .badge{background:var(--red);font-family:var(--font-heading);padding:4px 14px;border-radius:20px;font-size:.82rem;letter-spacing:1px;font-weight:700;display:inline-block;margin-bottom:8px}
+.header h1{font-family:var(--font-heading);font-size:1.8rem;letter-spacing:.5px;margin-bottom:4px}
+.header p{font-size:.95rem;opacity:.8}
+
+/* TOC */
+.toc{background:var(--white);border-radius:10px;padding:20px 28px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.toc h2{font-family:var(--font-heading);font-size:1.1rem;color:var(--blue);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.toc ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.toc a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--charcoal);padding:6px 10px;border-radius:6px;font-size:.9rem;transition:background .15s}
+.toc a:hover{background:var(--bg)}
+.toc .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* Cards */
+.card{background:var(--white);border-radius:10px;margin-bottom:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.card-header{padding:20px 28px;display:flex;align-items:center;gap:14px}
+.card-num{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:1.1rem;color:var(--white);flex-shrink:0}
+.card-header-text h2{font-family:var(--font-heading);font-size:1.15rem;letter-spacing:.5px}
+.card-header-text p{font-size:.85rem;color:var(--grey)}
+.card-body{padding:0 28px 24px}
+
+/* Info boxes */
+.info{background:var(--bg);border-radius:8px;padding:14px 18px;margin:12px 0;font-size:.9rem;border-left:5px solid var(--blue)}
+.info strong{color:var(--blue)}
+.info.warn{border-left-color:var(--orange);background:#FFF7ED}
+.info.warn strong{color:var(--orange)}
+.info.tip{border-left-color:var(--green);background:#F0F7ED}
+.info.tip strong{color:var(--green)}
+.info.important{border-left-color:var(--red);background:#FEF2F2}
+.info.important strong{color:var(--red)}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.88rem}
+th{background:var(--blue);color:var(--white);font-family:var(--font-heading);font-size:.82rem;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left}
+td{padding:10px 14px;border-bottom:1px solid var(--light-grey);vertical-align:top}
+tr:nth-child(even) td{background:#FAFAF8}
+td strong{color:var(--blue)}
+
+/* Lists */
+ul,ol{margin:8px 0 8px 20px}
+li{margin-bottom:6px;font-size:.92rem}
+li strong{color:var(--charcoal)}
+
+/* Steps */
+.step{display:flex;gap:14px;margin:12px 0;align-items:flex-start}
+.step-num{width:30px;height:30px;border-radius:50%;background:var(--orange);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:.85rem;flex-shrink:0;margin-top:2px}
+.step-text{flex:1;font-size:.92rem}
+
+/* Links section */
+.link-box{background:var(--white);border:2px solid var(--blue);border-radius:10px;padding:16px 20px;margin:12px 0}
+.link-box h3{font-family:var(--font-heading);font-size:1rem;color:var(--blue);margin-bottom:8px}
+.link-row{display:flex;align-items:center;gap:10px;margin:8px 0;padding:8px 12px;background:var(--bg);border-radius:6px}
+.link-row a{color:var(--blue);font-weight:600;word-break:break-all;font-size:.88rem}
+.link-row .label{font-size:.8rem;color:var(--grey);white-space:nowrap;min-width:120px}
+.copy-btn{background:var(--blue);color:var(--white);border:none;padding:4px 12px;border-radius:4px;font-size:.78rem;cursor:pointer;white-space:nowrap}
+.copy-btn:hover{background:#234E6F}
+
+/* Timeline */
+.timeline{position:relative;padding-left:24px;margin:16px 0}
+.timeline::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:3px;background:var(--light-grey);border-radius:2px}
+.tl-item{position:relative;margin-bottom:16px;padding-left:20px}
+.tl-item::before{content:"";position:absolute;left:-20px;top:6px;width:14px;height:14px;border-radius:50%;border:3px solid var(--blue);background:var(--white)}
+.tl-item.done::before{background:var(--green);border-color:var(--green)}
+.tl-item h4{font-family:var(--font-heading);font-size:.95rem;color:var(--charcoal);margin-bottom:2px}
+.tl-item p{font-size:.85rem;color:var(--grey)}
+
+/* Lesson plan */
+.lesson-plan{border:2px solid var(--light-grey);border-radius:10px;overflow:hidden;margin:16px 0}
+.lp-header{background:var(--bg);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--light-grey)}
+.lp-header h3{font-family:var(--font-heading);font-size:1rem;color:var(--charcoal)}
+.lp-header .week{font-size:.85rem;color:var(--grey);font-weight:600}
+.lp-body{padding:16px 20px}
+.lp-row{display:flex;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--light-grey)}
+.lp-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.lp-time{min-width:80px;font-family:var(--font-heading);font-size:.85rem;color:var(--orange);padding-top:2px}
+.lp-content{flex:1;font-size:.9rem}
+.lp-content strong{color:var(--blue)}
+
+/* Print */
+@media print{
+  @page{size:A4;margin:15mm 12mm}
+  body{padding:0;background:white}
+  .header{-webkit-print-color-adjust:exact;print-color-adjust:exact;border-radius:0;margin-bottom:16px}
+  .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}
+  .card-num{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .info,.info.warn,.info.tip,.info.important{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .link-box{break-inside:avoid}
+  .lesson-plan{break-inside:avoid}
+  .copy-btn{display:none}
+}
+@media(max-width:600px){
+  .toc ul{grid-template-columns:1fr}
+  .card-body{padding:0 16px 20px}
+  .card-header{padding:16px}
+  .lp-row{flex-direction:column;gap:4px}
+}
+</style>
+</head>
+<body>
+
+<div class="guide">
+
+  <div class="header">
+    <span class="badge">TEACHER GUIDE</span>
+    <h1>Assessment Writing Coach &amp; Design Portfolio</h1>
+    <p>Year 8 Technology Mandatory &mdash; From Container to Countertop &mdash; Weeks 6&ndash;10</p>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h2>Contents</h2>
+    <ul>
+      <li><a href="#overview"><span class="dot" style="background:var(--blue)"></span> Overview &amp; Purpose</a></li>
+      <li><a href="#links"><span class="dot" style="background:var(--green)"></span> Student Links &amp; Access</a></li>
+      <li><a href="#how-it-works"><span class="dot" style="background:var(--orange)"></span> How It Works</a></li>
+      <li><a href="#sharing"><span class="dot" style="background:var(--purple)"></span> How Students Share Progress</a></li>
+      <li><a href="#schedule"><span class="dot" style="background:var(--red)"></span> 6-Lesson Schedule</a></li>
+      <li><a href="#lesson1"><span class="dot" style="background:var(--orange)"></span> Lesson 1 (T1-L15)</a></li>
+      <li><a href="#lesson2"><span class="dot" style="background:var(--orange)"></span> Lesson 2 (T1-L16)</a></li>
+      <li><a href="#lesson3"><span class="dot" style="background:var(--orange)"></span> Lesson 3 (T1-L17)</a></li>
+      <li><a href="#lesson4"><span class="dot" style="background:var(--orange)"></span> Lesson 4 (T1-L18)</a></li>
+      <li><a href="#lesson5"><span class="dot" style="background:var(--orange)"></span> Lesson 5 (T1-L19)</a></li>
+      <li><a href="#lesson6"><span class="dot" style="background:var(--orange)"></span> Lesson 6 (T1-L20)</a></li>
+      <li><a href="#differentiation"><span class="dot" style="background:var(--green)"></span> Differentiation &amp; EAL/D</a></li>
+      <li><a href="#marking"><span class="dot" style="background:var(--blue)"></span> Marking &amp; Assessment</a></li>
+      <li><a href="#troubleshooting"><span class="dot" style="background:var(--grey)"></span> Troubleshooting</a></li>
+      <li><a href="#reuse"><span class="dot" style="background:var(--purple)"></span> Reuse for Year 7</a></li>
+    </ul>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="card" id="overview">
+    <div class="card-header" style="background:linear-gradient(135deg,var(--blue),#234E6F);color:var(--white)">
+      <div class="card-num" style="background:rgba(255,255,255,.2)">&#128218;</div>
+      <div class="card-header-text" style="color:var(--white)">
+        <h2>Overview &amp; Purpose</h2>
+        <p style="color:rgba(255,255,255,.8)">What these tools are and why they exist</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <p style="margin:12px 0">During Weeks 6&ndash;10, students are building their 1:20 scale cardboard models. While you circulate helping with construction, students also need to <strong>develop their academic writing skills</strong> for the design portfolio (Part A of the assessment).</p>
+
+      <p style="margin:12px 0">Two interactive tools have been created to run alongside model construction:</p>
+
+      <table>
+        <tr>
+          <th>Tool</th>
+          <th>Purpose</th>
+          <th>When</th>
+        </tr>
+        <tr>
+          <td><strong>Assessment Writing Coach</strong></td>
+          <td>6-session scaffolded writing program teaching rubric literacy, ALARM/VSCC framework, paragraph construction, and self-assessment. Builds writing skills progressively for HSC preparation.</td>
+          <td>~25 min per lesson, self-paced on devices during construction time</td>
+        </tr>
+        <tr>
+          <td><strong>Design Portfolio</strong></td>
+          <td>Digital submission template for the assessment task. Students fill in all 4 sections, upload images of drawings and model, complete evaluation cards.</td>
+          <td>Students work on this throughout weeks 5&ndash;10, submitting by 25 March</td>
+        </tr>
+      </table>
+
+      <div class="info tip">
+        <strong>Key design principle:</strong> Both tools are self-guided, so students work independently while you focus on hands-on model construction support. Each Writing Coach session takes ~25 minutes, leaving ~50 minutes per lesson for construction.
+      </div>
+
+      <div class="info">
+        <strong>EAL/D scaffolding built in:</strong> Word banks with simple definitions on hover, sentence frames at multiple levels (emerging/developing/proficient), step-by-step paragraph builders, example responses at all grade levels (A through E), connectives wall organised by purpose.
+      </div>
+    </div>
+  </div>
+
+  <!-- LINKS -->
+  <div class="card" id="links">
+    <div class="card-header">
+      <div class="card-num" style="background:var(--green)">&#128279;</div>
+      <div class="card-header-text">
+        <h2>Student Links &amp; Access</h2>
+        <p>Share these links with students via Google Classroom</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="link-box">
+        <h3>Direct Links (GitHub Pages &mdash; always up to date)</h3>
+
+        <div class="link-row">
+          <span class="label">Index Page:</span>
+          <a href="https://yunshugao.github.io/y8-worksheets/" target="_blank">yunshugao.github.io/y8-worksheets/</a>
+          <button class="copy-btn" onclick="copyLink('https://yunshugao.github.io/y8-worksheets/')">Copy</button>
+        </div>
+
+        <div class="link-row">
+          <span class="label">Writing Coach:</span>
+          <a href="https://yunshugao.github.io/y8-worksheets/Assessment-Writing-Coach.html" target="_blank">yunshugao.github.io/y8-worksheets/Assessment-Writing-Coach.html</a>
+          <button class="copy-btn" onclick="copyLink('https://yunshugao.github.io/y8-worksheets/Assessment-Writing-Coach.html')">Copy</button>
+        </div>
+
+        <div class="link-row">
+          <span class="label">Design Portfolio:</span>
+          <a href="https://yunshugao.github.io/y8-worksheets/Design-Portfolio.html" target="_blank">yunshugao.github.io/y8-worksheets/Design-Portfolio.html</a>
+          <button class="copy-btn" onclick="copyLink('https://yunshugao.github.io/y8-worksheets/Design-Portfolio.html')">Copy</button>
+        </div>
+      </div>
+
+      <div class="info warn">
+        <strong>Important:</strong> Students do NOT need a GitHub account. They just click the link and start working. All data saves automatically in their browser&rsquo;s localStorage on that device.
+      </div>
+
+      <div class="info important">
+        <strong>Same device, same browser:</strong> Because data is saved in localStorage, students must use the <em>same device and same browser</em> each lesson. If they switch devices, they will start fresh. To transfer progress, they should use the <strong>Share Link</strong> button (see below).
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="card" id="how-it-works">
+    <div class="card-header">
+      <div class="card-num" style="background:var(--orange)">&#9881;&#65039;</div>
+      <div class="card-header-text">
+        <h2>How It Works</h2>
+        <p>Quick overview of the tools&rsquo; features</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="font-family:var(--font-heading);margin:12px 0 8px;color:var(--blue)">Writing Coach Features</h3>
+      <ul>
+        <li><strong>6 tabbed modules</strong> &mdash; students click through tabs at the top to move between sessions</li>
+        <li><strong>Auto-save</strong> &mdash; all typed responses save to localStorage every 500ms</li>
+        <li><strong>Progress tracking</strong> &mdash; green progress bar at the top, and tabs show a green tick when completed</li>
+        <li><strong>Word banks</strong> &mdash; clickable words with hover definitions; click to copy to clipboard</li>
+        <li><strong>Sentence frames</strong> &mdash; fill-in-the-blank starters for emerging writers</li>
+        <li><strong>Paragraph builders</strong> &mdash; step-by-step guided paragraph assembly</li>
+        <li><strong>Example responses</strong> &mdash; collapsible examples at all 5 grade levels (E through A)</li>
+        <li><strong>Interactive quizzes</strong> &mdash; verb level matching, ALARM identification</li>
+        <li><strong>Self-assessment checklists</strong> &mdash; students tick off success criteria</li>
+        <li><strong>Save as PDF</strong> &mdash; print button generates clean PDF of all work</li>
+      </ul>
+
+      <h3 style="font-family:var(--font-heading);margin:16px 0 8px;color:var(--blue)">Design Portfolio Features</h3>
+      <ul>
+        <li><strong>4 assessment sections</strong> &mdash; colour-coded to match assessment rubric</li>
+        <li><strong>Image upload</strong> &mdash; click boxes to upload photos of drawings, floor plans, and model</li>
+        <li><strong>Scale conversion table</strong> &mdash; 1:20 ratio practice with editable fields</li>
+        <li><strong>PMI analysis grid</strong> &mdash; Plus/Minus/Interesting side-by-side</li>
+        <li><strong>Evaluation cards</strong> &mdash; clickable 1&ndash;5 rating buttons for each criterion</li>
+        <li><strong>Final checklist</strong> &mdash; 17-item pre-submission checklist</li>
+        <li><strong>Progress bar</strong> &mdash; real-time percentage of fields completed</li>
+        <li><strong>Share Link</strong> &mdash; encodes all text data in URL for teacher viewing</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SHARING -->
+  <div class="card" id="sharing">
+    <div class="card-header">
+      <div class="card-num" style="background:var(--purple)">&#128228;</div>
+      <div class="card-header-text">
+        <h2>How Students Share Progress</h2>
+        <p>The share-via-link system explained</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="font-family:var(--font-heading);margin:12px 0 8px;color:var(--blue)">Student Steps</h3>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">Student completes some or all of their work in the Writing Coach or Design Portfolio.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">Student clicks the <strong style="color:var(--green)">Share Link</strong> button (green button in the top toolbar).</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">The tool generates a URL that contains all their written responses encoded in the link. The link is automatically copied to their clipboard.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">Student pastes the link into Google Classroom (assignment submission, private comment, or a Google Doc).</div>
+      </div>
+
+      <h3 style="font-family:var(--font-heading);margin:16px 0 8px;color:var(--blue)">Teacher Steps</h3>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">Open the student&rsquo;s shared link in your browser. All their text responses and ratings will appear pre-filled.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">Check the progress bar to see overall completion percentage.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">Review individual responses and provide feedback via Google Classroom.</div>
+      </div>
+
+      <div class="info warn">
+        <strong>Limitation &mdash; images:</strong> Uploaded images (drawings, photos) are stored only in the student&rsquo;s browser and are NOT included in the share link (too large). Students must upload images separately to Google Classroom. The share link only transfers text, checkboxes, and ratings.
+      </div>
+
+      <div class="info tip">
+        <strong>Pro tip:</strong> Ask students to share their link at the <em>start</em> of each lesson so you can check who is on track and who needs support. You can open multiple student links in browser tabs for quick comparison.
+      </div>
+    </div>
+  </div>
+
+  <!-- 6-LESSON SCHEDULE -->
+  <div class="card" id="schedule">
+    <div class="card-header">
+      <div class="card-num" style="background:var(--red)">&#128197;</div>
+      <div class="card-header-text">
+        <h2>6-Lesson Schedule Overview</h2>
+        <p>Mapping Writing Coach sessions to lessons T1-L15 through T1-L20</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="info">
+        <strong>Dual-track structure:</strong> Each 75-minute lesson is split into ~25 min Writing Coach (self-guided on devices) + ~50 min model construction (teacher-guided). Students rotate or do Writing Coach first, then construction.
+      </div>
+
+      <table>
+        <tr>
+          <th>Lesson</th>
+          <th>Week</th>
+          <th>Writing Coach Module</th>
+          <th>Construction Activity</th>
+        </tr>
+        <tr>
+          <td><strong>T1-L15</strong></td>
+          <td>Week 6</td>
+          <td>Session 1: Understanding Assessment &amp; Rubrics</td>
+          <td>Net construction &mdash; cutting cardboard, preparing pieces</td>
+        </tr>
+        <tr>
+          <td><strong>T1-L16</strong></td>
+          <td>Week 6</td>
+          <td>Session 2: ALARM &amp; Breaking Down Questions</td>
+          <td>Model assembly &mdash; folding, taping/gluing walls</td>
+        </tr>
+        <tr>
+          <td><strong>T1-L17</strong></td>
+          <td>Week 7</td>
+          <td>Session 3: Writing Section 1 (Identifying &amp; Defining)</td>
+          <td>Interior features &mdash; counter, equipment, partitions</td>
+        </tr>
+        <tr>
+          <td><strong>T1-L18</strong></td>
+          <td>Week 7</td>
+          <td>Session 4: Writing Section 2 (Research &amp; Planning)</td>
+          <td>Interior detailing &mdash; signage, accessories, finishing</td>
+        </tr>
+        <tr>
+          <td><strong>T1-L19</strong></td>
+          <td>Week 8</td>
+          <td>Session 5: Writing Section 4 (Testing &amp; Evaluating)</td>
+          <td>Model finishing &mdash; final touches, photographing model</td>
+        </tr>
+        <tr>
+          <td><strong>T1-L20</strong></td>
+          <td>Week 8</td>
+          <td>Session 6: Final Portfolio Check</td>
+          <td>Portfolio completion &mdash; Design Portfolio submission prep</td>
+        </tr>
+      </table>
+
+      <div class="info tip">
+        <strong>Flexibility:</strong> If a student finishes their Writing Coach module early, they can start their Design Portfolio or continue model construction. The modules are designed to be self-paced.
+      </div>
+    </div>
+  </div>
+
+  <!-- INDIVIDUAL LESSON PLANS -->
+
+  <!-- Lesson 1 -->
+  <div class="card" id="lesson1">
+    <div class="card-header" style="background:var(--orange);color:var(--white)">
+      <div class="card-num" style="background:rgba(255,255,255,.2)">L15</div>
+      <div class="card-header-text" style="color:var(--white)">
+        <h2>Lesson 1 &mdash; T1-L15 (Week 6)</h2>
+        <p style="color:rgba(255,255,255,.8)">Writing Coach Session 1 + Net Construction</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="lesson-plan">
+        <div class="lp-header">
+          <h3>Lesson Plan &mdash; 75 minutes</h3>
+          <span class="week">Week 6, Lesson 1</span>
+        </div>
+        <div class="lp-body">
+          <div class="lp-row">
+            <div class="lp-time">0&ndash;5 min</div>
+            <div class="lp-content">
+              <strong>Setup:</strong> Students open devices and navigate to the Writing Coach link. Project the link on the board. Explain the dual-track structure: &ldquo;You will spend about 25 minutes working through the Writing Coach on your device, then the rest of the lesson on model construction.&rdquo;
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">5&ndash;30 min</div>
+            <div class="lp-content">
+              <strong>Writing Coach &mdash; Session 1:</strong> Understanding Assessment &amp; Rubrics
+              <ul>
+                <li>Students read through the rubric explorer (5 grade levels with &ldquo;I can&rdquo; statements)</li>
+                <li>Complete the verb quiz (matching verbs to thinking levels)</li>
+                <li>Self-paced &mdash; circulate briefly to ensure all students have opened the tool</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">30&ndash;70 min</div>
+            <div class="lp-content">
+              <strong>Model Construction:</strong> Cutting and assembling the net
+              <ul>
+                <li>Distribute cardboard sheets and tools</li>
+                <li>Students measure 30 cm &times; 12 cm &times; 12 cm net using their scale calculations</li>
+                <li>Demonstrate cutting technique &mdash; safety with craft knives/scissors</li>
+                <li>Circulate and assist with measurements and accuracy</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">70&ndash;75 min</div>
+            <div class="lp-content">
+              <strong>Pack up &amp; check:</strong> Materials stored safely. Quick show of hands: &ldquo;Who completed Session 1?&rdquo; Remind students they can revisit at home.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info">
+        <strong>Teacher focus during construction:</strong> Accuracy of measurements. Use a ruler to spot-check student nets. This is an engineering unit &mdash; emphasise precision.
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson 2 -->
+  <div class="card" id="lesson2">
+    <div class="card-header" style="background:var(--orange);color:var(--white)">
+      <div class="card-num" style="background:rgba(255,255,255,.2)">L16</div>
+      <div class="card-header-text" style="color:var(--white)">
+        <h2>Lesson 2 &mdash; T1-L16 (Week 6)</h2>
+        <p style="color:rgba(255,255,255,.8)">Writing Coach Session 2 + Model Assembly</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="lesson-plan">
+        <div class="lp-header">
+          <h3>Lesson Plan &mdash; 75 minutes</h3>
+          <span class="week">Week 6, Lesson 2</span>
+        </div>
+        <div class="lp-body">
+          <div class="lp-row">
+            <div class="lp-time">0&ndash;5 min</div>
+            <div class="lp-content">
+              <strong>Do Now:</strong> Students open Writing Coach and click on the <strong>Session 2</strong> tab. Write on board: &ldquo;Today: Learn ALARM &amp; VSCC, then continue building your model.&rdquo;
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">5&ndash;30 min</div>
+            <div class="lp-content">
+              <strong>Writing Coach &mdash; Session 2:</strong> ALARM &amp; Breaking Down Questions
+              <ul>
+                <li>Students learn the ALARM matrix (Acquire, Link, Analyse, Respond, Make)</li>
+                <li>Practise VSCC breakdown (Verb, Subject, Content, Concept)</li>
+                <li>Complete 2 VSCC practice activities and the ALARM level quiz</li>
+                <li>Mini check-in halfway: ask 2&ndash;3 students to explain what VSCC stands for</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">30&ndash;70 min</div>
+            <div class="lp-content">
+              <strong>Model Construction:</strong> Folding and assembling walls
+              <ul>
+                <li>Students fold the net along scored lines</li>
+                <li>Demonstrate taping/gluing technique for clean joins</li>
+                <li>Cut windows and serving hatch openings</li>
+                <li>Begin constructing the box structure</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">70&ndash;75 min</div>
+            <div class="lp-content">
+              <strong>Exit check:</strong> Quick verbal quiz &mdash; &ldquo;What does the V in VSCC stand for?&rdquo; Pack up materials.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson 3 -->
+  <div class="card" id="lesson3">
+    <div class="card-header" style="background:var(--orange);color:var(--white)">
+      <div class="card-num" style="background:rgba(255,255,255,.2)">L17</div>
+      <div class="card-header-text" style="color:var(--white)">
+        <h2>Lesson 3 &mdash; T1-L17 (Week 7)</h2>
+        <p style="color:rgba(255,255,255,.8)">Writing Coach Session 3 + Interior Features</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="lesson-plan">
+        <div class="lp-header">
+          <h3>Lesson Plan &mdash; 75 minutes</h3>
+          <span class="week">Week 7, Lesson 1</span>
+        </div>
+        <div class="lp-body">
+          <div class="lp-row">
+            <div class="lp-time">0&ndash;5 min</div>
+            <div class="lp-content">
+              <strong>Do Now:</strong> Open Writing Coach &rarr; Session 3 tab. Also introduce the <strong>Design Portfolio</strong> link: &ldquo;From today, you should also start filling in your Design Portfolio &mdash; this is what you submit for your assessment.&rdquo;
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">5&ndash;30 min</div>
+            <div class="lp-content">
+              <strong>Writing Coach &mdash; Session 3:</strong> Writing Section 1 (Identifying &amp; Defining)
+              <ul>
+                <li>Students use word banks and sentence frames to write about containers</li>
+                <li>Practice paragraph builder (4-step process for benefits paragraph)</li>
+                <li>Read example responses at different grade levels</li>
+                <li><em>After completing Session 3:</em> students should copy their best writing into the <strong>Design Portfolio</strong> Section 1</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">30&ndash;70 min</div>
+            <div class="lp-content">
+              <strong>Model Construction:</strong> Interior features
+              <ul>
+                <li>Students create interior elements: service counter, prep benches, equipment</li>
+                <li>Use scrap cardboard for interior partitions and fixtures</li>
+                <li>Emphasise scale accuracy &mdash; interior items should be proportional</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">70&ndash;75 min</div>
+            <div class="lp-content">
+              <strong>Check-in:</strong> Ask students to share their Writing Coach link so you can see Session 3 progress. Remind: &ldquo;Start filling in your Design Portfolio at home too.&rdquo;
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info tip">
+        <strong>Key transition moment:</strong> From Lesson 3 onward, students should be transferring their practised writing from the Writing Coach into the Design Portfolio. The Coach is for learning and practising; the Portfolio is the actual submission.
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson 4 -->
+  <div class="card" id="lesson4">
+    <div class="card-header" style="background:var(--orange);color:var(--white)">
+      <div class="card-num" style="background:rgba(255,255,255,.2)">L18</div>
+      <div class="card-header-text" style="color:var(--white)">
+        <h2>Lesson 4 &mdash; T1-L18 (Week 7)</h2>
+        <p style="color:rgba(255,255,255,.8)">Writing Coach Session 4 + Detailing</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="lesson-plan">
+        <div class="lp-header">
+          <h3>Lesson Plan &mdash; 75 minutes</h3>
+          <span class="week">Week 7, Lesson 2</span>
+        </div>
+        <div class="lp-body">
+          <div class="lp-row">
+            <div class="lp-time">0&ndash;5 min</div>
+            <div class="lp-content">
+              <strong>Do Now:</strong> Open Writing Coach &rarr; Session 4. Board: &ldquo;Today: Write about your research and planning. Then finish your model details.&rdquo;
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">5&ndash;30 min</div>
+            <div class="lp-content">
+              <strong>Writing Coach &mdash; Session 4:</strong> Writing Section 2 (Research &amp; Planning)
+              <ul>
+                <li>Students use the research description builder (3-step process)</li>
+                <li>Complete PMI analysis builder (Plus/Minus/Interesting)</li>
+                <li>Write about design choices using the guided builder</li>
+                <li>Transfer completed writing into Design Portfolio Section 2</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">30&ndash;70 min</div>
+            <div class="lp-content">
+              <strong>Model Construction:</strong> Interior detailing and finishing
+              <ul>
+                <li>Add signage, branding elements, awning/roof details</li>
+                <li>Add colour using markers, paint, or coloured paper</li>
+                <li>Attach any final accessories (tables, chairs, menu boards)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">70&ndash;75 min</div>
+            <div class="lp-content">
+              <strong>Portfolio check:</strong> Quick walk-around &mdash; check that students have started filling in their Design Portfolio (Sections 1 and 2 should be underway).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson 5 -->
+  <div class="card" id="lesson5">
+    <div class="card-header" style="background:var(--orange);color:var(--white)">
+      <div class="card-num" style="background:rgba(255,255,255,.2)">L19</div>
+      <div class="card-header-text" style="color:var(--white)">
+        <h2>Lesson 5 &mdash; T1-L19 (Week 8)</h2>
+        <p style="color:rgba(255,255,255,.8)">Writing Coach Session 5 + Photographing Models</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="lesson-plan">
+        <div class="lp-header">
+          <h3>Lesson Plan &mdash; 75 minutes</h3>
+          <span class="week">Week 8, Lesson 1</span>
+        </div>
+        <div class="lp-body">
+          <div class="lp-row">
+            <div class="lp-time">0&ndash;5 min</div>
+            <div class="lp-content">
+              <strong>Do Now:</strong> Open Writing Coach &rarr; Session 5. Announce: &ldquo;Today is evaluation day! We will also photograph your models for the portfolio.&rdquo;
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">5&ndash;30 min</div>
+            <div class="lp-content">
+              <strong>Writing Coach &mdash; Session 5:</strong> Writing Section 4 (Testing &amp; Evaluating)
+              <ul>
+                <li>Students evaluate against 4 criteria (appearance, functionality, sustainability, safety)</li>
+                <li>Rank and justify each criterion using the word bank and sentence frames</li>
+                <li>Write &ldquo;What I would improve&rdquo; using the WWW/EBI/YNS framework</li>
+                <li>Transfer evaluation writing into Design Portfolio Section 4</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">30&ndash;55 min</div>
+            <div class="lp-content">
+              <strong>Model photographing:</strong> Set up a &ldquo;photo station&rdquo; with good lighting
+              <ul>
+                <li>Students take photos: exterior, interior (top-down view), floor plan next to model</li>
+                <li>Upload photos directly into the Design Portfolio Section 3 image boxes</li>
+                <li>Ensure floor plan photo clearly shows the 1:20 scale notation</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">55&ndash;70 min</div>
+            <div class="lp-content">
+              <strong>Portfolio completion time:</strong> Students fill in remaining Design Portfolio fields. Teacher circulates to help with any sections students are struggling with.
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">70&ndash;75 min</div>
+            <div class="lp-content">
+              <strong>Progress check:</strong> All students share their Design Portfolio link. Identify students who need catch-up time next lesson.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info important">
+        <strong>Photo quality matters:</strong> Model photos should be clear, well-lit, and show detail. The floor plan photo is especially important &mdash; it must clearly show scale measurements. Consider setting up a simple photo backdrop (white paper on a desk near the window).
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson 6 -->
+  <div class="card" id="lesson6">
+    <div class="card-header" style="background:var(--orange);color:var(--white)">
+      <div class="card-num" style="background:rgba(255,255,255,.2)">L20</div>
+      <div class="card-header-text" style="color:var(--white)">
+        <h2>Lesson 6 &mdash; T1-L20 (Week 8)</h2>
+        <p style="color:rgba(255,255,255,.8)">Writing Coach Session 6 + Final Submission</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="lesson-plan">
+        <div class="lp-header">
+          <h3>Lesson Plan &mdash; 75 minutes</h3>
+          <span class="week">Week 8, Lesson 2</span>
+        </div>
+        <div class="lp-body">
+          <div class="lp-row">
+            <div class="lp-time">0&ndash;5 min</div>
+            <div class="lp-content">
+              <strong>Do Now:</strong> Open Writing Coach &rarr; Session 6 (Final Portfolio Check). Board: &ldquo;Last chance! Complete your portfolio checklist and submit today.&rdquo;
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">5&ndash;25 min</div>
+            <div class="lp-content">
+              <strong>Writing Coach &mdash; Session 6:</strong> Final Portfolio Check
+              <ul>
+                <li>Students work through the 24-item portfolio checklist</li>
+                <li>Self-grade each section using the rubric selectors</li>
+                <li>Create a 3-priority action plan for remaining gaps</li>
+                <li>Use remaining time to address action plan items</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">25&ndash;60 min</div>
+            <div class="lp-content">
+              <strong>Portfolio completion and catch-up:</strong>
+              <ul>
+                <li>Students complete all remaining Design Portfolio sections</li>
+                <li>Upload any missing images (drawings, floor plan, model photos)</li>
+                <li>Run through the final submission checklist in the Design Portfolio</li>
+                <li>Teacher provides individual feedback and support</li>
+              </ul>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">60&ndash;70 min</div>
+            <div class="lp-content">
+              <strong>Submission:</strong> Students submit by:
+              <ol>
+                <li>Clicking &ldquo;Share Link&rdquo; in the Design Portfolio and pasting the link into Google Classroom</li>
+                <li>Uploading model photos and floor plan separately to Google Classroom if not already done</li>
+                <li>Saving a PDF as backup (&ldquo;Save as PDF&rdquo; button)</li>
+              </ol>
+            </div>
+          </div>
+          <div class="lp-row">
+            <div class="lp-time">70&ndash;75 min</div>
+            <div class="lp-content">
+              <strong>Celebration:</strong> Quick gallery walk &mdash; students display models on desks and view each other&rsquo;s work. Congratulate the class on completing the unit.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info warn">
+        <strong>Final due date reminder:</strong> The assessment is due 25 March 2026. Students who don&rsquo;t finish in class can continue at home using the same links. They must submit the share link AND photos to Google Classroom.
+      </div>
+    </div>
+  </div>
+
+  <!-- DIFFERENTIATION -->
+  <div class="card" id="differentiation">
+    <div class="card-header">
+      <div class="card-num" style="background:var(--green)">&#127793;</div>
+      <div class="card-header-text">
+        <h2>Differentiation &amp; EAL/D Support</h2>
+        <p>How the tools support diverse learners</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>How It Helps EAL/D Learners</th>
+        </tr>
+        <tr>
+          <td><strong>Word banks with hover definitions</strong></td>
+          <td>Students see simple English definitions when they hover over technical words. Reduces vocabulary barriers without simplifying the content.</td>
+        </tr>
+        <tr>
+          <td><strong>Sentence frames</strong></td>
+          <td>Pre-structured sentence starters at multiple levels. Emerging writers can use fill-in-the-blank frames; proficient writers can adapt them.</td>
+        </tr>
+        <tr>
+          <td><strong>Paragraph builders</strong></td>
+          <td>Step-by-step guided assembly (Step 1: topic sentence, Step 2: supporting detail, etc.). Breaks the intimidating &ldquo;write a paragraph&rdquo; task into manageable pieces.</td>
+        </tr>
+        <tr>
+          <td><strong>Example responses at all 5 levels</strong></td>
+          <td>Students can see what an E-level vs A-level response looks like. Helps them understand quality expectations and set personal goals.</td>
+        </tr>
+        <tr>
+          <td><strong>Connectives wall</strong></td>
+          <td>Organised by purpose (adding, comparing, cause/effect, sequencing, concluding). Students click to copy useful linking words into their writing.</td>
+        </tr>
+        <tr>
+          <td><strong>Self-paced modules</strong></td>
+          <td>No time pressure. Students who need longer can revisit at home. Fast finishers move to the next module.</td>
+        </tr>
+        <tr>
+          <td><strong>Visual progress tracking</strong></td>
+          <td>Green ticks on completed tabs and progress bars provide motivation and clear sense of achievement.</td>
+        </tr>
+      </table>
+
+      <div class="info tip">
+        <strong>Emerging learners:</strong> Encourage them to use the sentence frames and word banks heavily. Tell them: &ldquo;It&rsquo;s OK to use the sentence starters &mdash; that&rsquo;s what they&rsquo;re there for.&rdquo; The tool is designed so that even a student using only the frames and word bank can produce a C-level response.
+      </div>
+
+      <div class="info">
+        <strong>Extension learners:</strong> Challenge them to write responses <em>without</em> using the sentence frames, aiming for A-level quality. They can use the example A-level responses as benchmarks.
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKING -->
+  <div class="card" id="marking">
+    <div class="card-header">
+      <div class="card-num" style="background:var(--blue)">&#128203;</div>
+      <div class="card-header-text">
+        <h2>Marking &amp; Assessment</h2>
+        <p>How to assess student work from the tools</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="info important">
+        <strong>What you mark:</strong> The <strong>Design Portfolio</strong> (submitted via share link + images on Google Classroom) and the <strong>physical model</strong>. The Writing Coach is a <em>learning tool</em> &mdash; you do not need to mark it separately. It prepares students to write better responses in the portfolio.
+      </div>
+
+      <h3 style="font-family:var(--font-heading);margin:16px 0 8px;color:var(--blue)">Assessment Breakdown (25 marks total)</h3>
+      <table>
+        <tr><th>Section</th><th>Marks</th><th>What to Look For</th></tr>
+        <tr>
+          <td><strong>Section 1: Identifying &amp; Defining</strong></td>
+          <td>5</td>
+          <td>Accurate definition of containers, 4+ structural features identified, sustainability explained with reasoning (not just listed)</td>
+        </tr>
+        <tr>
+          <td><strong>Section 2: Research &amp; Planning</strong></td>
+          <td>5</td>
+          <td>3 researched restaurants with details, completed PMI, creative design brief response, labelled sketches uploaded</td>
+        </tr>
+        <tr>
+          <td><strong>Section 3: Model Construction</strong></td>
+          <td>10</td>
+          <td>Accuracy of 1:20 scale, neatness of construction, interior features present, floor plan shows correct scale and labels</td>
+        </tr>
+        <tr>
+          <td><strong>Section 4: Testing &amp; Evaluating</strong></td>
+          <td>5</td>
+          <td>All 4 criteria evaluated with justified ratings, thoughtful improvement suggestions, genuine reflection on process</td>
+        </tr>
+      </table>
+
+      <div class="info tip">
+        <strong>Quick marking tip:</strong> Open each student&rsquo;s share link in a new tab. Check the progress percentage first &mdash; anything below 70% likely has significant gaps. Use the Design Portfolio&rsquo;s final checklist to quickly identify missing items.
+      </div>
+    </div>
+  </div>
+
+  <!-- TROUBLESHOOTING -->
+  <div class="card" id="troubleshooting">
+    <div class="card-header">
+      <div class="card-num" style="background:var(--grey)">&#128295;</div>
+      <div class="card-header-text">
+        <h2>Troubleshooting</h2>
+        <p>Common issues and solutions</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <table>
+        <tr><th style="width:35%">Problem</th><th>Solution</th></tr>
+        <tr>
+          <td><strong>&ldquo;My work disappeared!&rdquo;</strong></td>
+          <td>Data is saved per-device per-browser. If they used a different computer or browser, their previous work won&rsquo;t appear. Solution: always use the same device. If they shared their link previously, opening that link will restore text data.</td>
+        </tr>
+        <tr>
+          <td><strong>&ldquo;The link is too long!&rdquo;</strong></td>
+          <td>The share link encodes all responses as base64 &mdash; it can be very long. This is normal. It works fine when pasted into Google Classroom. Students can also use a URL shortener.</td>
+        </tr>
+        <tr>
+          <td><strong>&ldquo;My images didn&rsquo;t transfer!&rdquo;</strong></td>
+          <td>By design &mdash; images are stored locally only and are too large for URL encoding. Students must upload photos separately to Google Classroom.</td>
+        </tr>
+        <tr>
+          <td><strong>&ldquo;The page won&rsquo;t load&rdquo;</strong></td>
+          <td>Check the internet connection. The pages are hosted on GitHub Pages and require internet access. If school network blocks GitHub, try on mobile data.</td>
+        </tr>
+        <tr>
+          <td><strong>&ldquo;I accidentally cleared my work&rdquo;</strong></td>
+          <td>Unfortunately, &ldquo;Clear All&rdquo; is permanent. There is a confirmation dialog, but once confirmed the data is deleted from localStorage. Emphasise to students: the clear button is only for starting completely fresh.</td>
+        </tr>
+        <tr>
+          <td><strong>Student can&rsquo;t access at home</strong></td>
+          <td>The tools work on any device with a web browser (phone, tablet, computer). Share the link via Google Classroom so students can access it easily from home.</td>
+        </tr>
+        <tr>
+          <td><strong>Two students sharing a device</strong></td>
+          <td>They should use different browsers (e.g. one uses Chrome, one uses Edge). Or one can save their link, clear the data, then the other works. Not ideal &mdash; try to get separate devices.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- REUSE FOR YEAR 7 -->
+  <div class="card" id="reuse">
+    <div class="card-header">
+      <div class="card-num" style="background:var(--purple)">&#128260;</div>
+      <div class="card-header-text">
+        <h2>Reuse for Year 7</h2>
+        <p>How to adapt these tools for your two Year 7 classes</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <p style="margin:12px 0">The Writing Coach was designed with reusability in mind. The ALARM/VSCC framework and writing scaffolding methodology are universal &mdash; they work for any Technology assessment.</p>
+
+      <h3 style="font-family:var(--font-heading);margin:16px 0 8px;color:var(--blue)">What Stays the Same</h3>
+      <ul>
+        <li>Sessions 1 &amp; 2 (rubric literacy, ALARM, VSCC) &mdash; these are unit-agnostic</li>
+        <li>Word bank structure and sentence frame approach</li>
+        <li>Paragraph builder methodology</li>
+        <li>Self-assessment and checklist framework</li>
+        <li>WWW/EBI/YNS feedback sandwich</li>
+      </ul>
+
+      <h3 style="font-family:var(--font-heading);margin:16px 0 8px;color:var(--blue)">What Needs Changing</h3>
+      <ul>
+        <li>Sessions 3&ndash;5 content: Replace container/restaurant vocabulary with Year 7 unit vocabulary</li>
+        <li>Example responses: Rewrite to match the Year 7 assessment questions</li>
+        <li>Rubric content in Session 1: Update &ldquo;I can&rdquo; statements to match Year 7 rubric</li>
+        <li>Design Portfolio: Restructure sections to match Year 7 assessment structure</li>
+      </ul>
+
+      <div class="info tip">
+        <strong>Fastest approach:</strong> Duplicate the Writing Coach HTML file, rename it, then use find-and-replace to swap container-specific terms. The structure, styling, and JavaScript can remain identical. Only the text content needs updating.
+      </div>
+
+      <p style="margin:12px 0">Since Year 7 students don&rsquo;t have an assessment this term, you can use these tools purely as writing skill development &mdash; focusing on Sessions 1 and 2 (ALARM/VSCC) to build their foundation for future assessments.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyLink(url){
+  navigator.clipboard.writeText(url).then(()=>{
+    event.target.textContent = 'Copied!';
+    event.target.style.background = '#7FB069';
+    setTimeout(()=>{
+      event.target.textContent = 'Copy';
+      event.target.style.background = '';
+    }, 1500);
+  });
+}
+</script>
+</body>
+</html>
