@@ -32,7 +32,7 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
 .word-bank{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.word-bank span{background:#EEF4F8;border:1px solid var(--blue);color:var(--blue);padding:3px 10px;border-radius:14px;font-size:.82rem;cursor:pointer;transition:all .15s}.word-bank span:hover{background:var(--blue);color:var(--white)}
 
 /* Drawing / image placeholders */
-.draw-box{border:2px dashed var(--light-grey);border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;color:var(--grey);font-size:.9rem;cursor:pointer;transition:border-color .2s;position:relative;overflow:hidden}.draw-box:hover{border-color:var(--blue)}.draw-box input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer}.draw-box img{max-width:100%;max-height:400px;border-radius:8px;object-fit:contain}.draw-box.has-image{border-style:solid;border-color:var(--green)}
+.draw-box{border:2px dashed var(--light-grey);border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;color:var(--grey);font-size:.9rem;cursor:pointer;transition:border-color .2s;position:relative;overflow:hidden}.draw-box:hover{border-color:var(--blue)}.draw-box input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer}.draw-box img{max-width:100%;max-height:400px;border-radius:8px;object-fit:contain}.draw-box.has-image{border-style:solid;border-color:var(--green)}.img-hint{font-size:.72rem;color:var(--grey);margin-top:2px}
 
 /* Checklist */
 .checklist{margin:14px 0}.check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;padding:8px 12px;background:var(--bg);border-radius:8px}.check-item input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0;cursor:pointer}.check-item label{font-size:.9rem;cursor:pointer}
@@ -50,7 +50,13 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
 .ws-footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:18px 36px;font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.ws-footer strong{color:var(--white)}
 
 @media (max-width:700px){section.content{padding:20px 18px}.ws-header{padding:24px 18px 20px}.section-divider{padding:16px 18px}.pmi-grid{grid-template-columns:1fr}.ws-meta input{width:150px}.progress-bar{padding:10px 18px}}
-@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.portfolio{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section.content{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.section-divider{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-before:page}.section-num{-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}.info-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support{-webkit-print-color-adjust:exact;print-color-adjust:exact}.draw-box{break-inside:avoid}.question{break-inside:avoid}.eval-card{break-inside:avoid}.progress-bar{display:none}}
+/* Teacher marking mode */
+.teacher-panel{display:none;background:linear-gradient(135deg,#fff3e0,#fce4ec);border:2px solid #e65100;border-radius:12px;padding:20px 24px;margin:12px 0}.teacher-panel.active{display:block}.mark-input{width:60px;padding:4px 8px;border:2px solid var(--orange);border-radius:6px;font-size:1rem;font-weight:700;text-align:center;font-family:var(--font-heading);background:var(--white)}.mark-input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,73,101,.15)}.teacher-comment{width:100%;border:1.5px solid #e0c8b0;border-radius:8px;padding:8px 12px;font-size:.88rem;min-height:50px;resize:vertical;background:#fffbf5;font-style:italic;color:#5d4037;font-family:var(--font-body)}.teacher-comment::placeholder{color:#bcaaa4}.teacher-comment:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(224,122,58,.12)}.mark-row{display:flex;align-items:center;gap:10px;margin:6px 0;flex-wrap:wrap}.mark-label{font-size:.9rem;font-weight:600;color:#5d4037}.mark-of{font-size:.85rem;color:var(--grey)}.rubric-summary{display:grid;grid-template-columns:1fr auto auto;gap:4px 16px;margin:12px 0;font-size:.9rem;align-items:center}.rubric-summary .rs-section{font-weight:600;color:var(--charcoal)}.rubric-summary .rs-mark{font-weight:700;font-family:var(--font-heading);font-size:1rem;text-align:right}.rubric-summary .rs-of{color:var(--grey);font-size:.85rem}.rubric-total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:3px solid var(--orange);font-family:var(--font-heading)}.rubric-total .total-label{font-size:1.1rem;color:var(--charcoal)}.rubric-total .total-mark{font-size:1.6rem;color:var(--orange)}.grade-badge{display:inline-block;padding:4px 14px;border-radius:20px;font-weight:700;color:var(--white);font-size:.9rem;margin-left:12px}.grade-a{background:#4caf50}.grade-b{background:#8bc34a}.grade-c{background:#ffc107;color:var(--charcoal)}.grade-d{background:#ff9800}.grade-e{background:#f44336}.btn-teacher{background:#7b1fa2;color:var(--white)}.btn-teacher.on{background:#e65100}
+.rubric-criterion{background:var(--white);border:1.5px solid var(--light-grey);border-radius:8px;padding:10px 14px;margin-bottom:8px}.rc-label{font-weight:700;font-size:.88rem;color:var(--charcoal);margin-bottom:2px}.rc-desc{font-size:.78rem;color:var(--grey);margin-bottom:6px}.grade-row{display:flex;gap:6px;flex-wrap:wrap}.grade-btn{width:40px;height:32px;display:flex;align-items:center;justify-content:center;border:2px solid var(--light-grey);border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .15s;background:var(--white);position:relative}.grade-btn:hover{border-color:var(--blue);color:var(--blue)}.grade-btn.sel-A{background:#4caf50;color:var(--white);border-color:#4caf50}.grade-btn.sel-B{background:#8bc34a;color:var(--white);border-color:#8bc34a}.grade-btn.sel-C{background:#ffc107;color:var(--charcoal);border-color:#ffc107}.grade-btn.sel-D{background:#ff9800;color:var(--white);border-color:#ff9800}.grade-btn.sel-E{background:#f44336;color:var(--white);border-color:#f44336}.grade-btn[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:var(--charcoal);color:var(--white);padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:400;white-space:nowrap;z-index:10;pointer-events:none}.part-mark{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:.88rem;font-weight:600;color:var(--charcoal)}.teacher-inline{display:none;margin:8px 0 16px;padding:10px 14px;background:#fffbf5;border:1.5px dashed #e0c8b0;border-radius:8px}.teacher-inline.active{display:block}.teacher-inline .tl-header{font-size:.78rem;font-family:var(--font-heading);color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+/* Storage indicator */
+.storage-bar{height:4px;background:var(--light-grey);border-radius:2px;margin-top:6px;overflow:hidden}.storage-fill{height:100%;background:var(--green);border-radius:2px;transition:width .4s}.storage-fill.warn{background:var(--yellow)}.storage-fill.danger{background:#E05555}
+
+@media print{@page{size:A4;margin:15mm 12mm}body{padding-top:0;background:white;font-size:12px}.toolbar{display:none!important}.portfolio{max-width:100%;margin:0;box-shadow:none;border-radius:0}.ws-header{padding:20px 24px 16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-header::after{display:none}section.content{padding:16px 24px}.ws-footer{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:12px 24px}textarea,input[type="text"]{border:1.5px solid #ccc;min-height:50px;background:white!important}.section-divider{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-before:page}.section-num{-webkit-print-color-adjust:exact;print-color-adjust:exact}.ws-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}.info-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diff-support{-webkit-print-color-adjust:exact;print-color-adjust:exact}.draw-box{break-inside:avoid}.question{break-inside:avoid}.eval-card{break-inside:avoid}.progress-bar{display:none}.teacher-inline{display:none!important}.teacher-inline.active.print-show{display:block!important;border:none;background:none;padding:4px 0}.teacher-inline.active.print-show .teacher-comment{border:none;background:none;font-size:11px;min-height:auto;padding:2px 0}.teacher-panel.active.print-show{display:block!important;break-before:page;-webkit-print-color-adjust:exact;print-color-adjust:exact}.btn-teacher{display:none!important}}
 </style>
 </head>
 <body>
@@ -61,7 +67,9 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
     <span class="save-indicator" id="saveIndicator">All changes saved</span>
   </div>
   <div class="toolbar-right">
-    <button class="btn-share" onclick="shareLink()">&#128279; Share Link</button>
+    <button class="btn-teacher" id="btnTeacher" onclick="toggleTeacher()">Teacher Mode</button>
+    <button class="btn-teacher" id="btnLoadFile" onclick="openStudentFile()" style="display:none;background:#0277bd">Load Student File</button>
+    <button class="btn-share" onclick="submitToTeacher()" style="background:var(--green)">Submit to Teacher</button>
     <button class="btn-pdf" onclick="savePDF()">Save as PDF</button>
     <button class="btn-clear" onclick="clearAll()">Clear All</button>
   </div>
@@ -80,6 +88,14 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
     </div>
   </header>
 
+  <!-- Mark Summary -->
+  <div style="background:linear-gradient(135deg,#fff8e1,#fff3e0);border:1px solid #ffcc80;border-radius:10px;padding:12px 18px;margin:0 0 12px;font-size:.85rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span style="font-weight:700;color:#e65100">Total: 25 marks</span>
+    <span><strong style="color:var(--orange)">Part A</strong> Design Portfolio (Sections 1, 2 &amp; 4) = <strong>10 marks</strong></span>
+    <span><strong style="color:var(--blue)">Part B</strong> Scale Model = <strong>10 marks</strong></span>
+    <span><strong style="color:#0277bd">Part C</strong> Floor Plan = <strong>5 marks</strong></span>
+  </div>
+
   <!-- Progress -->
   <div class="progress-bar">
     <span class="progress-label">Portfolio Progress</span>
@@ -92,7 +108,7 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
     <div class="section-num">1</div>
     <div class="section-divider-text">
       <h2>IDENTIFYING &amp; DEFINING</h2>
-      <p>Weeks 1&ndash;2 &bull; <span class="marks">5 marks</span></p>
+      <p>Weeks 1&ndash;2 &bull; <span class="marks">Part A &mdash; Design Portfolio</span></p>
     </div>
   </div>
 
@@ -144,16 +160,22 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
       <div class="draw-box" id="drawS1" onclick="document.getElementById('fileS1').click()">
         <input type="file" id="fileS1" accept="image/*" onchange="loadImage(event,'drawS1','imgS1')">
         <span id="imgS1Label">&#128247; Click or drag to upload your isometric drawing</span>
+        <span class="img-hint">Max 10 MB per image &bull; Auto-resized to save space</span>
       </div>
     </div>
   </section>
+
+  <div class="teacher-inline" id="ti-s1">
+    <div class="tl-header">Teacher Comment &mdash; Section 1</div>
+    <textarea class="teacher-comment" id="tc-s1" placeholder="Comment on Section 1 (Identifying & Defining)..."></textarea>
+  </div>
 
   <!-- ==================== SECTION 2 ==================== -->
   <div class="section-divider s2">
     <div class="section-num">2</div>
     <div class="section-divider-text">
       <h2>RESEARCH &amp; PLANNING</h2>
-      <p>Weeks 3&ndash;4 &bull; <span class="marks">5 marks</span></p>
+      <p>Weeks 3&ndash;4 &bull; <span class="marks">Part A &mdash; Design Portfolio</span></p>
     </div>
   </div>
 
@@ -205,6 +227,7 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
       <div class="draw-box" id="drawS2ext" onclick="document.getElementById('fileS2ext').click()">
         <input type="file" id="fileS2ext" accept="image/*" onchange="loadImage(event,'drawS2ext','imgS2ext')">
         <span id="imgS2extLabel">&#128247; Upload external design sketch</span>
+        <span class="img-hint">Max 10 MB per image &bull; Auto-resized to save space</span>
       </div>
     </div>
 
@@ -214,6 +237,7 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
       <div class="draw-box" id="drawS2int" onclick="document.getElementById('fileS2int').click()">
         <input type="file" id="fileS2int" accept="image/*" onchange="loadImage(event,'drawS2int','imgS2int')">
         <span id="imgS2intLabel">&#128247; Upload internal floor plan sketch</span>
+        <span class="img-hint">Max 10 MB per image &bull; Auto-resized to save space</span>
       </div>
     </div>
 
@@ -232,12 +256,17 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
     </div>
   </section>
 
+  <div class="teacher-inline" id="ti-s2">
+    <div class="tl-header">Teacher Comment &mdash; Section 2</div>
+    <textarea class="teacher-comment" id="tc-s2" placeholder="Comment on Section 2 (Research & Planning)..."></textarea>
+  </div>
+
   <!-- ==================== SECTION 3 (Photo evidence) ==================== -->
   <div class="section-divider s3">
     <div class="section-num">3</div>
     <div class="section-divider-text">
       <h2>MODEL CONSTRUCTION</h2>
-      <p>Weeks 5&ndash;8 &bull; <span class="marks">10 marks</span> &bull; Submit photos of your completed model</p>
+      <p>Weeks 5&ndash;8 &bull; <span class="marks">Part B &mdash; Model (10 marks) + Part C &mdash; Floor Plan (5 marks)</span></p>
     </div>
   </div>
 
@@ -266,6 +295,7 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
       <div class="draw-box" id="drawFloor" onclick="document.getElementById('fileFloor').click()" style="min-height:250px">
         <input type="file" id="fileFloor" accept="image/*" onchange="loadImage(event,'drawFloor','imgFloor')">
         <span id="imgFloorLabel">&#128207; Upload your scaled floor plan (IMPORTANT)</span>
+        <span class="img-hint">Max 10 MB per image &bull; Auto-resized to save space</span>
       </div>
       <div class="checklist" style="margin-top:12px">
         <p style="font-weight:600;margin-bottom:8px">Floor plan checklist:</p>
@@ -284,16 +314,19 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
       <div class="draw-box" id="drawModel1" onclick="document.getElementById('fileModel1').click()">
         <input type="file" id="fileModel1" accept="image/*" onchange="loadImage(event,'drawModel1','imgModel1')">
         <span id="imgModel1Label">&#128247; Upload exterior photo</span>
+        <span class="img-hint">Max 10 MB &bull; Auto-resized</span>
       </div>
       <div class="sub-label" style="margin-top:12px">Interior view (showing features)</div>
       <div class="draw-box" id="drawModel2" onclick="document.getElementById('fileModel2').click()">
         <input type="file" id="fileModel2" accept="image/*" onchange="loadImage(event,'drawModel2','imgModel2')">
         <span id="imgModel2Label">&#128247; Upload interior photo</span>
+        <span class="img-hint">Max 10 MB &bull; Auto-resized</span>
       </div>
       <div class="sub-label" style="margin-top:12px">Additional view (optional &mdash; top, side, or detail)</div>
       <div class="draw-box" id="drawModel3" onclick="document.getElementById('fileModel3').click()">
         <input type="file" id="fileModel3" accept="image/*" onchange="loadImage(event,'drawModel3','imgModel3')">
         <span id="imgModel3Label">&#128247; Upload additional photo (optional)</span>
+        <span class="img-hint">Max 10 MB &bull; Auto-resized</span>
       </div>
     </div>
 
@@ -304,12 +337,17 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
     </div>
   </section>
 
+  <div class="teacher-inline" id="ti-s3">
+    <div class="tl-header">Teacher Comment &mdash; Section 3</div>
+    <textarea class="teacher-comment" id="tc-s3" placeholder="Comment on Section 3 (Model Construction)..."></textarea>
+  </div>
+
   <!-- ==================== SECTION 4 ==================== -->
   <div class="section-divider s4">
     <div class="section-num">4</div>
     <div class="section-divider-text">
       <h2>TESTING &amp; EVALUATING</h2>
-      <p>Weeks 9&ndash;10 &bull; <span class="marks">5 marks</span></p>
+      <p>Weeks 9&ndash;10 &bull; <span class="marks">Part A &mdash; Design Portfolio</span></p>
     </div>
   </div>
 
@@ -384,38 +422,139 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
     </div>
   </section>
 
+  <div class="teacher-inline" id="ti-s4">
+    <div class="tl-header">Teacher Comment &mdash; Section 4</div>
+    <textarea class="teacher-comment" id="tc-s4" placeholder="Comment on Section 4 (Testing & Evaluating)..."></textarea>
+  </div>
+
   <!-- ==================== FINAL CHECKLIST ==================== -->
   <section class="content" style="background:var(--bg)">
     <h3 style="font-family:var(--font-heading);color:var(--blue);margin-bottom:16px">&#9989; Final Submission Checklist</h3>
     <p style="font-size:.9rem;margin-bottom:14px">Before you submit, make sure you have completed everything. Tick each item below.</p>
 
     <div class="checklist">
-      <p style="font-weight:700;color:var(--orange);margin-bottom:8px">Section 1 &mdash; Identifying &amp; Defining (5 marks)</p>
+      <p style="font-weight:700;color:var(--orange);margin-bottom:8px">Section 1 &mdash; Identifying &amp; Defining (Part A)</p>
       <div class="check-item"><input type="checkbox" id="fc1" data-save="fc1"><label for="fc1">Defined a shipping container with dimensions and materials</label></div>
       <div class="check-item"><input type="checkbox" id="fc2" data-save="fc2"><label for="fc2">Listed 4+ structural features</label></div>
       <div class="check-item"><input type="checkbox" id="fc3" data-save="fc3"><label for="fc3">Explained sustainability benefits of upcycling</label></div>
       <div class="check-item"><input type="checkbox" id="fc4" data-save="fc4"><label for="fc4">Uploaded isometric drawing</label></div>
 
-      <p style="font-weight:700;color:var(--green);margin:14px 0 8px">Section 2 &mdash; Research &amp; Planning (5 marks)</p>
+      <p style="font-weight:700;color:var(--green);margin:14px 0 8px">Section 2 &mdash; Research &amp; Planning (Part A)</p>
       <div class="check-item"><input type="checkbox" id="fc5" data-save="fc5"><label for="fc5">Researched 3 container restaurants with details</label></div>
       <div class="check-item"><input type="checkbox" id="fc6" data-save="fc6"><label for="fc6">Completed PMI analysis</label></div>
       <div class="check-item"><input type="checkbox" id="fc7" data-save="fc7"><label for="fc7">Written design brief response</label></div>
       <div class="check-item"><input type="checkbox" id="fc8" data-save="fc8"><label for="fc8">Uploaded external and internal design sketches</label></div>
       <div class="check-item"><input type="checkbox" id="fc9" data-save="fc9"><label for="fc9">Completed materials and equipment list</label></div>
 
-      <p style="font-weight:700;color:var(--blue);margin:14px 0 8px">Section 3 &mdash; Model Construction (10 marks)</p>
+      <p style="font-weight:700;color:var(--blue);margin:14px 0 8px">Section 3 &mdash; Part B: Model (10 marks) + Part C: Floor Plan (5 marks)</p>
       <div class="check-item"><input type="checkbox" id="fc10" data-save="fc10"><label for="fc10">Completed scale conversion table</label></div>
       <div class="check-item"><input type="checkbox" id="fc11" data-save="fc11"><label for="fc11">Uploaded hand-drawn floor plan to scale (30 cm &times; 12 cm)</label></div>
       <div class="check-item"><input type="checkbox" id="fc12" data-save="fc12"><label for="fc12">Floor plan shows &ldquo;1:20&rdquo; scale ratio</label></div>
       <div class="check-item"><input type="checkbox" id="fc13" data-save="fc13"><label for="fc13">Uploaded photos of completed model (exterior + interior)</label></div>
       <div class="check-item"><input type="checkbox" id="fc14" data-save="fc14"><label for="fc14">Written construction notes</label></div>
 
-      <p style="font-weight:700;color:var(--purple);margin:14px 0 8px">Section 4 &mdash; Testing &amp; Evaluating (5 marks)</p>
+      <p style="font-weight:700;color:var(--purple);margin:14px 0 8px">Section 4 &mdash; Testing &amp; Evaluating (Part A)</p>
       <div class="check-item"><input type="checkbox" id="fc15" data-save="fc15"><label for="fc15">Evaluated design against all 4 criteria with ratings and explanations</label></div>
       <div class="check-item"><input type="checkbox" id="fc16" data-save="fc16"><label for="fc16">Written what you would improve</label></div>
       <div class="check-item"><input type="checkbox" id="fc17" data-save="fc17"><label for="fc17">Written reflection on the design process</label></div>
     </div>
   </section>
+
+  <!-- ==================== TEACHER MARKING PANEL ==================== -->
+  <div class="teacher-panel" id="teacherPanel">
+    <h3 style="font-family:var(--font-heading);color:#e65100;margin-bottom:4px">Marking Rubric</h3>
+    <p style="font-size:.82rem;color:var(--grey);margin-bottom:14px">Click a grade for each criterion. Marks are calculated automatically from the rubric.</p>
+
+    <!-- Part A -->
+    <div style="margin-bottom:18px">
+      <h4 style="font-family:var(--font-heading);color:var(--orange);margin-bottom:8px">Part A &mdash; Design Portfolio <span style="font-weight:400;color:var(--grey)">/10</span></h4>
+
+      <div class="rubric-criterion" id="rc-a1">
+        <div class="rc-label">1. Identifying &amp; Defining</div>
+        <div class="rc-desc">Describes need/benefits of upcycling containers, constraints, success criteria, and relevance of existing restaurants.</div>
+        <div class="grade-row">
+          <span class="grade-btn" onclick="setGrade('a1','A',this)" data-tip="Outstanding &bull; 3+ restaurants, outstanding detail">A</span>
+          <span class="grade-btn" onclick="setGrade('a1','B',this)" data-tip="High &bull; 3+ restaurants, high detail">B</span>
+          <span class="grade-btn" onclick="setGrade('a1','C',this)" data-tip="Sound &bull; 2-3 restaurants, sound detail">C</span>
+          <span class="grade-btn" onclick="setGrade('a1','D',this)" data-tip="Basic &bull; Limited restaurants, basic detail">D</span>
+          <span class="grade-btn" onclick="setGrade('a1','E',this)" data-tip="Limited &bull; Very limited or incomplete">E</span>
+        </div>
+      </div>
+
+      <div class="rubric-criterion" id="rc-a2">
+        <div class="rc-label">2. Researching &amp; Planning</div>
+        <div class="rc-desc">Design ideas with labelled 2D/3D sketches, PMI analysis, chosen design explanation, production process.</div>
+        <div class="grade-row">
+          <span class="grade-btn" onclick="setGrade('a2','A',this)" data-tip="Outstanding &bull; 3 ideas, outstanding PMI + sketches">A</span>
+          <span class="grade-btn" onclick="setGrade('a2','B',this)" data-tip="High &bull; 3 ideas, high quality PMI + sketches">B</span>
+          <span class="grade-btn" onclick="setGrade('a2','C',this)" data-tip="Sound &bull; Sound ideas, sound PMI">C</span>
+          <span class="grade-btn" onclick="setGrade('a2','D',this)" data-tip="Basic &bull; Basic ideas, basic PMI">D</span>
+          <span class="grade-btn" onclick="setGrade('a2','E',this)" data-tip="Limited &bull; Limited ideas, limited PMI">E</span>
+        </div>
+      </div>
+
+      <div class="rubric-criterion" id="rc-a4">
+        <div class="rc-label">4. Testing &amp; Evaluating</div>
+        <div class="rc-desc">Explains how design met success criteria (appearance, functionality, sustainability, safety). Reflects on strengths/weaknesses with terminology.</div>
+        <div class="grade-row">
+          <span class="grade-btn" onclick="setGrade('a4','A',this)" data-tip="Outstanding &bull; All 4 criteria, outstanding terminology">A</span>
+          <span class="grade-btn" onclick="setGrade('a4','B',this)" data-tip="High &bull; All 4 criteria, high terminology">B</span>
+          <span class="grade-btn" onclick="setGrade('a4','C',this)" data-tip="Sound &bull; All criteria, sound terminology">C</span>
+          <span class="grade-btn" onclick="setGrade('a4','D',this)" data-tip="Basic &bull; Some criteria, basic terminology">D</span>
+          <span class="grade-btn" onclick="setGrade('a4','E',this)" data-tip="Limited &bull; Few criteria, limited terminology">E</span>
+        </div>
+      </div>
+      <div class="part-mark">Part A mark: <input type="number" class="mark-input" id="markPartA" min="0" max="10" placeholder="-" oninput="updateTotal()"> <span class="rs-of">/ 10</span></div>
+    </div>
+
+    <!-- Part B -->
+    <div style="margin-bottom:18px">
+      <h4 style="font-family:var(--font-heading);color:var(--blue);margin-bottom:8px">Part B &mdash; Scale Model <span style="font-weight:400;color:var(--grey)">/10</span></h4>
+      <div class="rubric-criterion" id="rc-b">
+        <div class="rc-label">3. Producing &amp; Implementing</div>
+        <div class="rc-desc">Safe use of tools/materials. Detail, realism, mixed materials, neatness, accuracy to plans, process photos.</div>
+        <div class="grade-row">
+          <span class="grade-btn" onclick="setGrade('b','A',this)" data-tip="Outstanding &bull; Highly detailed, realistic, multiple finishes, accurate">A</span>
+          <span class="grade-btn" onclick="setGrade('b','B',this)" data-tip="High &bull; Complete, well detailed, various finishes, neat">B</span>
+          <span class="grade-btn" onclick="setGrade('b','C',this)" data-tip="Sound &bull; Complete, some realistic features, neat">C</span>
+          <span class="grade-btn" onclick="setGrade('b','D',this)" data-tip="Basic &bull; Largely complete, some discrepancies">D</span>
+          <span class="grade-btn" onclick="setGrade('b','E',this)" data-tip="Limited &bull; Incomplete or poorly made">E</span>
+        </div>
+      </div>
+      <div class="part-mark">Part B mark: <input type="number" class="mark-input" id="markPartB" min="0" max="10" placeholder="-" oninput="updateTotal()"> <span class="rs-of">/ 10</span></div>
+    </div>
+
+    <!-- Part C -->
+    <div style="margin-bottom:18px">
+      <h4 style="font-family:var(--font-heading);color:#0277bd;margin-bottom:8px">Part C &mdash; Floor Plan <span style="font-weight:400;color:var(--grey)">/5</span></h4>
+      <div class="rubric-criterion" id="rc-c">
+        <div class="rc-label">5. Floor Plan (hand-drawn, 1:20 scale)</div>
+        <div class="rc-desc">Accuracy in scale, interior features with architectural symbols, spatial planning for prep/service/storage/safety.</div>
+        <div class="grade-row">
+          <span class="grade-btn" onclick="setGrade('c','A',this)" data-tip="Outstanding (5) &bull; All features, correct symbols, excellent layout">A</span>
+          <span class="grade-btn" onclick="setGrade('c','B',this)" data-tip="High (4) &bull; Most features, mostly correct symbols, good layout">B</span>
+          <span class="grade-btn" onclick="setGrade('c','C',this)" data-tip="Sound (3) &bull; Most features, some symbols, functional layout">C</span>
+          <span class="grade-btn" onclick="setGrade('c','D',this)" data-tip="Basic (2) &bull; Some features, basic planning">D</span>
+          <span class="grade-btn" onclick="setGrade('c','E',this)" data-tip="Limited (0-1) &bull; Few features, incomplete">E</span>
+        </div>
+      </div>
+      <div class="part-mark">Part C mark: <input type="number" class="mark-input" id="markPartC" min="0" max="5" placeholder="-" oninput="updateTotal()"> <span class="rs-of">/ 5</span></div>
+    </div>
+
+    <!-- Total -->
+    <div class="rubric-total">
+      <span class="total-label">TOTAL</span>
+      <span><span class="total-mark" id="totalMark">0</span><span style="font-size:1rem;color:var(--grey)"> / 25</span><span class="grade-badge" id="gradeBadge" style="display:none"></span></span>
+    </div>
+
+    <div style="margin-top:16px">
+      <div class="sub-label">Overall teacher comment</div>
+      <textarea class="teacher-comment" id="teacherOverall" placeholder="Overall feedback for the student..."></textarea>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-pdf" onclick="printMarked()" style="font-family:var(--font-body);font-size:.85rem;font-weight:600;border:none;border-radius:6px;padding:8px 16px;cursor:pointer">Export Marked PDF</button>
+    </div>
+  </div>
 
   <footer class="ws-footer">
     <span><strong>Year 8 Technology Mandatory</strong> &mdash; Arthur Phillip High School &mdash; 2026</span>
@@ -426,7 +565,11 @@ textarea,input[type="text"]{width:100%;border:1.5px solid var(--light-grey);bord
 
 <script>
 const STORAGE_KEY = 'y8-design-portfolio';
+const IMG_STORAGE_KEY = 'y8-design-portfolio-imgs';
+const TEACHER_STORAGE_KEY = 'y8-design-portfolio-teacher';
+const MAX_IMG_WIDTH = 1200;
 let saveTimeout;
+let teacherMode = false;
 
 // ── Auto-save ──
 function triggerSave(){
@@ -448,44 +591,75 @@ function saveData(){
     if(el.type === 'checkbox') data[key] = el.checked;
     else data[key] = el.value;
   });
-  // Save rank selections
   document.querySelectorAll('.rank-btn.active').forEach(btn=>{
     const group = btn.parentElement.dataset.group;
     data['rank_'+group] = btn.dataset.val;
   });
-  // Save image data references (filenames only, not data)
-  document.querySelectorAll('.draw-box.has-image img').forEach(img=>{
-    data['img_'+img.closest('.draw-box').id] = img.src.substring(0,100) + '...';
-  });
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  // Save images separately (they are large)
+  const imgData = {};
+  document.querySelectorAll('.draw-box.has-image img').forEach(img=>{
+    const boxId = img.closest('.draw-box').id;
+    imgData[boxId] = img.src;
+  });
+  try{
+    localStorage.setItem(IMG_STORAGE_KEY, JSON.stringify(imgData));
+  }catch(e){
+    console.warn('Image storage full.');
+    const ind = document.getElementById('saveIndicator');
+    ind.textContent = 'Storage full — reduce image sizes';
+    ind.style.color = '#ff6b6b';
+    setTimeout(()=>{ ind.style.color = ''; }, 5000);
+  }
   updateProgress();
 }
 
 function loadData(){
   const raw = localStorage.getItem(STORAGE_KEY);
-  if(!raw) return;
-  try{
-    const data = JSON.parse(raw);
-    document.querySelectorAll('[data-save]').forEach(el=>{
-      const key = el.dataset.save;
-      if(key in data){
-        if(el.type === 'checkbox') el.checked = data[key];
-        else el.value = data[key];
-      }
-    });
-    // Restore ranks
-    Object.keys(data).forEach(k=>{
-      if(k.startsWith('rank_')){
-        const group = k.replace('rank_','');
-        const container = document.querySelector(`[data-group="${group}"]`);
-        if(container){
-          container.querySelectorAll('.rank-btn').forEach(b=>{
-            if(b.dataset.val === data[k]) b.classList.add('active');
-          });
+  if(raw){
+    try{
+      const data = JSON.parse(raw);
+      document.querySelectorAll('[data-save]').forEach(el=>{
+        const key = el.dataset.save;
+        if(key in data){
+          if(el.type === 'checkbox') el.checked = data[key];
+          else el.value = data[key];
         }
-      }
-    });
-  }catch(e){}
+      });
+      Object.keys(data).forEach(k=>{
+        if(k.startsWith('rank_')){
+          const group = k.replace('rank_','');
+          const container = document.querySelector('[data-group="'+group+'"]');
+          if(container){
+            container.querySelectorAll('.rank-btn').forEach(b=>{
+              if(b.dataset.val === data[k]) b.classList.add('active');
+            });
+          }
+        }
+      });
+    }catch(e){ console.warn('Could not load saved data'); }
+  }
+  // Restore images from separate storage
+  const imgRaw = localStorage.getItem(IMG_STORAGE_KEY);
+  if(imgRaw){
+    try{
+      const imgData = JSON.parse(imgRaw);
+      Object.keys(imgData).forEach(boxId=>{
+        const box = document.getElementById(boxId);
+        if(!box) return;
+        const src = imgData[boxId];
+        if(!src || src.length < 50) return;
+        const label = box.querySelector('span');
+        if(label) label.style.display = 'none';
+        const existing = box.querySelector('img');
+        if(existing) existing.remove();
+        const img = document.createElement('img');
+        img.src = src;
+        box.appendChild(img);
+        box.classList.add('has-image');
+      });
+    }catch(e){ console.warn('Could not load saved images'); }
+  }
   updateProgress();
 }
 
@@ -502,20 +676,43 @@ function setRank(btn){
   triggerSave();
 }
 
-// ── Image upload ──
+// ── Resize image to stay within localStorage budget ──
+function resizeImage(dataUrl, maxWidth, quality){
+  return new Promise((resolve)=>{
+    const img = new Image();
+    img.onload = function(){
+      let w = img.width, h = img.height;
+      if(w > maxWidth){ h = Math.round(h * maxWidth / w); w = maxWidth; }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', quality || 0.7));
+    };
+    img.src = dataUrl;
+  });
+}
+
+// ── Image upload with resize ──
 function loadImage(event, boxId, labelId){
   const file = event.target.files[0];
   if(!file) return;
+  if(file.size > 10 * 1024 * 1024){
+    alert('This image is too large (over 10 MB). Please use a smaller image or take a photo at lower resolution.');
+    event.target.value = '';
+    return;
+  }
   const reader = new FileReader();
-  reader.onload = function(e){
+  reader.onload = async function(e){
     const box = document.getElementById(boxId);
     const label = document.getElementById(labelId+'Label');
+    let src = e.target.result;
+    try{ src = await resizeImage(src, MAX_IMG_WIDTH, 0.7); }catch(err){}
     if(label) label.style.display = 'none';
-    // Remove existing image if any
     const existing = box.querySelector('img');
     if(existing) existing.remove();
     const img = document.createElement('img');
-    img.src = e.target.result;
+    img.src = src;
     img.id = labelId;
     box.appendChild(img);
     box.classList.add('has-image');
@@ -560,28 +757,37 @@ function updateProgress(){
   document.getElementById('progressPct').textContent = pct + '%';
 }
 
-// ── Share link ──
-function shareLink(){
+// ── Submit to teacher (download .json with all data + images) ──
+function submitToTeacher(){
+  const name = (document.getElementById('studentName').value || '').trim();
+  if(!name){
+    alert('Please enter your name at the top of the portfolio before submitting.');
+    document.getElementById('studentName').focus();
+    return;
+  }
   const data = {};
   document.querySelectorAll('[data-save]').forEach(el=>{
     const key = el.dataset.save;
     if(el.type === 'checkbox') data[key] = el.checked;
     else if(el.value && el.value.trim()) data[key] = el.value;
   });
-  // Save ranks
   document.querySelectorAll('.rank-btn.active').forEach(btn=>{
     const group = btn.parentElement.dataset.group;
     data['rank_'+group] = btn.dataset.val;
   });
-
-  const encoded = btoa(encodeURIComponent(JSON.stringify(data)));
-  const url = window.location.origin + window.location.pathname + '#data=' + encoded;
-
-  navigator.clipboard.writeText(url).then(()=>{
-    alert('Link copied to clipboard! Share this link with your teacher to show your progress.\n\nNote: Images are saved locally and will not be shared via the link. Upload images separately to Google Classroom.');
-  }).catch(()=>{
-    prompt('Copy this link and share it with your teacher:', url);
+  // Include images
+  document.querySelectorAll('.draw-box.has-image img').forEach(img=>{
+    const boxId = img.closest('.draw-box').id;
+    data['img_'+boxId] = img.src;
   });
+  const safeName = name.replace(/[^a-zA-Z0-9]/g,'_');
+  const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'DesignPortfolio_' + safeName + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  alert('Your portfolio has been downloaded!\n\nUpload the file "DesignPortfolio_' + safeName + '.json" to Google Classroom.\n\nAll your text AND images are included.');
 }
 
 // ── Load from URL hash ──
@@ -618,10 +824,246 @@ function loadFromHash(){
 // ── PDF ──
 function savePDF(){ window.print(); }
 
+// ── Grade-to-mark mapping ──
+const GRADE_MARKS = {
+  // Part A: 3 criteria, each graded A-E, average determines /10
+  a1: {A:10, B:8, C:6, D:3, E:1},
+  a2: {A:10, B:8, C:6, D:3, E:1},
+  a4: {A:10, B:8, C:6, D:3, E:1},
+  // Part B: single criterion /10
+  b:  {A:10, B:8, C:6, D:3, E:1},
+  // Part C: single criterion /5
+  c:  {A:5, B:4, C:3, D:2, E:0}
+};
+
+function setGrade(criterion, grade, btn){
+  // Clear previous selection in this criterion
+  btn.parentElement.querySelectorAll('.grade-btn').forEach(b=>{
+    b.className = 'grade-btn';
+  });
+  btn.classList.add('sel-'+grade);
+  // Auto-calculate part marks
+  autoCalcMarks();
+  saveTeacherData();
+}
+
+function autoCalcMarks(){
+  // Part A: average of 3 sub-criteria
+  const a1 = getSelectedGradeMark('rc-a1','a1');
+  const a2 = getSelectedGradeMark('rc-a2','a2');
+  const a4 = getSelectedGradeMark('rc-a4','a4');
+  if(a1 !== null && a2 !== null && a4 !== null){
+    const avg = Math.round((a1 + a2 + a4) / 3);
+    document.getElementById('markPartA').value = avg;
+  } else if(a1 !== null || a2 !== null || a4 !== null){
+    // Partial: average what's available
+    const vals = [a1,a2,a4].filter(v=>v!==null);
+    const avg = Math.round(vals.reduce((s,v)=>s+v,0) / vals.length);
+    document.getElementById('markPartA').value = avg;
+  }
+  // Part B
+  const bMark = getSelectedGradeMark('rc-b','b');
+  if(bMark !== null) document.getElementById('markPartB').value = bMark;
+  // Part C
+  const cMark = getSelectedGradeMark('rc-c','c');
+  if(cMark !== null) document.getElementById('markPartC').value = cMark;
+  updateTotal();
+}
+
+function getSelectedGradeMark(containerId, criterion){
+  const container = document.getElementById(containerId);
+  const sel = container.querySelector('.grade-btn[class*="sel-"]');
+  if(!sel) return null;
+  const grade = sel.className.match(/sel-([ABCDE])/);
+  if(!grade) return null;
+  return GRADE_MARKS[criterion][grade[1]];
+}
+
+function getSelectedGrade(containerId){
+  const container = document.getElementById(containerId);
+  const sel = container.querySelector('.grade-btn[class*="sel-"]');
+  if(!sel) return null;
+  const match = sel.className.match(/sel-([ABCDE])/);
+  return match ? match[1] : null;
+}
+
+// ── Teacher Mode ──
+function toggleTeacher(){
+  teacherMode = !teacherMode;
+  const btn = document.getElementById('btnTeacher');
+  const panel = document.getElementById('teacherPanel');
+  const loadBtn = document.getElementById('btnLoadFile');
+  btn.textContent = teacherMode ? 'Exit Teacher Mode' : 'Teacher Mode';
+  btn.classList.toggle('on', teacherMode);
+  panel.classList.toggle('active', teacherMode);
+  loadBtn.style.display = teacherMode ? '' : 'none';
+  document.querySelectorAll('.teacher-inline').forEach(el=>{
+    el.classList.toggle('active', teacherMode);
+  });
+  if(teacherMode) loadTeacherData();
+}
+
+function updateTotal(){
+  const a = parseFloat(document.getElementById('markPartA').value) || 0;
+  const b = parseFloat(document.getElementById('markPartB').value) || 0;
+  const c = parseFloat(document.getElementById('markPartC').value) || 0;
+  const total = Math.min(25, a + b + c);
+  document.getElementById('totalMark').textContent = total;
+  const badge = document.getElementById('gradeBadge');
+  const pct = (total / 25) * 100;
+  let grade = '', cls = '';
+  if(pct >= 80){ grade = 'A'; cls = 'grade-a'; }
+  else if(pct >= 60){ grade = 'B'; cls = 'grade-b'; }
+  else if(pct >= 40){ grade = 'C'; cls = 'grade-c'; }
+  else if(pct >= 20){ grade = 'D'; cls = 'grade-d'; }
+  else{ grade = 'E'; cls = 'grade-e'; }
+  badge.textContent = grade;
+  badge.className = 'grade-badge ' + cls;
+  badge.style.display = (a || b || c) ? 'inline-block' : 'none';
+  saveTeacherData();
+}
+
+function saveTeacherData(){
+  const student = document.getElementById('studentName').value || 'unknown';
+  const key = TEACHER_STORAGE_KEY + '-' + student.replace(/[^a-zA-Z0-9]/g,'_');
+  const td = {
+    markA: document.getElementById('markPartA').value,
+    markB: document.getElementById('markPartB').value,
+    markC: document.getElementById('markPartC').value,
+    overall: document.getElementById('teacherOverall').value,
+    s1: document.getElementById('tc-s1').value,
+    s2: document.getElementById('tc-s2').value,
+    s3: document.getElementById('tc-s3').value,
+    s4: document.getElementById('tc-s4').value,
+    gradeA1: getSelectedGrade('rc-a1'),
+    gradeA2: getSelectedGrade('rc-a2'),
+    gradeA4: getSelectedGrade('rc-a4'),
+    gradeB: getSelectedGrade('rc-b'),
+    gradeC: getSelectedGrade('rc-c')
+  };
+  localStorage.setItem(key, JSON.stringify(td));
+}
+
+function loadTeacherData(){
+  const student = document.getElementById('studentName').value || 'unknown';
+  const key = TEACHER_STORAGE_KEY + '-' + student.replace(/[^a-zA-Z0-9]/g,'_');
+  const raw = localStorage.getItem(key);
+  if(!raw) return;
+  try{
+    const td = JSON.parse(raw);
+    if(td.markA) document.getElementById('markPartA').value = td.markA;
+    if(td.markB) document.getElementById('markPartB').value = td.markB;
+    if(td.markC) document.getElementById('markPartC').value = td.markC;
+    if(td.overall) document.getElementById('teacherOverall').value = td.overall;
+    if(td.s1) document.getElementById('tc-s1').value = td.s1;
+    if(td.s2) document.getElementById('tc-s2').value = td.s2;
+    if(td.s3) document.getElementById('tc-s3').value = td.s3;
+    if(td.s4) document.getElementById('tc-s4').value = td.s4;
+    // Restore grade selections
+    const gradeMap = {gradeA1:'rc-a1',gradeA2:'rc-a2',gradeA4:'rc-a4',gradeB:'rc-b',gradeC:'rc-c'};
+    Object.keys(gradeMap).forEach(k=>{
+      if(td[k]){
+        const container = document.getElementById(gradeMap[k]);
+        container.querySelectorAll('.grade-btn').forEach(btn=>{
+          if(btn.textContent.trim() === td[k]) btn.classList.add('sel-'+td[k]);
+        });
+      }
+    });
+    updateTotal();
+  }catch(e){}
+}
+
+document.querySelectorAll('.teacher-comment').forEach(el=>{
+  el.addEventListener('input', saveTeacherData);
+});
+
+function printMarked(){
+  document.querySelectorAll('.teacher-inline.active').forEach(el=>el.classList.add('print-show'));
+  document.getElementById('teacherPanel').classList.add('print-show');
+  window.print();
+  setTimeout(()=>{
+    document.querySelectorAll('.print-show').forEach(el=>el.classList.remove('print-show'));
+  }, 1000);
+}
+
+// ── Load .json submission file (for teacher) ──
+function loadSubmissionFile(file){
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const data = JSON.parse(e.target.result);
+      document.querySelectorAll('[data-save]').forEach(el=>{
+        const key = el.dataset.save;
+        if(key in data){
+          if(el.type === 'checkbox') el.checked = data[key];
+          else el.value = data[key];
+        }
+      });
+      Object.keys(data).forEach(k=>{
+        if(k.startsWith('rank_')){
+          const group = k.replace('rank_','');
+          const container = document.querySelector('[data-group="'+group+'"]');
+          if(container){
+            container.querySelectorAll('.rank-btn').forEach(b=>{
+              b.classList.remove('active');
+              if(b.dataset.val === data[k]) b.classList.add('active');
+            });
+          }
+        }
+        if(k.startsWith('img_')){
+          const boxId = k.replace('img_','');
+          const box = document.getElementById(boxId);
+          if(!box) return;
+          const src = data[k];
+          if(!src || src.length < 50) return;
+          const label = box.querySelector('span');
+          if(label) label.style.display = 'none';
+          const existing = box.querySelector('img');
+          if(existing) existing.remove();
+          const img = document.createElement('img');
+          img.src = src;
+          box.appendChild(img);
+          box.classList.add('has-image');
+        }
+      });
+      updateProgress();
+      alert('Student submission loaded! Click "Teacher Mode" to start marking.');
+    }catch(err){
+      alert('Error reading file. Make sure it is a valid .json portfolio file.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// Hidden file input for loading .json (teacher)
+const jsonInput = document.createElement('input');
+jsonInput.type = 'file';
+jsonInput.accept = '.json';
+jsonInput.style.display = 'none';
+jsonInput.addEventListener('change', function(e){
+  if(e.target.files[0]) loadSubmissionFile(e.target.files[0]);
+  e.target.value = '';
+});
+document.body.appendChild(jsonInput);
+function openStudentFile(){ jsonInput.click(); }
+
+// Drag & drop .json loader (for teacher)
+document.addEventListener('dragover', e=>e.preventDefault());
+document.addEventListener('drop', function(e){
+  e.preventDefault();
+  const file = e.dataTransfer.files[0];
+  if(file && file.name.endsWith('.json')){
+    if(confirm('Load student submission from "'+file.name+'"?\nThis will replace current data on this page.')){
+      loadSubmissionFile(file);
+    }
+  }
+});
+
 // ── Clear ──
 function clearAll(){
   if(!confirm('Are you sure you want to clear ALL your work? This cannot be undone.')) return;
   localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(IMG_STORAGE_KEY);
   document.querySelectorAll('[data-save]').forEach(el=>{
     if(el.type === 'checkbox') el.checked = false;
     else el.value = '';
